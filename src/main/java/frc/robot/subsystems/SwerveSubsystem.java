@@ -16,8 +16,10 @@ import frc.robot.controllers.SwerveModuleControlller;
 import frc.robot.utils.NetworkTableUtils;
 import frc.robot.utils.SwerveUtils;
 
+
 public class SwerveSubsystem extends SubsystemBase {
-    // Defining Motors
+
+    // Defining Motors takes drivingPort, turningPort, ChassisAngularOffset
     private final SwerveModuleControlller frontLeft = new SwerveModuleControlller(
             DrivetrainConstants.frontLeftDrivingPort,
             DrivetrainConstants.frontLeftTurningPort,
@@ -42,30 +44,30 @@ public class SwerveSubsystem extends SubsystemBase {
             DrivetrainConstants.rearRightChassisAngularOffset
     );
 
-    // Gyro
+    // Gyro - Measures robot orientation
     private final AHRS gyro = new AHRS();
 
-    // Slew Rate Constants
+    // Slew Rate Constants (Adjust for new robot)
     private double currentRotation = 0.0;
     private double currentTranslationDirection = 0.0;
     private double currentTranslationMagnitude = 0.0;
 
-    // Slew Rate Limiters
+    // Slew Rate Limiters (Adjust for new robot)
     private final SlewRateLimiter magnitudeLimiter = new SlewRateLimiter(DrivetrainConstants.magnitudeSlewRate);
     private final SlewRateLimiter rotationLimiter = new SlewRateLimiter(DrivetrainConstants.rotationalSlewRate);
 
-    // Slew Rate Time
+    // Slew Rate Time (Adjust for new robot)
     private double previousTime = WPIUtilJNI.now() * 1e-6;
 
-    // Limelight Network Table
+    // Limelight Network Table for relaying data to the driver station.
     private final NetworkTableUtils limelightTable = new NetworkTableUtils("limelight");
 
-    // Convert Gyro angle to radians(-2pi to 2pi)
+    // Convert gyro angle to radians(-2pi to 2pi).
     public double heading() {
         return Units.degreesToRadians(-1 * (gyro.getAngle() + 180.0) % 360.0);
     }
 
-    // Swerve Odometry
+    // Swerve odometry. Detects changes in position. SwerveOdometry() takes kinematics, gyro angle, and swerve module positions.
     private final SwerveDriveOdometry odometry = new SwerveDriveOdometry(
             DrivetrainConstants.driveKinematics,
             Rotation2d.fromRadians(heading()),
@@ -76,8 +78,7 @@ public class SwerveSubsystem extends SubsystemBase {
                     rearRight.getPosition()
             }
     );
-
-    // Network Tables Telemetry
+    // Network Tables Telemetry. Default entry is zeroes.
     private final DoubleArrayEntry setpointsTelemetry = NetworkTableInstance.getDefault()
             .getTable("Swerve").getDoubleArrayTopic("Setpoints").getEntry(new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
     private final DoubleArrayEntry actualTelemetry = NetworkTableInstance.getDefault()
@@ -101,7 +102,7 @@ public class SwerveSubsystem extends SubsystemBase {
             .getTable("Swerve").getDoubleTopic("rrpos").getEntry(rearRight.getPosition().angle.getRadians());
 
 
-    // Periodic
+    // Called periodically during robot operation.
     @Override
     public void periodic() {
         // Update odometry
@@ -115,22 +116,25 @@ public class SwerveSubsystem extends SubsystemBase {
                 }
         );
 
-        // Coen's Vision Lineup Thing:
-        // find the botpose network table id thingy, construct a pose2d, feed it into resetodometry
-//        double[] botpose = limelightTable.getDoubleArray("botpose", new double[0]);
-//        if (!Arrays.equals(botpose, new double[0])) {
-//            Pose2d pose = new Pose2d(new Translation2d(botpose[0], botpose[2]), new Rotation2d(botpose[3], botpose[5]));
-//            resetOdometry(pose);
-//        }
+        /* Coen's Vision Lineup Thing:
+          Find the botpose network table id thingy, construct a pose2d, feed it into resetodometry.
 
+          double[] botpose = limelightTable.getDoubleArray("botpose", new double[0]);
+          if (!Arrays.equals(botpose, new double[0])) {
+              Pose2d pose = new Pose2d(new Translation2d(botpose[0], botpose[2]), new Rotation2d(botpose[3], botpose[5]));
+              resetOdometry(pose);
+         }
+*/
+
+        // Set positions in network table
         frontrightpos.set(frontRight.getPosition().angle.getRadians());
         frontleftpos.set(frontLeft.getPosition().angle.getRadians());
         rearrightpos.set(rearRight.getPosition().angle.getRadians());
 
-        // Set Network Tables Telemetry
+        // Set telemetry in network tables.
         actualTelemetry.set(new double[]{
                 frontLeft.getPosition().angle.getRadians(), frontLeft.getState().speedMetersPerSecond,
-                frontRight.getPosition().angle.getRadians(), frontRight.getState().speedMetersPerSecond,
+                frontLeft.getPosition().angle.getRadians(), frontRight.getState().speedMetersPerSecond,
                 rearLeft.getPosition().angle.getRadians(), rearLeft.getState().speedMetersPerSecond,
                 rearRight.getPosition().angle.getRadians(), rearRight.getState().speedMetersPerSecond});
 
@@ -170,11 +174,14 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // Drive function - slew rate limited to prevent shearing of wheels
     public void drive(double forwardMetersPerSecond, double sidewaysMetersPerSecond, double radiansPerSecond, boolean fieldRelative, boolean rateLimit) {
-        // forward is xspeed, sideways is yspeed
+
+        // Forward is xspeed, sideways is yspeed.
         double xSpeedCommanded;
         double ySpeedCommanded;
 
+
         if (rateLimit) {
+            // Scary math
             double inputTranslationDirection = Math.atan2(sidewaysMetersPerSecond, forwardMetersPerSecond);
             double inputTranslationMagnitude = Math.sqrt(Math.pow(forwardMetersPerSecond, 2.0) + Math.pow(sidewaysMetersPerSecond, 2.0));
 
@@ -182,12 +189,13 @@ public class SwerveSubsystem extends SubsystemBase {
             if (currentTranslationMagnitude != 0.0) {
                 directionSlewRate = Math.abs(DrivetrainConstants.directionSlewRate / currentTranslationMagnitude);
             } else {
-                directionSlewRate = 500.0; // super high number means slew is instantaneous
+                directionSlewRate = 500.0; //super high number means slew is instantaneous
             }
 
-            double currentTime = WPIUtilJNI.now() * 1e-6;
+            double currentTime = WPIUtilJNI.now() * 1e-5;
             double elapsedTime = currentTime - previousTime;
 
+            // Moar scary math
             double angleDifference = SwerveUtils.AngleDifference(inputTranslationDirection, currentTranslationDirection);
             if (angleDifference < 0.45 * Math.PI) {
                 currentTranslationDirection = SwerveUtils.StepTowardsCircular(
@@ -197,7 +205,7 @@ public class SwerveSubsystem extends SubsystemBase {
                 );
                 currentTranslationMagnitude = magnitudeLimiter.calculate(inputTranslationMagnitude);
             } else if (angleDifference > 0.85 * Math.PI) {
-                if (currentTranslationMagnitude > 1e-4) { // small number avoids floating-point errors
+                if (currentTranslationMagnitude > 1e-5) { // small number avoids floating-point errors
                     currentTranslationMagnitude = magnitudeLimiter.calculate(0.0);
                 } else {
                     currentTranslationDirection = SwerveUtils.WrapAngle(currentTranslationDirection + Math.PI);
@@ -217,6 +225,8 @@ public class SwerveSubsystem extends SubsystemBase {
             xSpeedCommanded = currentTranslationMagnitude * Math.cos(currentTranslationDirection);
             ySpeedCommanded = currentTranslationMagnitude * Math.sin(currentTranslationDirection);
             currentRotation = rotationLimiter.calculate(radiansPerSecond);
+
+        // If there's no rate limit
         } else {
             xSpeedCommanded = forwardMetersPerSecond;
             ySpeedCommanded = sidewaysMetersPerSecond;
@@ -267,12 +277,12 @@ public class SwerveSubsystem extends SubsystemBase {
         rearRight.setDesiredState(new SwerveModuleState(0.0, Rotation2d.fromDegrees(0.0)));
     }
 
-    // Resets Gyro
+    // Resets gyro
     public void zeroGyro() {
         gyro.reset();
     }
 
-    // Resets Gyro and odometry
+    // Resets gyro and odometry
     public void zeroGyroAndOdometry() {
         gyro.reset();
         resetOdometry(new Pose2d(0.0, 0.0, new Rotation2d(0.0)));
@@ -288,7 +298,7 @@ public class SwerveSubsystem extends SubsystemBase {
         rearRight.setDesiredState(desiredStates[3]);
     }
 
-    // Resets Swerve encoders
+    // Resets swerve encoders
     public void resetEncoders() {
         frontLeft.resetEncoders();
         frontRight.resetEncoders();
