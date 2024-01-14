@@ -2,15 +2,22 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.0820151177339394,
-      "y": 2.411480822961646
+      "x": 1.3887948146266664,
+      "y": 5.543115998269035
     },
-    "rotation": 0
+    "rotation": -179.2783987962029
   },
   "command": {
     "type": "sequential",
     "data": {
-      "commands": []
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle Leave"
+          }
+        }
+      ]
     }
   },
   "folder": "Leave",

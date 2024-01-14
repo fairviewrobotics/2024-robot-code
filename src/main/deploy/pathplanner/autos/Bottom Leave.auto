@@ -2,15 +2,22 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2,
-      "y": 2
+      "x": 0.7877655246051235,
+      "y": 4.4112497530550625
     },
-    "rotation": 0
+    "rotation": 120.9485911059235
   },
   "command": {
     "type": "sequential",
     "data": {
-      "commands": []
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom Leave"
+          }
+        }
+      ]
     }
   },
   "folder": "Leave",
