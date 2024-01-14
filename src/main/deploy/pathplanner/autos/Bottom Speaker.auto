@@ -1,0 +1,18 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.817042022972935,
+      "y": 3.5564710157198096
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": []
+    }
+  },
+  "folder": "Score One",
+  "choreoAuto": false
+}

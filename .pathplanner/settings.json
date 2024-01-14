@@ -2,8 +2,22 @@
   "robotWidth": 0.9,
   "robotLength": 0.9,
   "holonomicMode": true,
-  "pathFolders": [],
-  "autoFolders": [],
+  "pathFolders": [
+    "Leave",
+    "Score Amp",
+    "Score One",
+    "Score One Leave",
+    "Score Two",
+    "Score Three"
+  ],
+  "autoFolders": [
+    "Leave",
+    "Score One Leave",
+    "Score Amp",
+    "Score Three",
+    "Score One",
+    "Score Two"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
