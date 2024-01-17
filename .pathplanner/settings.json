@@ -4,18 +4,23 @@
   "holonomicMode": true,
   "pathFolders": [
     "Leave",
+    "Place from Bottom",
+    "Pickup from Bottom",
+    "Pickup from Middle",
+    "Pickup from Top",
+    "Place from Middle",
+    "Place from Top",
     "Score Amp",
     "Score One",
-    "Score One Leave",
-    "Score Two",
-    "Score Three"
+    "Score One Leave"
   ],
   "autoFolders": [
     "Leave",
-    "Score One Leave",
+    "Score Four",
     "Score Amp",
-    "Score Three",
     "Score One",
+    "Score One Leave",
+    "Score Three",
     "Score Two"
   ],
   "defaultMaxVel": 3.0,

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3443159154836832,
-        "y": 2.776872900968024
+        "x": 2.0,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3443159154836826,
-        "y": 2.276872900968024
+        "x": 3.0,
+        "y": 6.5
       },
       "isLocked": false,
       "linkedName": null
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 5.447479515329401,
-        "y": 1.9700173567013801
+        "x": 4.828694296277482,
+        "y": 3.5824813732960807
       },
       "prevControl": {
-        "x": 5.197479515329401,
-        "y": 3.4700173567013795
+        "x": 4.578694296277482,
+        "y": 5.082481373296082
       },
       "nextControl": null,
       "isLocked": false,
@@ -59,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Score Three",
+  "folder": "Place from Middle",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

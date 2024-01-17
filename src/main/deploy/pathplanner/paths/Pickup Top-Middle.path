@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 5.488929811192956,
-        "y": 0.9767542498047964
+        "x": 6.997827472506796,
+        "y": 3.4469662226361493
       },
       "prevControl": {
-        "x": 5.238929811192956,
-        "y": 2.476754249804796
+        "x": 6.747827472506796,
+        "y": 4.946966222636148
       },
       "nextControl": null,
       "isLocked": false,
@@ -59,7 +59,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Score Two",
+  "folder": "Pickup from Top",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

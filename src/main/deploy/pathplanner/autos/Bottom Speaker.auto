@@ -2,15 +2,34 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.817042022972935,
-      "y": 3.5564710157198096
+      "x": 0.8337884175768354,
+      "y": 4.428589991439242
     },
-    "rotation": 0
+    "rotation": 121.45645840326694
   },
   "command": {
     "type": "sequential",
     "data": {
-      "commands": []
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": null
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.01
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom Speaker"
+          }
+        }
+      ]
     }
   },
   "folder": "Score One",
