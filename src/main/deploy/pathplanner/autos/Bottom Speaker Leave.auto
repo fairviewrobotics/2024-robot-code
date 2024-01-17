@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.8304628924072665,
+      "y": 4.418078956528284
+    },
+    "rotation": 120.30803947276516
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": null
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.01
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom Speaker Leave"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Score One Leave",
+  "choreoAuto": false
+}
