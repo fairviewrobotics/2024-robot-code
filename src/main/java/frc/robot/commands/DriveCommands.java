@@ -1,13 +1,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.SwerveSubsystem;
 
 import java.util.function.DoubleSupplier;
 
-public class DriveCommands extends CommandBase {
+public class DriveCommands extends Command {
     private final SwerveSubsystem swerveSubsystem;
     private final DoubleSupplier forward;
     private final DoubleSupplier sideways;

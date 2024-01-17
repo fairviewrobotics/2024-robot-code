@@ -1,0 +1,25 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.8274936735058658,
+      "y": 6.699448607230549
+    },
+    "rotation": -119.37999053144982
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top Leave"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Leave",
+  "choreoAuto": false
+}
