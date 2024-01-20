@@ -1,0 +1,53 @@
+package frc.robot.subsystems;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.revrobotics.CANSparkLowLevel;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+//import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.ShooterConstants;
+
+public class ShooterSubsystem extends SubsystemBase {
+    private final CANSparkMax topShooterMotor;
+    private final CANSparkMax bottomShooterMotor;
+    private final RelativeEncoder topShooterEncoder;
+    private final RelativeEncoder bottomShooterEncoder;
+
+    //private MotorControllerGroup shooterMotorGroup;
+
+    public ShooterSubsystem() {
+        
+        topShooterMotor = new CANSparkMax(ShooterConstants.topShooterMotorPort, CANSparkLowLevel.MotorType.kBrushless);
+        bottomShooterMotor = new CANSparkMax(ShooterConstants.bottomShooterMotorPort, CANSparkLowLevel.MotorType.kBrushless);
+
+        topShooterEncoder = topShooterMotor.getEncoder();
+        bottomShooterEncoder = bottomShooterMotor.getEncoder();
+
+        topShooterMotor.setInverted(ShooterConstants.topShooterReversed);
+        bottomShooterMotor.setInverted(ShooterConstants.bottomShooterReversed);
+
+        topShooterMotor.setSmartCurrentLimit(38);
+        bottomShooterMotor.setSmartCurrentLimit(38);
+    }
+
+    public void percentShoot(double topPercent, double bottomPercent) {
+        topShooterMotor.set(topPercent);
+        bottomShooterMotor.set(bottomPercent);
+    }
+
+    public void voltageShoot(double topVoltage, double bottomVoltage) {
+        topShooterMotor.setVoltage(topVoltage);
+        bottomShooterMotor.setVoltage(bottomVoltage);
+    }
+
+    public double topShooterSpeed() {
+        return topShooterEncoder.getVelocity();
+    }
+
+    public double bottomShooterSpeed() {
+        return bottomShooterEncoder.getVelocity();
+    }
+}
