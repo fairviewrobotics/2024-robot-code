@@ -91,7 +91,9 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int,double)" class="member-name-link">SwerveModuleControlller</a><wbr>(int&nbsp;drivingPort,
  int&nbsp;turningPort,
  double&nbsp;chassisAngularOffset)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">This class contains all  the logic and code to control the swerve motors</div>
+</div>
 </div>
 </section>
 </li>
@@ -108,19 +110,29 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.kinematics.SwerveModuleState</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDesiredState()" class="member-name-link">getDesiredState</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the current desired state</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.kinematics.SwerveModulePosition</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPosition()" class="member-name-link">getPosition</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the position of the swerve module</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.kinematics.SwerveModuleState</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getState()" class="member-name-link">getState</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This function gets the state of the swerve module</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetEncoders()" class="member-name-link">resetEncoders</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This function resets all encoders for the swerve module</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDesiredState(edu.wpi.first.math.kinematics.SwerveModuleState)" class="member-name-link">setDesiredState</a><wbr>(edu.wpi.first.math.kinematics.SwerveModuleState&nbsp;desiredState)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This function sets the state of a swerve module</div>
+</div>
 </div>
 </div>
 </div>
@@ -144,6 +156,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SwerveModuleControlller</span><wbr><span class="parameters">(int&nbsp;drivingPort,
  int&nbsp;turningPort,
  double&nbsp;chassisAngularOffset)</span></div>
+<div class="block">This class contains all  the logic and code to control the swerve motors</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>drivingPort</code> - the port for the drive motor</dd>
+<dd><code>turningPort</code> - the port for the turning motor</dd>
+<dd><code>chassisAngularOffset</code> - the angular offset of the motor to the chassis?</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -158,30 +177,51 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getState()">
 <h3>getState</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.kinematics.SwerveModuleState</span>&nbsp;<span class="element-name">getState</span>()</div>
+<div class="block">This function gets the state of the swerve module</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Returns a SwerveModuleState containing info about the velocity and rotation of the swerve module</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getPosition()">
 <h3>getPosition</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.kinematics.SwerveModulePosition</span>&nbsp;<span class="element-name">getPosition</span>()</div>
+<div class="block">Gets the position of the swerve module</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Returns a SwerveModulePosition containing info about the velocity and rotation of the swerve module</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setDesiredState(edu.wpi.first.math.kinematics.SwerveModuleState)">
 <h3>setDesiredState</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDesiredState</span><wbr><span class="parameters">(edu.wpi.first.math.kinematics.SwerveModuleState&nbsp;desiredState)</span></div>
+<div class="block">This function sets the state of a swerve module</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>desiredState</code> - the target state for the module</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getDesiredState()">
 <h3>getDesiredState</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.kinematics.SwerveModuleState</span>&nbsp;<span class="element-name">getDesiredState</span>()</div>
+<div class="block">Gets the current desired state</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>returns the desired state as a SwerveModuleState</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="resetEncoders()">
 <h3>resetEncoders</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetEncoders</span>()</div>
+<div class="block">This function resets all encoders for the swerve module</div>
 </section>
 </li>
 </ul>
