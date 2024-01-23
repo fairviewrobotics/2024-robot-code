@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3991870807815692,
+      "y": 5.540324932501718
+    },
+    "rotation": -179.23416351084057
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": null
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.01
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle Speaker"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Score One Leave",
+  "choreoAuto": false
+}
