@@ -3,16 +3,16 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.constants.IndexerConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
-    private final CANSparkMax wheel1 = new CANSparkMax(Constants.wheel1ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax wheel1 = new CANSparkMax(IndexerConstants.wheel1ID, CANSparkLowLevel.MotorType.kBrushless);
 
-    private final CANSparkMax wheel2 = new CANSparkMax(Constants.wheel2ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax wheel2 = new CANSparkMax(IndexerConstants.wheel2ID, CANSparkLowLevel.MotorType.kBrushless);
 
-    private final CANSparkMax wheel3 = new CANSparkMax(Constants.wheel3ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax wheel3 = new CANSparkMax(IndexerConstants.wheel3ID, CANSparkLowLevel.MotorType.kBrushless);
 
-    private final CANSparkMax indexerRotate = new CANSparkMax(Constants.indexerRotateID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax indexerRotate = new CANSparkMax(IndexerConstants.indexerRotateID, CANSparkLowLevel.MotorType.kBrushless);
 
     /**
      * Set indexer pos changes the position of the indexer for either the Amp or Speaker
