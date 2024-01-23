@@ -22,33 +22,32 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  public XboxController primaryController = new XboxController(0);
-  public XboxController secondaryController = new XboxController(1);
+//  public XboxController primaryController = new XboxController(0);
+//  public XboxController secondaryController = new XboxController(1);
   public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
 //    configureButtonBindings();
-    configureButtonBindings();
   }
-
-  public void configureButtonBindings(){
-
-    swerveSubsystem.setDefaultCommand(new DriveCommands(
-            swerveSubsystem,
-            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 4.0,
-            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 4.0,
-            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 4.0,
-            true,
-            true
-    ));
-
-    new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
-            new RunCommand(() -> {
-              swerveSubsystem.zeroGyro();
-            })
-    );
-  }
+//
+//  public void configureButtonBindings(){
+//
+//    swerveSubsystem.setDefaultCommand(new DriveCommands(
+//            swerveSubsystem,
+//            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 4.0,
+//            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 4.0,
+//            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 4.0,
+//            true,
+//            true
+//    ));
+//
+//    new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
+//            new RunCommand(() -> {
+//              swerveSubsystem.zeroGyro();
+//            })
+//    );
+//  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
