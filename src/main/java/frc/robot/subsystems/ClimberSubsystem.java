@@ -13,7 +13,7 @@ public class ClimberSubsystem extends SubsystemBase {
     private ClimberState state;
     /**
      * This function sets the state of the climber, possible options are EXTEND, RETRACT, or HOLD
-     * @param state The state we are setting the climber to.
+     * @param state The state we are setting the climber to (see {@link ClimberState}).
      */
     public void setState(ClimberState state) {
         this.state = state;
@@ -21,7 +21,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
     /**
      * Gets the current state of the climber
-     * @return Returns the state of the climber as a ClimberState
+     * @return Returns the state of the climber as a {@link ClimberState}
      */
     public ClimberState getState() {
         return this.state;
