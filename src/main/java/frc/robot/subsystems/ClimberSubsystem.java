@@ -32,12 +32,18 @@ public class ClimberSubsystem extends SubsystemBase {
         switch (this.state) {
             case EXTEND -> {
                 // Extend logic
+                rightSide.setVoltage(3.0);
+                leftSide.setVoltage(3.0);
             }
             case RETRACT -> {
                 // Retract logic
+                rightSide.setVoltage(-3.0);
+                leftSide.setVoltage(-3.0);
             }
             case HOLD -> {
                 // Hold logic
+                leftSide.setVoltage(0.0);
+                rightSide.setVoltage(0.0);
                 leftSide.setIdleMode(CANSparkBase.IdleMode.kBrake);
                 rightSide.setIdleMode(CANSparkBase.IdleMode.kBrake);
             }
