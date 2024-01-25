@@ -161,7 +161,6 @@ public class SwerveSubsystem extends SubsystemBase {
     /**
      * Get robot's pose.
      */
-
     private Pose2d getPose() {
         return odometry.getPoseMeters();
     }
