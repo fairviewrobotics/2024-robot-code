@@ -61,9 +61,11 @@ public class SwerveSubsystem extends SubsystemBase {
     private final SlewRateLimiter rotationLimiter = new SlewRateLimiter(DrivetrainConstants.rotationalSlewRate);
 
     // Slew Rate Time
+
     private double previousTime = WPIUtilJNI.now() * 1e-6;
 
     // Limelight Network Table
+    // Relay data to driverstation using network table
     private final NetworkTableUtils limelightTable = new NetworkTableUtils("limelight");
 
     // Convert Gyro angle to radians(-2pi to 2pi)
@@ -127,6 +129,8 @@ public class SwerveSubsystem extends SubsystemBase {
     private final DoubleEntry rearrightpos = NetworkTableInstance.getDefault()
             .getTable("Swerve").getDoubleTopic("rrpos").getEntry(rearRight.getPosition().angle.getRadians());
 
+    private final DoubleEntry rearleftpos = NetworkTableInstance.getDefault()
+            .getTable("Swerve").getDoubleTopic("rlpos").getEntry(rearLeft.getPosition().angle.getRadians());
 
     // Periodic
     @Override
@@ -163,6 +167,7 @@ public class SwerveSubsystem extends SubsystemBase {
         frontrightpos.set(frontRight.getPosition().angle.getRadians());
         frontleftpos.set(frontLeft.getPosition().angle.getRadians());
         rearrightpos.set(rearRight.getPosition().angle.getRadians());
+        rearleftpos.set(rearLeft.getPosition().angle.getRadians());
 
         // Set Network Tables Telemetry
         actualTelemetry.set(new double[]{
@@ -187,11 +192,20 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     // Define robot pose
+
+    /**
+     * Get robot's pose.
+     */
     private Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
     }
 
     // Reset odometry function
+
+    /**
+     * @param pose Reset robot's position.
+     */
+
     private void resetOdometry(Pose2d pose) {
         poseEstimator.resetPosition(
                 Rotation2d.fromRadians(heading()),
@@ -206,12 +220,24 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     // Drive function - slew rate limited to prevent shearing of wheels
+
+    /**
+     * Swerve drive function.
+     * @param forwardMetersPerSecond
+     * @param sidewaysMetersPerSecond
+     * @param radiansPerSecond
+     * @param fieldRelative
+     * @param rateLimit
+     */
+
     public void drive(double forwardMetersPerSecond, double sidewaysMetersPerSecond, double radiansPerSecond, boolean fieldRelative, boolean rateLimit) {
         // forward is xspeed, sideways is yspeed
         double xSpeedCommanded;
         double ySpeedCommanded;
 
         if (rateLimit) {
+
+            // Scary math that calculates important stuff about where the robot is heading
             double inputTranslationDirection = Math.atan2(sidewaysMetersPerSecond, forwardMetersPerSecond);
             double inputTranslationMagnitude = Math.sqrt(Math.pow(forwardMetersPerSecond, 2.0) + Math.pow(sidewaysMetersPerSecond, 2.0));
 
@@ -254,16 +280,20 @@ public class SwerveSubsystem extends SubsystemBase {
             xSpeedCommanded = currentTranslationMagnitude * Math.cos(currentTranslationDirection);
             ySpeedCommanded = currentTranslationMagnitude * Math.sin(currentTranslationDirection);
             currentRotation = rotationLimiter.calculate(radiansPerSecond);
+
         } else {
+            // If there's no rate limit, robot does the exact inputs given.
             xSpeedCommanded = forwardMetersPerSecond;
             ySpeedCommanded = sidewaysMetersPerSecond;
             currentRotation = radiansPerSecond;
         }
 
+
         double xSpeedDelivered = xSpeedCommanded * DrivetrainConstants.maxSpeedMetersPerSecond;
         double ySpeedDelivered = ySpeedCommanded * DrivetrainConstants.maxSpeedMetersPerSecond;
         double rotationDelivered = currentRotation * DrivetrainConstants.maxAngularSpeed;
 
+        // Field relative is easier for drivers I think.
         SwerveModuleState[] swerveModuleStates;
         if (fieldRelative) {
             swerveModuleStates = DrivetrainConstants.driveKinematics.toSwerveModuleStates(
@@ -289,6 +319,11 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     // Sets the wheels to an X configuration
+
+    /**
+     * Set wheels to an X configuration for docking procedure.
+     */
+
     public void setX() {
         frontLeft.setDesiredState(new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)));
         frontRight.setDesiredState(new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0)));
@@ -297,6 +332,11 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     // Sets the wheels to a zeroed configuration
+
+    /**
+     * Set wheels to a 0 configuration for calibration and testing.
+     */
+
     public void setZero() {
         frontLeft.setDesiredState(new SwerveModuleState(0.0, Rotation2d.fromDegrees(0.0)));
         frontRight.setDesiredState(new SwerveModuleState(0.0, Rotation2d.fromDegrees(0.0)));
@@ -304,18 +344,30 @@ public class SwerveSubsystem extends SubsystemBase {
         rearRight.setDesiredState(new SwerveModuleState(0.0, Rotation2d.fromDegrees(0.0)));
     }
 
+
     // Resets Gyro
+
+    /**
+     * Reset the gyro
+     */
+
     public void zeroGyro() {
         gyro.reset();
     }
 
-    // Resets Gyro and odometry
+    /**
+     * Resets Gyro and odometry
+     */
+
     public void zeroGyroAndOdometry() {
         gyro.reset();
         resetOdometry(new Pose2d(0.0, 0.0, new Rotation2d(0.0)));
     }
 
-    // Sets states of swerve modules
+    /**
+     * Sets states of swerve modules
+     * @param desiredStates
+     */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DrivetrainConstants.maxSpeedMetersPerSecond);
 
@@ -325,7 +377,9 @@ public class SwerveSubsystem extends SubsystemBase {
         rearRight.setDesiredState(desiredStates[3]);
     }
 
-    // Resets Swerve encoders
+    /**
+     * Resets swerve encoders
+     */
     public void resetEncoders() {
         frontLeft.resetEncoders();
         frontRight.resetEncoders();
