@@ -6,6 +6,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.constants.DrivetrainConstants;
 
+// TODO: Lots of deprecated stuff here
 public class SwerveModuleControlller {
     private final CANSparkMax drivingMotor;
     private final CANSparkMax turningMotor;
@@ -16,6 +17,12 @@ public class SwerveModuleControlller {
     private SwerveModuleState m_desiredState;
     private double chassisAngularOffset;
 
+    /**
+     * This class contains all  the logic and code to control the swerve motors
+     * @param drivingPort the port for the drive motor
+     * @param turningPort the port for the turning motor
+     * @param chassisAngularOffset the angular offset of the motor to the chassis?
+     */
     public SwerveModuleControlller(int drivingPort, int turningPort, double chassisAngularOffset) {
 
         this.chassisAngularOffset = chassisAngularOffset;
@@ -70,14 +77,26 @@ public class SwerveModuleControlller {
         turningMotor.burnFlash();
     }
 
+    /**
+     * This function gets the state of the swerve module
+     * @return Returns a SwerveModuleState containing info about the velocity and rotation of the swerve module
+     */
     public SwerveModuleState getState() {
         return new SwerveModuleState(drivingEncoder.getVelocity(), new Rotation2d(turningEncoder.getPosition() - chassisAngularOffset));
     }
 
+    /**
+     * Gets the position of the swerve module
+     * @return Returns a SwerveModulePosition containing info about the velocity and rotation of the swerve module
+     */
     public SwerveModulePosition getPosition() {
         return new SwerveModulePosition(drivingEncoder.getPosition(), new Rotation2d(turningEncoder.getPosition() - chassisAngularOffset));
     }
 
+    /**
+     * This function sets the state of a swerve module
+     * @param desiredState the target state for the module
+     */
     public void setDesiredState(SwerveModuleState desiredState) {
         SwerveModuleState correctedDesiredState = new SwerveModuleState();
         correctedDesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
@@ -95,10 +114,17 @@ public class SwerveModuleControlller {
 
     }
 
+    /**
+     * Gets the current desired state
+     * @return returns the desired state as a SwerveModuleState
+     */
     public SwerveModuleState getDesiredState(){
         return m_desiredState;
     }
 
+    /**
+     * This function resets all encoders for the swerve module
+     */
     public void resetEncoders() {
         drivingEncoder.setPosition(0.0);
     }

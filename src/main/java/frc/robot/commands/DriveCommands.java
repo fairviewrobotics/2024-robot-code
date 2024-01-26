@@ -14,6 +14,15 @@ public class DriveCommands extends Command {
     private final DoubleSupplier radians;
     private final boolean fieldRelativeFromButton;
 
+    /**
+     * This class contains all the drive commands for swerve
+     * @param swerveSubsystem SwerveSubsystem instance for controlling the swerve drive
+     * @param forward The target forward meters/second
+     * @param sideways The target sideways meters/second
+     * @param radians The target radian for the rotation
+     * @param fieldRelative If the swerve should be relative to the robot or the field
+     * @param limited If we are limiting the motors
+     */
     public DriveCommands(SwerveSubsystem swerveSubsystem, DoubleSupplier forward, DoubleSupplier sideways, DoubleSupplier radians, boolean fieldRelative, boolean limited) {
         this.swerveSubsystem = swerveSubsystem;
         this.forward = forward;
@@ -23,6 +32,7 @@ public class DriveCommands extends Command {
         addRequirements(swerveSubsystem);
     }
 
+    // Don't write javadoc for wpilib functions
     @Override
     public void execute() {
         double forwardDesired = MathUtil.applyDeadband(forward.getAsDouble(), 0.06);
