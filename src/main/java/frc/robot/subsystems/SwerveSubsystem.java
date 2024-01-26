@@ -104,6 +104,12 @@ public class SwerveSubsystem extends SubsystemBase {
     private final DoubleEntry frontleftpos = NetworkTableInstance.getDefault()
             .getTable("Swerve").getDoubleTopic("flpos").getEntry(frontLeft.getPosition().angle.getRadians());
 
+    private final DoubleEntry rearrightpos = NetworkTableInstance.getDefault()
+            .getTable("Swerve").getDoubleTopic("rrpos").getEntry(rearRight.getPosition().angle.getRadians());
+
+    private final DoubleEntry rearleftpos = NetworkTableInstance.getDefault()
+            .getTable("Swerve").getDoubleTopic("rlpos").getEntry(rearLeft.getPosition().angle.getRadians());
+
     // Periodic
 
     /**
@@ -133,6 +139,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
         frontrightpos.set(frontRight.getPosition().angle.getRadians());
         frontleftpos.set(frontLeft.getPosition().angle.getRadians());
+        rearrightpos.set(rearRight.getPosition().angle.getRadians());
+        rearleftpos.set(rearLeft.getPosition().angle.getRadians());
 
         // Set Network Tables Telemetry
         actualTelemetry.set(new double[]{
