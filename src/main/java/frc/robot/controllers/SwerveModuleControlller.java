@@ -11,20 +11,19 @@ public class SwerveModuleControlller {
     private final CANSparkMax turningMotor;
     private final RelativeEncoder drivingEncoder;
     private final AbsoluteEncoder turningEncoder;
-    private final SparkMaxPIDController drivingPID;
-    private final SparkMaxPIDController turningPID;
+    private final SparkPIDController drivingPID;
+    private final SparkPIDController turningPID;
     private SwerveModuleState m_desiredState;
-
     private double chassisAngularOffset;
 
     public SwerveModuleControlller(int drivingPort, int turningPort, double chassisAngularOffset) {
 
         this.chassisAngularOffset = chassisAngularOffset;
-        drivingMotor = new CANSparkMax(drivingPort, CANSparkMaxLowLevel.MotorType.kBrushless);
-        turningMotor = new CANSparkMax(turningPort, CANSparkMaxLowLevel.MotorType.kBrushless);
+        drivingMotor = new CANSparkMax(drivingPort, CANSparkLowLevel.MotorType.kBrushless);
+        turningMotor = new CANSparkMax(turningPort, CANSparkLowLevel.MotorType.kBrushless);
 //        drivingEncoder = drivingMotor.getEncoder();
         drivingEncoder = drivingMotor.getEncoder();
-        turningEncoder = turningMotor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle);
+        turningEncoder = turningMotor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
         drivingPID = drivingMotor.getPIDController();
         turningPID = turningMotor.getPIDController();
         m_desiredState = new SwerveModuleState(0.0, new Rotation2d());

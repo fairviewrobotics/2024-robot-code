@@ -15,7 +15,7 @@ public class DrivetrainConstants {
     public static final double rotationalSlewRate = 12.0; // percent/second (1 = 100%) - rotation
 
     public static final double drivingSpeedScalar = -1.0;
-    public static final double rotationSpeedScalar = -2.0;
+    public static final double rotationSpeedScalar = 2.0;
 
     public static final double trackWidth = Units.inchesToMeters(22);
     public static final double wheelBase = Units.inchesToMeters(22.5);
@@ -27,20 +27,20 @@ public class DrivetrainConstants {
             new Translation2d(-wheelBase / 2, -trackWidth / 2)
     );
 
-    public static final double frontLeftChassisAngularOffset = 5.772;
-    public static final double frontRightChassisAngularOffset = 6.099;
-    public static final double rearLeftChassisAngularOffset = 0.871 + Math.PI;
-    public static final double rearRightChassisAngularOffset = 3.650;
+    public static final double frontLeftChassisAngularOffset = -0.57 + Math.PI;
+    public static final double frontRightChassisAngularOffset = 0.874 + Math.PI;
+    public static final double rearLeftChassisAngularOffset = 6.089;
+    public static final double rearRightChassisAngularOffset = 2.428 + Math.PI/2;
 
-    public static final int frontLeftDrivingPort = 3;
-    public static final int rearLeftDrivingPort = 4;
-    public static final int frontRightDrivingPort = 10;
-    public static final int rearRightDrivingPort = 11;
+    public static final int frontLeftDrivingPort = 1;
+    public static final int rearLeftDrivingPort = 5;
+    public static final int frontRightDrivingPort = 3;
+    public static final int rearRightDrivingPort = 7;
 
-    public static final int frontLeftTurningPort = 8;
+    public static final int frontLeftTurningPort = 2;
     public static final int rearLeftTurningPort = 6;
-    public static final int frontRightTurningPort = 18;
-    public static final int rearRightTurningPort = 2;
+    public static final int frontRightTurningPort = 4;
+    public static final int rearRightTurningPort = 8;
 
     public static final boolean gyroReversed = false;
     public static final boolean turningEncoderReversed = true;
