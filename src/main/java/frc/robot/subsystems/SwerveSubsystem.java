@@ -5,7 +5,9 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.DoubleArrayEntry;
@@ -153,14 +155,17 @@ public class SwerveSubsystem extends SubsystemBase {
         });
 
 //         Add vision measurement to odometry
-        Pose2d visionMeasurement = VisionUtils.getBotPoseFieldSpace();
+        Pose3d visionMeasurement = VisionUtils.getBotPoseFieldSpace();
 
         if (visionMeasurement.getY() != 0 || visionMeasurement.getX() != 0) {
-            System.out.println("Distance from tag: " + distanceToTag);
+//            System.out.println("Distance from tag: " + distanceToTag);
 
             distanceToTag = VisionUtils.getDistanceFromTag();
             poseEstimator.addVisionMeasurement(
-                    visionMeasurement,
+                    new Pose2d(
+                            new Translation2d(visionMeasurement.getX(), visionMeasurement.getY()),
+                            new Rotation2d(visionMeasurement.getRotation().toRotation2d().getRadians())
+                    ),
                     Timer.getFPGATimestamp() - (VisionUtils.getLatencyPipeline()/1000.0) - (VisionUtils.getLatencyCapture()/1000.0));
         }
 

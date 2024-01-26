@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AlignCommand;
 import frc.robot.commands.DriveCommands;
 import frc.robot.constants.DrivetrainConstants;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -22,32 +23,37 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-//  public XboxController primaryController = new XboxController(0);
-//  public XboxController secondaryController = new XboxController(1);
+  public XboxController primaryController = new XboxController(0);
+  public XboxController secondaryController = new XboxController(1);
   public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-//    configureButtonBindings();
+    configureButtonBindings();
   }
-//
-//  public void configureButtonBindings(){
-//
-//    swerveSubsystem.setDefaultCommand(new DriveCommands(
-//            swerveSubsystem,
-//            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 4.0,
-//            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 4.0,
-//            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 4.0,
-//            true,
-//            true
-//    ));
-//
-//    new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
-//            new RunCommand(() -> {
-//              swerveSubsystem.zeroGyro();
-//            })
-//    );
-//  }
+
+  public void configureButtonBindings(){
+
+    swerveSubsystem.setDefaultCommand(new DriveCommands(
+            swerveSubsystem,
+            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 4.0,
+            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 4.0,
+            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 4.0,
+            true,
+            true
+    ));
+
+    new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
+            new RunCommand(() -> {
+              swerveSubsystem.zeroGyro();
+            })
+    );
+
+    new JoystickButton(primaryController, XboxController.Button.kX.value).whileTrue(
+            new AlignCommand(swerveSubsystem, 0.0, 1.0, 0)
+    );
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
