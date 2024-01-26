@@ -10,7 +10,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.SetLEDCommand;
 import frc.robot.constants.DrivetrainConstants;
+import frc.robot.constants.LEDConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 
 /**
@@ -46,6 +48,16 @@ public class RobotContainer {
     new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
             new RunCommand(() -> {
               swerveSubsystem.zeroGyro();
+            })
+    );
+    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
+            new RunCommand(() -> {
+              SetLEDCommand.run(LEDConstants.Status.TEST_1);
+            })
+    );
+    new JoystickButton(primaryController, XboxController.Button.kB.value).whileTrue(
+            new RunCommand(() -> {
+              SetLEDCommand.run(LEDConstants.Status.TEST_2);
             })
     );
   }
