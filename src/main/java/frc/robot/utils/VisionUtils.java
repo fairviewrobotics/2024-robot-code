@@ -22,9 +22,10 @@ public class VisionUtils {
         double[] returnedPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry(pose + suffix).getDoubleArray(new double[0]);
         if (returnedPose.length == 0) return new Pose2d();
 
+
         return new Pose2d(
                 new Translation2d(returnedPose[0], returnedPose[1]),
-                new Rotation2d(returnedPose[5])
+                Rotation2d.fromDegrees(returnedPose[5])
         );
     }
 
@@ -34,6 +35,12 @@ public class VisionUtils {
      * */
     public static Pose2d getBotPoseFieldSpace() {
         return getPose("botpose", true);
+    }
+
+    public static double getDistanceFromTag() {
+        double[] returnedPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[0]);
+
+        return -returnedPose[2];
     }
 
     /**

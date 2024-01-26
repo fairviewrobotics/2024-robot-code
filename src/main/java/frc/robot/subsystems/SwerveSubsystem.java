@@ -85,6 +85,7 @@ public class SwerveSubsystem extends SubsystemBase {
     );
      */
 
+    private double distanceToTag = 1.0;
     private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
             DrivetrainConstants.driveKinematics,
             gyro.getRotation2d(),
@@ -97,11 +98,11 @@ public class SwerveSubsystem extends SubsystemBase {
             new Pose2d(),
 
             // How much we trust the wheel measurements
-            VecBuilder.fill(999999, 999999, Units.degreesToRadians(999999)),
+            VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
 
             // How much we trust the vision measurements
             // TODO: Make this scale w/ distance
-            VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)));
+            VecBuilder.fill(0.05 * distanceToTag, 0.05 * distanceToTag, Units.degreesToRadians(30 * (distanceToTag / 5.0))));
 
     // Network Tables Telemetry
     private final DoubleArrayEntry setpointsTelemetry = NetworkTableInstance.getDefault()
@@ -147,18 +148,16 @@ public class SwerveSubsystem extends SubsystemBase {
                 poseEstimator.getEstimatedPosition().getRotation().getRadians()
         });
 
-        // Add vision measurement to odometry
+//         Add vision measurement to odometry
         Pose2d visionMeasurement = VisionUtils.getBotPoseFieldSpace();
 
-        System.out.println("Pose estimator has: " + poseEstimator.getEstimatedPosition());
-
         if (visionMeasurement.getY() != 0 || visionMeasurement.getX() != 0) {
-            System.out.println("Vision saw: " + visionMeasurement);
+            System.out.println("Distance from tag: " + distanceToTag);
+
+            distanceToTag = VisionUtils.getDistanceFromTag();
             poseEstimator.addVisionMeasurement(
                     visionMeasurement,
                     Timer.getFPGATimestamp() - (VisionUtils.getLatencyPipeline()/1000.0) - (VisionUtils.getLatencyCapture()/1000.0));
-        } else {
-//            System.out.println("Vision cannot see target to update odometry!");
         }
 
         frontrightpos.set(frontRight.getPosition().angle.getRadians());

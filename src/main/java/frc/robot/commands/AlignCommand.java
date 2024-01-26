@@ -53,6 +53,7 @@ public class AlignCommand {
             latestZ = botPoseTargetSpace.getY();
             latestRotation = botPoseTargetSpace.getRotation().getRadians();
 
+            System.out.println("--------------------------");
             System.out.println("Latest X: " + latestX + "m");
             System.out.println("Latest Z (Y): " + latestZ + "m");
             System.out.println("Latest Rotation: " + latestRotation + "rad");

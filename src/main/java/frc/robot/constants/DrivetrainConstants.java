@@ -32,15 +32,15 @@ public class DrivetrainConstants {
     public static final double rearLeftChassisAngularOffset = 0.871 + Math.PI;
     public static final double rearRightChassisAngularOffset = 3.650;
 
-    public static final int frontLeftDrivingPort = 3;
-    public static final int rearLeftDrivingPort = 4;
-    public static final int frontRightDrivingPort = 10;
-    public static final int rearRightDrivingPort = 11;
+    public static final int frontLeftDrivingPort = 1;
+    public static final int rearLeftDrivingPort = 2;
+    public static final int frontRightDrivingPort = 3;
+    public static final int rearRightDrivingPort = 4;
 
-    public static final int frontLeftTurningPort = 8;
+    public static final int frontLeftTurningPort = 5;
     public static final int rearLeftTurningPort = 6;
-    public static final int frontRightTurningPort = 18;
-    public static final int rearRightTurningPort = 2;
+    public static final int frontRightTurningPort = 7;
+    public static final int rearRightTurningPort = 8;
 
     public static final boolean gyroReversed = false;
     public static final boolean turningEncoderReversed = true;
