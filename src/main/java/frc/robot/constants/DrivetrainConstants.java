@@ -14,8 +14,8 @@ public class DrivetrainConstants {
     public static final double magnitudeSlewRate = 5.0; // percent/second (1 = 100%) - forward/backward/traverse
     public static final double rotationalSlewRate = 12.0; // percent/second (1 = 100%) - rotation
 
-    public static final double drivingSpeedScalar = -1.0;
-    public static final double rotationSpeedScalar = 2.0;
+    public static final double drivingSpeedScalar = 1.0;
+    public static final double rotationSpeedScalar = -2.0;
 
     public static final double trackWidth = Units.inchesToMeters(18);
     public static final double wheelBase = Units.inchesToMeters(22.5);
@@ -27,10 +27,10 @@ public class DrivetrainConstants {
             new Translation2d(-wheelBase / 2, -trackWidth / 2)
     );
 
-    public static final double frontLeftChassisAngularOffset = -0.57 + Math.PI;
-    public static final double frontRightChassisAngularOffset = 0.874 + Math.PI;
-    public static final double rearLeftChassisAngularOffset = 6.098;
-    public static final double rearRightChassisAngularOffset = 5.52 - Math.PI/2;
+    public static final double frontLeftChassisAngularOffset = -0.57 ;
+    public static final double frontRightChassisAngularOffset = 0.874;
+    public static final double rearLeftChassisAngularOffset = 6.098 + Math.PI;
+    public static final double rearRightChassisAngularOffset = 5.52 + Math.PI/2;
 
     public static final int frontLeftDrivingPort = 1;
     public static final int rearLeftDrivingPort = 5;

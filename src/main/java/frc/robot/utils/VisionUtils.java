@@ -34,18 +34,22 @@ public class VisionUtils {
         return getPose("botpose", true);
     }
 
-    public static double getDistanceFromTag() {
-        double[] returnedPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[0]);
-
-        return -returnedPose[2];
-    }
-
     /**
      * Gets the bots position relative to the target. Used by AlignCommand
      * @return The bots position
      * */
     public static Pose3d getBotPoseTargetSpace() {
         return getPose("botpose_targetspace", false);
+    }
+
+    /**
+     * Gets the distance from the first visible AprilTag
+     * @return The distance (in meters) from the AprilTag
+     */
+    public static double getDistanceFromTag() {
+        Pose3d returnedPose = getBotPoseTargetSpace();
+
+        return -returnedPose.getZ();
     }
 
     /**

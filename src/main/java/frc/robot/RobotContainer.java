@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AlignCommand;
 import frc.robot.commands.DriveCommands;
 import frc.robot.constants.DrivetrainConstants;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -37,9 +36,9 @@ public class RobotContainer {
 
     swerveSubsystem.setDefaultCommand(new DriveCommands(
             swerveSubsystem,
-            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 1.0,
-            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 1.0,
-            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 1.0,
+            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 2.0,
+            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 2.0,
+            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 2.0,
             true,
             true
     ));
@@ -48,10 +47,6 @@ public class RobotContainer {
             new RunCommand(() -> {
               swerveSubsystem.zeroGyro();
             })
-    );
-
-    new JoystickButton(primaryController, XboxController.Button.kX.value).whileTrue(
-            new AlignCommand(swerveSubsystem, 0.0, 1.0, 0)
     );
   }
   /**
