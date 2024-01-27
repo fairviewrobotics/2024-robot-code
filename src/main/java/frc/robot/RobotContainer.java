@@ -36,9 +36,9 @@ public class RobotContainer {
 
     swerveSubsystem.setDefaultCommand(new DriveCommands(
             swerveSubsystem,
-            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 4.0,
-            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 4.0,
-            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 4.0,
+            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 1.0,
+            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 1.0,
+            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 1.0,
             true,
             true
     ));
