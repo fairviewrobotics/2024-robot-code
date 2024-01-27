@@ -25,10 +25,10 @@ public class RobotContainer {
   public XboxController primaryController = new XboxController(0);
   public XboxController secondaryController = new XboxController(1);
   public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-//    configureButtonBindings();
     configureButtonBindings();
   }
 
@@ -36,9 +36,9 @@ public class RobotContainer {
 
     swerveSubsystem.setDefaultCommand(new DriveCommands(
             swerveSubsystem,
-            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 1.0,
-            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 1.0,
-            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 1.0,
+            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 2.0,
+            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 2.0,
+            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 2.0,
             true,
             true
     ));
