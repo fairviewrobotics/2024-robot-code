@@ -53,20 +53,21 @@ public class AlignCommand extends Command {
 
             // Coordinate systems are different
             // Pose2D is X/Y, and Y is equivalent to Z in botPoseTargetSpace
-            latestZ = botPoseTargetSpace.getY();
+            latestZ = -botPoseTargetSpace.getZ();
             latestRotation = botPoseTargetSpace.getRotation().toRotation2d().getRadians();
 
             System.out.println("--------------------------");
-            System.out.println("Latest X: " + latestX + "m");
-            System.out.println("Latest Z (Y): " + latestZ + "m");
-            System.out.println("Latest Rotation: " + latestRotation + "rad");
+            System.out.println("Robot thinks its at: " + botPoseTargetSpace);
+            System.out.println("Robot XPID: " + pidXController.calculate(latestX));
+            System.out.println("Robot ZPID: " + pidZController.calculate(latestZ));
+            System.out.println("Robot RPID: " + pidRotationController.calculate(latestRotation));
 
-//            swerveSubsystem.drive(
-//                    pidXController.calculate(latestX),
-//                    pidZController.calculate(latestZ),
-//                    pidRotationController.calculate(latestRotation),
-//                    false, false
-//            );
+            swerveSubsystem.drive(
+                    pidXController.calculate(latestX) / 4.0,
+                    pidZController.calculate(latestZ) / 4.0,
+                    pidRotationController.calculate(latestRotation) / 4.0,
+                    false, false
+            );
         } else {
             System.out.println("Vision could not find a target!");
         }

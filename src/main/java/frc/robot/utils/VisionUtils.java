@@ -20,7 +20,6 @@ public class VisionUtils {
         double[] returnedPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry(pose + suffix).getDoubleArray(new double[0]);
         if (returnedPose.length == 0) return new Pose3d();
 
-
         return new Pose3d(
                 new Translation3d(returnedPose[0], returnedPose[1], returnedPose[2]),
                 new Rotation3d(0.0, 0.0, Math.toRadians(returnedPose[5]))
