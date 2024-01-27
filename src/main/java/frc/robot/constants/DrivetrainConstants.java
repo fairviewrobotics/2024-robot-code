@@ -17,7 +17,7 @@ public class DrivetrainConstants {
     public static final double drivingSpeedScalar = -1.0;
     public static final double rotationSpeedScalar = 2.0;
 
-    public static final double trackWidth = Units.inchesToMeters(22);
+    public static final double trackWidth = Units.inchesToMeters(18);
     public static final double wheelBase = Units.inchesToMeters(22.5);
 
     public static final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics(
@@ -29,8 +29,8 @@ public class DrivetrainConstants {
 
     public static final double frontLeftChassisAngularOffset = -0.57 + Math.PI;
     public static final double frontRightChassisAngularOffset = 0.874 + Math.PI;
-    public static final double rearLeftChassisAngularOffset = 6.089;
-    public static final double rearRightChassisAngularOffset = 2.428 + Math.PI/2;
+    public static final double rearLeftChassisAngularOffset = 6.098;
+    public static final double rearRightChassisAngularOffset = 5.52 - Math.PI/2;
 
     public static final int frontLeftDrivingPort = 1;
     public static final int rearLeftDrivingPort = 5;
