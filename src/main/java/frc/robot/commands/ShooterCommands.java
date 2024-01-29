@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkLowLevel;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -20,11 +22,14 @@ public class ShooterCommands extends Command {
     @Override
     public void execute() {
         shooterSubsystem.percentShoot(topPercent, bottomPercent);
+        //System.out.println(topPercent);
     }
 
     @Override
     public void end(boolean interrupted) {
         shooterSubsystem.voltageShoot(0.0, 0.0);
+        System.out.println(topPercent + bottomPercent);
+
     }
 
 }

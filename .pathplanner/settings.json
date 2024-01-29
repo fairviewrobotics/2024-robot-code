@@ -4,10 +4,11 @@
   "holonomicMode": true,
   "pathFolders": [
     "Leave",
-    "Place from Bottom",
+    "Aadit",
     "Pickup from Bottom",
     "Pickup from Middle",
     "Pickup from Top",
+    "Place from Bottom",
     "Place from Middle",
     "Place from Top",
     "Score Amp",

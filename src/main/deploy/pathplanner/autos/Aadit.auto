@@ -1,0 +1,61 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1Back"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1Front"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2Front"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3Front"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

@@ -1,0 +1,65 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.8644029202120904,
+        "y": 7.072338426903417
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.8728401275161932,
+        "y": 7.061878889382779
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.892559397423483,
+        "y": 6.536020943135637
+      },
+      "prevControl": {
+        "x": 5.070186869602984,
+        "y": 6.940578943736126
+      },
+      "nextControl": {
+        "x": 6.883334391668783,
+        "y": 6.048619021066167
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.270757596202692,
+        "y": 4.108155599123698
+      },
+      "prevControl": {
+        "x": 7.983903213900178,
+        "y": 5.178723711939612
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -73.29380883276308,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Aadit",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}

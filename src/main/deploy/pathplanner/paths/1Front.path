@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.8644029202120904,
+        "y": 7.072338426903417
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.8728401275161932,
+        "y": 7.061878889382779
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.26537124753937,
+        "y": 7.450384944715202
+      },
+      "prevControl": {
+        "x": 7.641431650050801,
+        "y": 7.433349051268414
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.5897219565828061,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Aadit",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
