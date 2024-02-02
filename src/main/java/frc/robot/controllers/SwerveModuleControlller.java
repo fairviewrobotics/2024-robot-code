@@ -12,10 +12,9 @@ public class SwerveModuleControlller {
     private final CANSparkMax turningMotor;
     private final RelativeEncoder drivingEncoder;
     private final AbsoluteEncoder turningEncoder;
-    private final SparkMaxPIDController drivingPID;
-    private final SparkMaxPIDController turningPID;
+    private final SparkPIDController drivingPID;
+    private final SparkPIDController turningPID;
     private SwerveModuleState m_desiredState;
-
     private double chassisAngularOffset;
 
     /**
