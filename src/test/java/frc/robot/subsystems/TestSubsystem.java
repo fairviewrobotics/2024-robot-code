@@ -16,7 +16,7 @@ public class TestSubsystem extends SubsystemBase {
 
     @Test
     public void fail() {
-        int x = 5;
+        int x = 6;
         int y = 4;
         assertEquals(10, x + y);
     }
