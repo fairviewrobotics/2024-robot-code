@@ -13,6 +13,11 @@ public class AmpCommand extends Command {
     private boolean reversed = false;
 
 
+    /**
+     * Moves the indexer to the amp
+     * @param indexerSubsystem The instance of {@link IndexerSubsystem}
+     * @param controller An instance of {@link XboxController}
+     */
     public AmpCommand(IndexerSubsystem indexerSubsystem, XboxController controller) {
         this.indexerSubsystem = indexerSubsystem;
         this.xboxController = controller;

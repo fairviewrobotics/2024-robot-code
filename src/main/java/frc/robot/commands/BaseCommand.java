@@ -6,6 +6,10 @@ import frc.robot.subsystems.IndexerSubsystem;
 public class BaseCommand extends Command {
     private final IndexerSubsystem indexerSubsystem;
 
+    /**
+     * Reset indexer to default pos
+     * @param indexerSubsystem Instance of {@link IndexerSubsystem}
+     */
     public BaseCommand(IndexerSubsystem indexerSubsystem) {
         this.indexerSubsystem = indexerSubsystem;
     }
