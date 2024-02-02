@@ -15,7 +15,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final PIDController shooterPID = new PIDController(ShooterConstants.shooterP,ShooterConstants.shooterI, ShooterConstants.shooterD);
 
     /**
-     *
+     * Set the target speed for the shooter
      * @param speed target speed in rpm
      */
     public void setSpeed(double speed) {

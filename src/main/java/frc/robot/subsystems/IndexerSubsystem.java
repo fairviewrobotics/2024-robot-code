@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IndexerConstants;
@@ -33,6 +32,9 @@ public class IndexerSubsystem extends SubsystemBase {
             IndexerConstants.indexerTrapezoidProfile
     );
 
+    /**
+     * Indexer subsystem for everything indexer related
+     */
     public IndexerSubsystem() {
         indexerPID.setTolerance(0.2);
     }
@@ -52,6 +54,12 @@ public class IndexerSubsystem extends SubsystemBase {
         }
     }
 
+    /**
+     * Rotate one of the motors with a percent value
+     * @param motor The target motor.
+     * @param percent Percent of motor speed (0.0-1.0)
+     */
+
     public void rotateMotorPercent(IndexerMotors motor, double percent) {
         switch (motor) {
             case WHEEL_1 -> wheel1.set(percent);
@@ -61,32 +69,55 @@ public class IndexerSubsystem extends SubsystemBase {
         }
     }
 
-    public void rotateAllWheels(double percent) {
+    /**
+     * Rotates all wheels with a percent value
+     * @param percent Percent of motor speed to rotate
+     */
+    public void rotateAllWheelsPercent(double percent) {
         rotateMotorPercent(IndexerMotors.WHEEL_1, percent);
         rotateMotorPercent(IndexerMotors.WHEEL_2, percent);
         rotateMotorPercent(IndexerMotors.WHEEL_3, percent);
 
     }
 
-
+    /**
+     * Rotate the indexer to a certain position
+     * @param angle The target angle for the indexer
+     */
     public void moveIndexerToPos(double angle) {
         rotateMotorVolts(IndexerMotors.INDEXER_POS,
                 indexerPID.calculate(indexerEncoder.getPosition(), angle) + IndexerConstants.indexerFF
                         .calculate(indexerEncoder.getPosition(), 0.0));
     }
 
+    /**
+     * Check if the indexer is at its goal
+     * @return If the indexer is at its goal
+     */
     public boolean isIndexerRotated() {
         return indexerPID.atGoal();
     }
 
+    /**
+     * Check if center limebreak is seeing something
+     * @return If the limebreak is seeing something
+     */
     public boolean getCenterLimebreak() {
         return this.centerLimebreak.get();
     }
 
+    /**
+     * Check if top limebreak is seeing something
+     * @return If the limebreak is seeing something
+     */
     public boolean getTopLimebreak() {
         return this.topLimebreak.get();
     }
 
+    /**
+     * Get the current angle of the indexer
+     * @return The current angle of the indexer
+     */
     public double getIndexerAngle() {
         return this.indexerEncoder.getPosition();
     }

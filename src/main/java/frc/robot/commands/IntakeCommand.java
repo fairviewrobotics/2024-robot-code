@@ -9,6 +9,11 @@ public class IntakeCommand extends Command {
 
     private final IndexerSubsystem indexerSubsystem;
 
+    /**
+     * Command to run the intake
+     * @param intakeSubsystem The instance of {@link IntakeSubsystem}
+     * @param indexerSubsystem The instance of {@link IndexerSubsystem} (needed for limebreak detection to stop intake motor)
+     */
     public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
         this.indexerSubsystem = indexerSubsystem;
@@ -20,16 +25,16 @@ public class IntakeCommand extends Command {
     public void execute() {
         if (!indexerSubsystem.getCenterLimebreak()) {
             intakeSubsystem.setSpeed(.9);
-            indexerSubsystem.rotateAllWheels(.9);
+            indexerSubsystem.rotateAllWheelsPercent(.9);
         } else {
             intakeSubsystem.setSpeed(0);
-            indexerSubsystem.rotateAllWheels(0);
+            indexerSubsystem.rotateAllWheelsPercent(0);
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         intakeSubsystem.setSpeed(0);
-        indexerSubsystem.rotateAllWheels(0);
+        indexerSubsystem.rotateAllWheelsPercent(0);
     }
 }

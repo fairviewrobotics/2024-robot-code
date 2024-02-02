@@ -6,6 +6,10 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class SpinUpCommand extends Command {
     private final ShooterSubsystem shooterSubsystem;
 
+    /**
+     * Command to spin up the shooter
+     * @param shooterSubsystem Instance of {@link ShooterSubsystem}
+     */
     public SpinUpCommand(ShooterSubsystem shooterSubsystem) {
         this.shooterSubsystem = shooterSubsystem;
 
