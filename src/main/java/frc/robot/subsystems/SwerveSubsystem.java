@@ -151,9 +151,7 @@ public class SwerveSubsystem extends SubsystemBase {
                         0.4,
                         new ReplanningConfig()
                 ),
-                () -> {
-                    return DriverStation.getAlliance().filter(value -> value == DriverStation.Alliance.Red).isPresent();
-                },
+                () -> DriverStation.getAlliance().filter(value -> value == DriverStation.Alliance.Red).isPresent(),
                 this
 
         );
