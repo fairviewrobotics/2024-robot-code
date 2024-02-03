@@ -7,7 +7,7 @@ import edu.wpi.first.math.util.Units;
 
 public class DrivetrainConstants {
 
-    public static final double maxSpeedMetersPerSecond = 4.0;
+    public static final double maxSpeedMetersPerSecond = 1.0;
     public static final double maxAngularSpeed = Math.PI;
 
     public static final double directionSlewRate = 4.0; // rads/sec - turning
@@ -27,20 +27,20 @@ public class DrivetrainConstants {
             new Translation2d(-wheelBase / 2, -trackWidth / 2)
     );
 
-    public static final double frontLeftChassisAngularOffset = -0.57 ;
-    public static final double frontRightChassisAngularOffset = 0.874;
-    public static final double rearLeftChassisAngularOffset = 6.098 + Math.PI;
-    public static final double rearRightChassisAngularOffset = 5.52 + Math.PI/2;
+    public static final double frontLeftChassisAngularOffset = 5.516 + Math.PI/2 + Math.PI;
+    public static final double frontRightChassisAngularOffset = 6.107;
+    public static final double rearLeftChassisAngularOffset = 0.876 + Math.PI;
+    public static final double rearRightChassisAngularOffset = 1.036 + Math.PI/2;
 
-    public static final int frontLeftDrivingPort = 1;
+    public static final int frontLeftDrivingPort = 7;
     public static final int rearLeftDrivingPort = 5;
     public static final int frontRightDrivingPort = 3;
-    public static final int rearRightDrivingPort = 7;
+    public static final int rearRightDrivingPort = 1;
 
-    public static final int frontLeftTurningPort = 2;
+    public static final int frontLeftTurningPort = 8;
     public static final int rearLeftTurningPort = 6;
     public static final int frontRightTurningPort = 4;
-    public static final int rearRightTurningPort = 8;
+    public static final int rearRightTurningPort = 2;
 
     public static final boolean gyroReversed = false;
     public static final boolean turningEncoderReversed = true;
