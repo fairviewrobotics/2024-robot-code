@@ -145,13 +145,13 @@ public class SwerveSubsystem extends SubsystemBase {
                 this::getRobotRelativeSpeeds,
                 this::driveRobotRelative,
                 new HolonomicPathFollowerConfig(
-                        new PIDConstants(5.0, 0.0, 0.0),
-                        new PIDConstants(5.0, 0.0, 0.0),
-                        4.5,
+                        new PIDConstants(0.2, 0.0, 0.0),
+                        new PIDConstants(0.2, 0.0, 0.0),
                         0.4,
+                         Units.inchesToMeters(14.4),
                         new ReplanningConfig()
                 ),
-                () -> DriverStation.getAlliance().filter(value -> value == DriverStation.Alliance.Red).isPresent(),
+            () -> DriverStation.getAlliance().filter(value -> value != DriverStation.Alliance.Red).isPresent(),
                 this
 
         );

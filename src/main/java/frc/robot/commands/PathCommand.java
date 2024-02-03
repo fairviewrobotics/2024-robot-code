@@ -30,7 +30,7 @@ public class PathCommand extends Command {
                 new Rotation2d()
         );
 
-        Pose2d endPos = new Pose2d(startPos.getTranslation().plus(new Translation2d(2, 2)), new Rotation2d());
+        Pose2d endPos = new Pose2d(startPos.getTranslation().plus(new Translation2d(0.5, 1)), new Rotation2d());
 
         List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(startPos, endPos);
         path = new PathPlannerPath(
@@ -43,10 +43,13 @@ public class PathCommand extends Command {
         );
 
         path.preventFlipping = true;
+
+        AutoBuilder.followPath(path).schedule();
+
     }
 
-    @Override
-    public void execute() {
-        AutoBuilder.followPath(path).schedule();
-    }
+//    @Override
+//    public void execute() {
+//    }
+
 }
