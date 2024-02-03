@@ -76,6 +76,10 @@ public class RobotContainer {
             new AmpCommand(indexerSubsystem, secondaryController)
     );
 
+    new JoystickButton(secondaryController, XboxController.Button.kBack.value).whileTrue(
+            new AmdCommand2(indexerSubsystem, secondaryController) // This is kinda fucked
+    );
+
     new JoystickButton(secondaryController, XboxController.Axis.kLeftTrigger.value).whileTrue(
             new IntakeCommand(intakeSubsystem, indexerSubsystem)
     );
