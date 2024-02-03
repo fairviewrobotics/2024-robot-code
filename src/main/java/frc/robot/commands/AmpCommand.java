@@ -27,32 +27,24 @@ public class AmpCommand extends Command {
     @Override
     public void execute() {
         if (indexerSubsystem.getCenterLimebreak() && !reversed) {
-            indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_1, 0.5);
-            indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_2, 0.5);
-            indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_3, 0.5);
+            indexerSubsystem.rotateAllWheelsPercent(0.5);
         } else {
             reversed = true;
         }
 
         if (reversed && !indexerSubsystem.getTopLimebreak()) {
-            indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_1, -0.5);
-            indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_2, -0.5);
-            indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_3, -0.5);
+            indexerSubsystem.rotateAllWheelsPercent(-0.5);
         } else if (reversed && indexerSubsystem.getTopLimebreak()) {
             indexerSubsystem.moveIndexerToPos(160);
         }
 
         if (xboxController.getRightBumper() && indexerSubsystem.isIndexerRotated()) {
-            indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_1, -0.5);
-            indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_2, -0.5);
-            indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_3, -0.5);
+            indexerSubsystem.rotateAllWheelsPercent(-0.5);
         }
     }
 
     @Override
     public void end(boolean interrupted) {
-        indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_1, 0.0);
-        indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_2, 0.0);
-        indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_3, 0.0);
+        indexerSubsystem.rotateAllWheelsPercent(0);
     }
 }
