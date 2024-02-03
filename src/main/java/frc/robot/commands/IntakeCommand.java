@@ -23,7 +23,7 @@ public class IntakeCommand extends Command {
 
     @Override
     public void execute() {
-        if (!indexerSubsystem.getCenterLimebreak()) {
+        if (!indexerSubsystem.isCenter()) {
             intakeSubsystem.setSpeed(.9);
             indexerSubsystem.rotateAllWheelsPercent(.9);
         } else {

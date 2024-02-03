@@ -26,15 +26,15 @@ public class AmpCommand extends Command {
 
     @Override
     public void execute() {
-        if (indexerSubsystem.getCenterLimebreak() && !reversed) {
+        if (indexerSubsystem.isCenter() && !reversed) {
             indexerSubsystem.rotateAllWheelsPercent(0.5);
         } else {
             reversed = true;
         }
 
-        if (reversed && !indexerSubsystem.getTopLimebreak()) {
+        if (reversed && !indexerSubsystem.isTop()) {
             indexerSubsystem.rotateAllWheelsPercent(-0.5);
-        } else if (reversed && indexerSubsystem.getTopLimebreak()) {
+        } else if (reversed && indexerSubsystem.isTop()) {
             indexerSubsystem.moveIndexerToPos(160);
         }
 

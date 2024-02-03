@@ -50,7 +50,7 @@ public class IndexerSubsystem extends SubsystemBase {
             case WHEEL_1 -> wheel1.setVoltage(volts);
             case WHEEL_2 -> wheel2.setVoltage(volts);
             case WHEEL_3 -> wheel3.setVoltage(volts);
-            case INDEXER_POS -> indexerRotate.setVoltage(volts);
+            case INDEXER_ROTATE -> indexerRotate.setVoltage(volts);
         }
     }
 
@@ -65,7 +65,7 @@ public class IndexerSubsystem extends SubsystemBase {
             case WHEEL_1 -> wheel1.set(percent);
             case WHEEL_2 -> wheel2.set(percent);
             case WHEEL_3 -> wheel3.set(percent);
-            case INDEXER_POS -> indexerRotate.set(percent);
+            case INDEXER_ROTATE -> indexerRotate.set(percent);
         }
     }
 
@@ -85,7 +85,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @param angle The target angle for the indexer
      */
     public void moveIndexerToPos(double angle) {
-        rotateMotorVolts(IndexerMotors.INDEXER_POS,
+        rotateMotorVolts(IndexerMotors.INDEXER_ROTATE,
                 indexerPID.calculate(indexerEncoder.getPosition(), angle) + IndexerConstants.indexerFF
                         .calculate(indexerEncoder.getPosition(), 0.0));
     }
@@ -102,7 +102,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * Check if center limebreak is seeing something
      * @return If the limebreak is seeing something
      */
-    public boolean getCenterLimebreak() {
+    public boolean isCenter() {
         return this.centerLimebreak.get();
     }
 
@@ -110,7 +110,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * Check if top limebreak is seeing something
      * @return If the limebreak is seeing something
      */
-    public boolean getTopLimebreak() {
+    public boolean isTop() {
         return this.topLimebreak.get();
     }
 
@@ -128,7 +128,7 @@ public class IndexerSubsystem extends SubsystemBase {
         WHEEL_1,
         WHEEL_2,
         WHEEL_3,
-        INDEXER_POS
+        INDEXER_ROTATE
     }
 
 

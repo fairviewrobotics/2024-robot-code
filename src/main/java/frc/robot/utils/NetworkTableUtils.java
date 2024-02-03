@@ -8,7 +8,7 @@ public class NetworkTableUtils {
 
     /**
      * This class is a utility class for interfacing with network tables
-     * @param table The string ID for a network tables table
+     * @param table The string ID for a network table
      */
     public NetworkTableUtils(String table) {
         this.table = NetworkTableInstance.getDefault().getTable(table);

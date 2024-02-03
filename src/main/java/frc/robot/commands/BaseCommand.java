@@ -19,12 +19,12 @@ public class BaseCommand extends Command {
         if (indexerSubsystem.getIndexerAngle() > Math.PI/6) {
             indexerSubsystem.moveIndexerToPos(10);
         } else {
-            indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_POS, 0.0);
+            indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_ROTATE, 0.0);
         }
     }
 
     @Override
     public void end(boolean interrupted) {
-        indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_POS, 0.0);
+        indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_ROTATE, 0.0);
     }
 }
