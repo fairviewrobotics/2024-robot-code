@@ -1,6 +1,10 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -15,6 +19,7 @@ import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.WPIUtilJNI;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DrivetrainConstants;
@@ -23,6 +28,8 @@ import frc.robot.utils.NetworkTableUtils;
 import frc.robot.utils.SwerveUtils;
 
 import frc.robot.utils.VisionUtils;
+
+import java.util.Optional;
 
 public class SwerveSubsystem extends SubsystemBase {
     // Defining Motors
@@ -63,17 +70,13 @@ public class SwerveSubsystem extends SubsystemBase {
     private final SlewRateLimiter rotationLimiter = new SlewRateLimiter(DrivetrainConstants.rotationalSlewRate);
 
     // Slew Rate Time
-
     private double previousTime = WPIUtilJNI.now() * 1e-6;
 
     // Limelight Network Table
     // Relay data to driverstation using network table
     private final NetworkTableUtils limelightTable = new NetworkTableUtils("limelight");
 
-    // Convert Gyro angle to radians(-2pi to 2pi)
-    public double heading() {
-        return Units.degreesToRadians(-1 * (gyro.getAngle() + 180.0) % 360.0);
-    }
+    // Convert Gyro angle to radians(-2pi to 2pi
 
     // Swerve Odometry
     /*
@@ -90,6 +93,7 @@ public class SwerveSubsystem extends SubsystemBase {
      */
 
     private double distanceToTag = 1.0;
+
     private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
             DrivetrainConstants.driveKinematics,
             gyro.getRotation2d(),
@@ -132,6 +136,27 @@ public class SwerveSubsystem extends SubsystemBase {
 
     private final DoubleEntry rearleftpos = NetworkTableInstance.getDefault()
             .getTable("Swerve").getDoubleTopic("rlpos").getEntry(rearLeft.getPosition().angle.getRadians());
+
+    public SwerveSubsystem() {
+        // PathPlanner stuff
+        AutoBuilder.configureHolonomic(
+                this::getPose,
+                this::resetOdometry,
+                this::getRobotRelativeSpeeds,
+                this::driveRobotRelative,
+                new HolonomicPathFollowerConfig(
+                        new PIDConstants(0.2, 0.0, 0.0),
+                        new PIDConstants(0.2, 0.0, 0.0),
+                        0.4,
+                         Units.inchesToMeters(14.4),
+                        new ReplanningConfig()
+                ),
+            () -> DriverStation.getAlliance().filter(value -> value != DriverStation.Alliance.Red).isPresent(),
+                this
+
+        );
+    }
+
 
     // Periodic
     @Override
@@ -211,11 +236,50 @@ public class SwerveSubsystem extends SubsystemBase {
     /**
      * Get robot's pose.
      */
-    private Pose2d getPose() {
+    public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
     }
 
-    // Reset odometry function
+    /**
+     * Get current heading of robot
+     * @return Heading of robot in radians
+     */
+    public double heading() {
+        return Units.degreesToRadians(-1 * (gyro.getAngle() + 180.0) % 360.0);
+    }
+
+    /**
+     * Get the pose estimator instance
+     * @return The current pose estimator
+     */
+    public SwerveDrivePoseEstimator getPoseEstimator() {
+        return this.poseEstimator;
+    }
+
+    /**
+     * Drive the robot with {@link ChassisSpeeds} (mainly used for path planner)
+     * @param chassisSpeeds {@link ChassisSpeeds} object
+     */
+    public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
+        double forward = -chassisSpeeds.vxMetersPerSecond;
+        double sideways = chassisSpeeds.vyMetersPerSecond;
+        double rotation = chassisSpeeds.omegaRadiansPerSecond;
+
+        drive(forward, sideways, rotation, true, true);
+    }
+
+    /**
+     * Get the speed of the chassis relative to the robot
+     * @return {@link ChassisSpeeds} of the current robots speed
+     */
+    public ChassisSpeeds getRobotRelativeSpeeds() {
+        return DrivetrainConstants.driveKinematics.toChassisSpeeds(
+                frontLeft.getState(),
+                frontRight.getState(),
+                rearLeft.getState(),
+                rearRight.getState()
+        );
+    }
 
     /**
      * @param pose Reset robot's position.
