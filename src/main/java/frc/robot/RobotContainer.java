@@ -15,8 +15,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommands;
+
 import frc.robot.commands.PathCommand;
 import frc.robot.constants.DrivetrainConstants;
+import frc.robot.constants.LEDConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 
 /**
@@ -57,9 +59,10 @@ public class RobotContainer {
             })
     );
 
+
     new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
             new PathCommand(swerveSubsystem)
-    );
+
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
