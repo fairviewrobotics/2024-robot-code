@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 
-public class AmdCommand2 extends Command {
+public class AmpCommand2 extends Command {
     private final IndexerSubsystem indexerSubsystem;
 
     private final XboxController xboxController;
@@ -13,7 +13,7 @@ public class AmdCommand2 extends Command {
      * Second Amp command to go straight to amp position from intake, we cannot change to speaker mode if we use this command
      * @param indexerSubsystem Instance of {@link IndexerSubsystem}
      */
-    public AmdCommand2(IndexerSubsystem indexerSubsystem, XboxController xboxController) {
+    public AmpCommand2(IndexerSubsystem indexerSubsystem, XboxController xboxController) {
         this.indexerSubsystem = indexerSubsystem;
         this.xboxController = xboxController;
 

@@ -16,8 +16,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-import javax.swing.*;
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -77,7 +75,7 @@ public class RobotContainer {
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kBack.value).whileTrue(
-            new AmdCommand2(indexerSubsystem, secondaryController) // This is kinda fucked
+            new AmpCommand2(indexerSubsystem, secondaryController) // This is kinda fucked
     );
 
     new JoystickButton(secondaryController, XboxController.Axis.kLeftTrigger.value).whileTrue(
