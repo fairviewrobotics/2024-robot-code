@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.9,
-  "robotLength": 0.9,
+  "robotWidth": 0.6,
+  "robotLength": 0.66,
   "holonomicMode": true,
   "pathFolders": [
     "Leave",
@@ -24,8 +24,8 @@
     "Score Three",
     "Score Two"
   ],
-  "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 3.0,
+  "defaultMaxVel": 4.5,
+  "defaultMaxAccel": 4.5,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "maxModuleSpeed": 4.5
