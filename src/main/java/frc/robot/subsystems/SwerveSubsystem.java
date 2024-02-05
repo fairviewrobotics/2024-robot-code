@@ -5,24 +5,31 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.DoubleArrayEntry;
 import edu.wpi.first.networktables.DoubleEntry;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.DrivetrainConstants;;
+import frc.robot.constants.DrivetrainConstants;
 import frc.robot.controllers.SwerveModuleControlller;
 import frc.robot.utils.NetworkTableUtils;
 import frc.robot.utils.SwerveUtils;
-import java.util.Arrays;
 
+import frc.robot.utils.VisionUtils;
+
+import java.util.Optional;
 
 public class SwerveSubsystem extends SubsystemBase {
     // Defining Motors
@@ -63,50 +70,16 @@ public class SwerveSubsystem extends SubsystemBase {
     private final SlewRateLimiter rotationLimiter = new SlewRateLimiter(DrivetrainConstants.rotationalSlewRate);
 
     // Slew Rate Time
-
     private double previousTime = WPIUtilJNI.now() * 1e-6;
 
     // Limelight Network Table
     // Relay data to driverstation using network table
     private final NetworkTableUtils limelightTable = new NetworkTableUtils("limelight");
 
-    public SwerveSubsystem() {
-
-        AutoBuilder.configureHolonomic(
-                this::getPose, // Robot pose supplier
-                this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
-                this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-                new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                        new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                        new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-                        4.5, // Max module speed, in m/s
-                        0.4, // Drive base radius in meters. Distance from robot center to furthest module.
-                        new ReplanningConfig() // Default path replanning config. See the API for the options here
-                ),
-                () -> {
-                    // Boolean supplier that controls when the path will be mirrored for the red alliance
-                    // This will flip the path being followed to the red side of the field.
-                    // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-                    var alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
-                },
-                this // Reference to this subsystem to set requirements
-        );
-    }
-
-    // Convert Gyro angle to radians (-2pi to 2pi)
-    // Makes some robot direction math stuff easier than degrees?
-    public double heading() {
-        return Units.degreesToRadians(-1 * (gyro.getAngle() + 180.0) % 360.0);
-    }
+    // Convert Gyro angle to radians(-2pi to 2pi
 
     // Swerve Odometry
-    // Tracks changes in robot position?
+    /*
     private final SwerveDriveOdometry odometry = new SwerveDriveOdometry(
             DrivetrainConstants.driveKinematics,
             Rotation2d.fromRadians(heading()),
@@ -117,6 +90,26 @@ public class SwerveSubsystem extends SubsystemBase {
                     rearRight.getPosition()
             }
     );
+     */
+
+    private double distanceToTag = 1.0;
+
+    private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
+            DrivetrainConstants.driveKinematics,
+            gyro.getRotation2d(),
+            new SwerveModulePosition[] {
+                    frontLeft.getPosition(),
+                    frontRight.getPosition(),
+                    rearLeft.getPosition(),
+                    rearRight.getPosition()
+            },
+            new Pose2d(),
+
+            // How much we trust the wheel measurements
+            VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(10)),
+
+            // How much we trust the vision measurements
+            VecBuilder.fill(0.05 * distanceToTag, 0.05 * distanceToTag, Units.degreesToRadians(30 * (distanceToTag / 5.0))));
 
     // Network Tables Telemetry
     private final DoubleArrayEntry setpointsTelemetry = NetworkTableInstance.getDefault()
@@ -125,9 +118,9 @@ public class SwerveSubsystem extends SubsystemBase {
             .getTable("Swerve").getDoubleArrayTopic("Actual").getEntry(new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
 
     private final DoubleArrayEntry poseTelemetry = NetworkTableInstance.getDefault()
-            .getTable("Swerve").getDoubleArrayTopic("Pose").getEntry(new double[]{odometry.getPoseMeters().getTranslation().getX(),
-                    odometry.getPoseMeters().getTranslation().getY(),
-                    odometry.getPoseMeters().getRotation().getRadians()});
+            .getTable("Swerve").getDoubleArrayTopic("Pose").getEntry(new double[]{poseEstimator.getEstimatedPosition().getTranslation().getX(),
+                    poseEstimator.getEstimatedPosition().getTranslation().getY(),
+                    poseEstimator.getEstimatedPosition().getRotation().getRadians()});
 
     private final DoubleEntry gyroHeading = NetworkTableInstance.getDefault()
             .getTable("Swerve").getDoubleTopic("GyroHeading").getEntry(heading());
@@ -138,16 +131,38 @@ public class SwerveSubsystem extends SubsystemBase {
     private final DoubleEntry frontleftpos = NetworkTableInstance.getDefault()
             .getTable("Swerve").getDoubleTopic("flpos").getEntry(frontLeft.getPosition().angle.getRadians());
 
+    private final DoubleEntry rearrightpos = NetworkTableInstance.getDefault()
+            .getTable("Swerve").getDoubleTopic("rrpos").getEntry(rearRight.getPosition().angle.getRadians());
+
+    private final DoubleEntry rearleftpos = NetworkTableInstance.getDefault()
+            .getTable("Swerve").getDoubleTopic("rlpos").getEntry(rearLeft.getPosition().angle.getRadians());
+
+    public SwerveSubsystem() {
+        // PathPlanner stuff
+        AutoBuilder.configureHolonomic(
+                this::getPose,
+                this::resetOdometry,
+                this::getRobotRelativeSpeeds,
+                this::driveRobotRelative,
+                new HolonomicPathFollowerConfig(
+                        new PIDConstants(0.2, 0.0, 0.0),
+                        new PIDConstants(0.2, 0.0, 0.0),
+                        0.4,
+                         Units.inchesToMeters(14.4),
+                        new ReplanningConfig()
+                ),
+            () -> DriverStation.getAlliance().filter(value -> value != DriverStation.Alliance.Red).isPresent(),
+                this
+
+        );
+    }
+
+
     // Periodic
-
-    /**
-    * Periodically updates swerve module position.
-     **/
-
     @Override
     public void periodic() {
-        // Update odometry
-        odometry.update(
+        // Add wheel measurements to odometry
+        poseEstimator.update(
                 Rotation2d.fromRadians(heading()),
                 new SwerveModulePosition[]{
                         frontLeft.getPosition(),
@@ -157,16 +172,42 @@ public class SwerveSubsystem extends SubsystemBase {
                 }
         );
 
-        // Coen's Vision Lineup Thing:
-        // find the botpose network table id thingy, construct a pose2d, feed it into resetodometry
-//        double[] botpose = limelightTable.getDoubleArray("botpose", new double[0]);
-//        if (!Arrays.equals(botpose, new double[0])) {
-//            Pose2d pose = new Pose2d(new Translation2d(botpose[0], botpose[2]), new Rotation2d(botpose[3], botpose[5]));
-//            resetOdometry(pose);
-//        }
+        // Add vision measurement to odometry
+        Pose3d visionMeasurement = VisionUtils.getBotPoseFieldSpace();
+
+        if (visionMeasurement.getY() != 0 || visionMeasurement.getX() != 0) {
+            distanceToTag = VisionUtils.getDistanceFromTag();
+
+            double visionTrust = 0.075 * Math.pow(distanceToTag, 2.5);
+            double rotationVisionTrust = Math.pow(distanceToTag, 2.5) / 5;
+
+            if (distanceToTag < 3) {
+                poseEstimator.setVisionMeasurementStdDevs(
+                        VecBuilder.fill(
+                                visionTrust,
+                                visionTrust,
+                                Units.degreesToRadians(20 * ((distanceToTag < 1.5) ? rotationVisionTrust : 9999))
+                        )
+                );
+            } else {
+                // If we're 3 meters away, limelight is too unreliable. Don't trust it!
+                poseEstimator.setVisionMeasurementStdDevs(
+                        VecBuilder.fill(9999, 9999, 9999)
+                );
+            }
+
+            poseEstimator.addVisionMeasurement(
+                    new Pose2d(
+                            new Translation2d(visionMeasurement.getX(), visionMeasurement.getY()),
+                            new Rotation2d(visionMeasurement.getRotation().toRotation2d().getRadians())
+                    ),
+                    Timer.getFPGATimestamp() - (VisionUtils.getLatencyPipeline()/1000.0) - (VisionUtils.getLatencyCapture()/1000.0));
+        }
 
         frontrightpos.set(frontRight.getPosition().angle.getRadians());
         frontleftpos.set(frontLeft.getPosition().angle.getRadians());
+        rearrightpos.set(rearRight.getPosition().angle.getRadians());
+        rearleftpos.set(rearLeft.getPosition().angle.getRadians());
 
         // Set Network Tables Telemetry
         actualTelemetry.set(new double[]{
@@ -182,9 +223,9 @@ public class SwerveSubsystem extends SubsystemBase {
                 rearRight.getDesiredState().angle.getRadians(), rearRight.getDesiredState().speedMetersPerSecond});
 
         poseTelemetry.set(new double[]{
-                odometry.getPoseMeters().getTranslation().getX(),
-                odometry.getPoseMeters().getTranslation().getY(),
-                odometry.getPoseMeters().getRotation().getRadians()
+                poseEstimator.getEstimatedPosition().getTranslation().getX(),
+                poseEstimator.getEstimatedPosition().getTranslation().getY(),
+                poseEstimator.getEstimatedPosition().getRotation().getRadians()
         });
 
         gyroHeading.set(heading());
@@ -195,21 +236,57 @@ public class SwerveSubsystem extends SubsystemBase {
     /**
      * Get robot's pose.
      */
-
-    private Pose2d getPose() {
-        return odometry.getPoseMeters();
+    public Pose2d getPose() {
+        return poseEstimator.getEstimatedPosition();
     }
 
-    //Useful functions for testing, calibration:
+    /**
+     * Get current heading of robot
+     * @return Heading of robot in radians
+     */
+    public double heading() {
+        return Units.degreesToRadians(-1 * (gyro.getAngle() + 180.0) % 360.0);
+    }
 
-    // Reset odometry function
+    /**
+     * Get the pose estimator instance
+     * @return The current pose estimator
+     */
+    public SwerveDrivePoseEstimator getPoseEstimator() {
+        return this.poseEstimator;
+    }
+
+    /**
+     * Drive the robot with {@link ChassisSpeeds} (mainly used for path planner)
+     * @param chassisSpeeds {@link ChassisSpeeds} object
+     */
+    public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
+        double forward = -chassisSpeeds.vxMetersPerSecond;
+        double sideways = chassisSpeeds.vyMetersPerSecond;
+        double rotation = chassisSpeeds.omegaRadiansPerSecond;
+
+        drive(forward, sideways, rotation, true, true);
+    }
+
+    /**
+     * Get the speed of the chassis relative to the robot
+     * @return {@link ChassisSpeeds} of the current robots speed
+     */
+    public ChassisSpeeds getRobotRelativeSpeeds() {
+        return DrivetrainConstants.driveKinematics.toChassisSpeeds(
+                frontLeft.getState(),
+                frontRight.getState(),
+                rearLeft.getState(),
+                rearRight.getState()
+        );
+    }
 
     /**
      * @param pose Reset robot's position.
      */
 
     private void resetOdometry(Pose2d pose) {
-        odometry.resetPosition(
+        poseEstimator.resetPosition(
                 Rotation2d.fromRadians(heading()),
                 new SwerveModulePosition[]{
                         frontLeft.getPosition(),
@@ -320,24 +397,6 @@ public class SwerveSubsystem extends SubsystemBase {
         rearRight.setDesiredState(swerveModuleStates[3]);
     }
 
-    public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
-        double forwardSpeed = -chassisSpeeds.vxMetersPerSecond;
-        double sidewaysSpeed = chassisSpeeds.vyMetersPerSecond;
-        double rotation = chassisSpeeds.omegaRadiansPerSecond;
-
-        drive(forwardSpeed, sidewaysSpeed, rotation, true, true);
-    }
-
-    public ChassisSpeeds getRobotRelativeSpeeds() {
-        return DrivetrainConstants.driveKinematics.toChassisSpeeds(
-                frontLeft.getState(),
-                frontRight.getState(),
-                rearLeft.getState(),
-                rearRight.getState()
-        );
-
-    }
-
     // Sets the wheels to an X configuration
 
     /**
@@ -406,10 +465,4 @@ public class SwerveSubsystem extends SubsystemBase {
         rearLeft.resetEncoders();
         rearRight.resetEncoders();
     }
-
-
-
-
-
-
 }
