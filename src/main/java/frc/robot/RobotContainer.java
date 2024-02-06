@@ -62,6 +62,7 @@ public class RobotContainer {
 
     new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
             new PathCommand(swerveSubsystem)
+    );
 
   }
   /**
