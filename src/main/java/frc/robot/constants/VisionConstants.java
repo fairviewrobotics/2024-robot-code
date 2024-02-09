@@ -17,4 +17,9 @@ public class VisionConstants {
     public static final double alignRotationI = 0;
     public static final double alignRotationD = 0;
     public static final TrapezoidProfile.Constraints alignRotationConstraints = new TrapezoidProfile.Constraints(0.75, 0.5);
+
+    public static final double rotateToNoteP = 0.6;
+    public static final double rotateToNoteI = 0;
+    public static final double rotateToNoteD = 0;
+    public static final TrapezoidProfile.Constraints rotateToNoteConstraints = new TrapezoidProfile.Constraints(Math.PI, Math.PI/2);
 }

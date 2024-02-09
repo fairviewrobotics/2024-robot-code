@@ -5,8 +5,17 @@ import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class VisionUtils {
+
+    //Note Vision Limelight
+    public static NetworkTable noteLimelight = NetworkTableInstance.getDefault().getTable("limelight-note");
+    public static double height = 0.4;
+    public static double forward = 0.4;
+
     /**
      * Gets the requested entry from as well as optionally adding the alliance. Used internally
      * @param pose The pose you want as defined by https://docs.limelightvision.io/docs/docs-limelight/apis/complete-networktables-api#apriltag-and-3d-data
@@ -67,4 +76,33 @@ public class VisionUtils {
     public static double getLatencyCapture() {
         return NetworkTableInstance.getDefault().getTable("limelight").getEntry("cl").getDouble(0.0);
     }
+
+    public static double getNoteTX(){
+        return noteLimelight.getEntry("tx").getDouble(0.0);
+    }
+
+    public static double getNoteTY() {
+        return noteLimelight.getEntry("ty").getDouble(0.0);
+    }
+
+    public static double getNoteTV(){
+        return noteLimelight.getEntry("tv").getDouble(0.0);
+    }
+
+    public static double YDistanceToNote() {
+        return height * Math.tan(getNoteTY());
+    }
+
+    public static double XDistanceToNote() {
+        return YDistanceToNote() * Math.tan(getNoteTX());
+    }
+
+    public static double distanceToNote() {
+        return Math.sqrt(
+                Math.pow(YDistanceToNote(), 2)
+                + Math.pow(XDistanceToNote(), 2)
+        );
+    }
+
+
 }
