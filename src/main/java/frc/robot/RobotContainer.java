@@ -4,13 +4,21 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommands;
+
+import frc.robot.commands.PathCommand;
 import frc.robot.constants.DrivetrainConstants;
+import frc.robot.constants.LEDConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 
 /**
@@ -25,6 +33,8 @@ public class RobotContainer {
   public XboxController primaryController = new XboxController(0);
   public XboxController secondaryController = new XboxController(1);
   public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -48,6 +58,11 @@ public class RobotContainer {
               swerveSubsystem.zeroGyro();
             })
     );
+
+
+    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
+            new PathCommand(swerveSubsystem)
+
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

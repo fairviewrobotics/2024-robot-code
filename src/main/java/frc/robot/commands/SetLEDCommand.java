@@ -5,7 +5,7 @@ import frc.robot.constants.LEDConstants;
 import frc.robot.subsystems.LEDSubsystem;
 
 public class SetLEDCommand extends Command {
-    private static LEDSubsystem subsystem = new LEDSubsystem();
+    private static LEDSubsystem subsystem = new LEDSubsystem;
     public SetLEDCommand(LEDSubsystem subsystem) {
         this.subsystem = subsystem;
     }
