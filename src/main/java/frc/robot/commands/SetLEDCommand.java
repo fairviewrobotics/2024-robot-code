@@ -5,15 +5,19 @@ import frc.robot.constants.LEDConstants;
 import frc.robot.subsystems.LEDSubsystem;
 
 public class SetLEDCommand extends Command {
-    private static LEDSubsystem subsystem;
-    public SetLEDCommand(LEDSubsystem subsystem) {
+    private final LEDSubsystem subsystem;
+
+    private final LEDConstants.Status status;
+    public SetLEDCommand(LEDSubsystem subsystem, LEDConstants.Status status) {
+        this.status = status;
+
         this.subsystem = subsystem;
         addRequirements(subsystem);
     }
 
-    //@Override
-    public static void run(LEDConstants.Status currentStatus) {
-        switch(currentStatus) {
+    @Override
+    public void execute() {
+        switch(status) {
             case TEST_1:
                 //Confetti
                 subsystem.setLED(-0.87);
@@ -22,4 +26,5 @@ public class SetLEDCommand extends Command {
                 subsystem.setLED(-0.71);
         }
     }
+
 }
