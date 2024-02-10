@@ -21,6 +21,7 @@ public class PathCommand extends Command {
 
     public PathCommand(SwerveSubsystem swerveSubsystem) {
         this.swerveSubsystem = swerveSubsystem;
+        addRequirements(swerveSubsystem);
     }
 
     @Override

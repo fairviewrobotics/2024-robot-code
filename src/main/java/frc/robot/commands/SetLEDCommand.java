@@ -10,7 +10,9 @@ public class SetLEDCommand extends Command {
     private final LEDConstants.Status status;
     public SetLEDCommand(LEDSubsystem subsystem, LEDConstants.Status status) {
         this.status = status;
+
         this.subsystem = subsystem;
+        addRequirements(subsystem);
     }
 
     @Override

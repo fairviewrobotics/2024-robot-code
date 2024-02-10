@@ -4,27 +4,15 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.*;
 import frc.robot.commands.*;
-import frc.robot.constants.DrivetrainConstants;
-import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.commands.DriveCommands;
+import frc.robot.constants.*;
 
-import frc.robot.commands.PathCommand;
-import frc.robot.constants.DrivetrainConstants;
-import frc.robot.constants.LEDConstants;
-import frc.robot.subsystems.SwerveSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -67,9 +55,7 @@ public class RobotContainer {
 
     // Primary controller
     new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
-            new RunCommand(() -> {
-              swerveSubsystem.zeroGyro();
-            })
+            new RunCommand(() -> swerveSubsystem.zeroGyro())
     );
 
     // Secondary controller
@@ -85,7 +71,7 @@ public class RobotContainer {
             new AmpCommand(indexerSubsystem, secondaryController)
     );
 
-    new JoystickButton(secondaryController, XboxController.Button.kBack.value).whileTrue(
+    new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
             new AmpCommand2(indexerSubsystem, secondaryController) // This is kinda fucked
     );
 
