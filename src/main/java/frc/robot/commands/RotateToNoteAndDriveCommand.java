@@ -14,6 +14,8 @@ public class RotateToNoteAndDriveCommand extends Command {
     private final DoubleSupplier forward;
     private final DoubleSupplier sideways;
     private final DoubleSupplier radians;
+    private final double visionRotation;
+
     private final ProfiledPIDController rotationPID = new ProfiledPIDController(
             VisionConstants.rotateToNoteP,
             VisionConstants.rotateToNoteI,
@@ -32,8 +34,11 @@ public class RotateToNoteAndDriveCommand extends Command {
 
         rotationPID.setTolerance(0.05);
 
+        this.visionRotation = rotationPID.calculate(VisionUtils.getNoteTX(), 0.0);
+
         addRequirements(swerveSubsystem);
     }
+
 
     @Override
     public void execute() {
@@ -41,7 +46,7 @@ public class RotateToNoteAndDriveCommand extends Command {
             swerveSubsystem.drive(
                     forward.getAsDouble(),
                     sideways.getAsDouble(),
-                    rotationPID.calculate(VisionUtils.getNoteTX(), 0.0),
+                    visionRotation,
                     true,
                     true
             );
@@ -59,13 +64,6 @@ public class RotateToNoteAndDriveCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        swerveSubsystem.drive(
-            0.0,
-            0.0,
-            0.0,
-            false,
-            false
-        );
         controller.setRumble(GenericHID.RumbleType.kBothRumble, 0.0);
     }
 }
