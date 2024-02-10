@@ -119,9 +119,31 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Swerve drive function.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#driveRobotRelative(edu.wpi.first.math.kinematics.ChassisSpeeds)" class="member-name-link">driveRobotRelative</a><wbr>(edu.wpi.first.math.kinematics.ChassisSpeeds&nbsp;chassisSpeeds)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Drive the robot with <code>ChassisSpeeds</code> (mainly used for path planner)</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Pose2d</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPose()" class="member-name-link">getPose</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get robot's pose.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.estimator.SwerveDrivePoseEstimator</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPoseEstimator()" class="member-name-link">getPoseEstimator</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get the pose estimator instance</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.kinematics.ChassisSpeeds</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRobotRelativeSpeeds()" class="member-name-link">getRobotRelativeSpeeds</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get the speed of the chassis relative to the robot</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#heading()" class="member-name-link">heading</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get current heading of robot</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -193,15 +215,60 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="heading()">
-<h3>heading</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">heading</span>()</div>
-</section>
-</li>
-<li>
 <section class="detail" id="periodic()">
 <h3>periodic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">periodic</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPose()">
+<h3>getPose</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose2d</span>&nbsp;<span class="element-name">getPose</span>()</div>
+<div class="block">Get robot's pose.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="heading()">
+<h3>heading</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">heading</span>()</div>
+<div class="block">Get current heading of robot</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Heading of robot in radians</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPoseEstimator()">
+<h3>getPoseEstimator</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.estimator.SwerveDrivePoseEstimator</span>&nbsp;<span class="element-name">getPoseEstimator</span>()</div>
+<div class="block">Get the pose estimator instance</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The current pose estimator</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="driveRobotRelative(edu.wpi.first.math.kinematics.ChassisSpeeds)">
+<h3>driveRobotRelative</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">driveRobotRelative</span><wbr><span class="parameters">(edu.wpi.first.math.kinematics.ChassisSpeeds&nbsp;chassisSpeeds)</span></div>
+<div class="block">Drive the robot with <code>ChassisSpeeds</code> (mainly used for path planner)</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>chassisSpeeds</code> - <code>ChassisSpeeds</code> object</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRobotRelativeSpeeds()">
+<h3>getRobotRelativeSpeeds</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.kinematics.ChassisSpeeds</span>&nbsp;<span class="element-name">getRobotRelativeSpeeds</span>()</div>
+<div class="block">Get the speed of the chassis relative to the robot</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>ChassisSpeeds</code> of the current robots speed</dd>
+</dl>
 </section>
 </li>
 <li>
