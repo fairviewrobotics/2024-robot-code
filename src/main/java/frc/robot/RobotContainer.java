@@ -64,7 +64,7 @@ public class RobotContainer {
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kRightBumper.value).whileTrue(
-            new SpeakerCommand(indexerSubsystem)
+            new SpeakerCommand(indexerSubsystem, swerveSubsystem.getFieldRelativeChassisSpeeds(), swerveSubsystem.getPose())
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kLeftBumper.value).whileTrue(
@@ -82,6 +82,7 @@ public class RobotContainer {
     new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
             new PathCommand(swerveSubsystem)
     );
+
 
   }
   /**

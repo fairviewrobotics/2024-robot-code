@@ -282,6 +282,15 @@ public class SwerveSubsystem extends SubsystemBase {
 
     }
 
+    public ChassisSpeeds getFieldRelativeChassisSpeeds() {
+        return new ChassisSpeeds(
+                getRobotRelativeSpeeds().vxMetersPerSecond * getPose().getRotation().getCos()
+                        - getRobotRelativeSpeeds().vyMetersPerSecond * getPose().getRotation().getSin(),
+                getRobotRelativeSpeeds().vyMetersPerSecond * getPose().getRotation().getCos()
+                        + getRobotRelativeSpeeds().vxMetersPerSecond * getPose().getRotation().getSin(),
+                getRobotRelativeSpeeds().omegaRadiansPerSecond);
+    }
+
     /**
      * @param pose Reset robot's position.
      */
