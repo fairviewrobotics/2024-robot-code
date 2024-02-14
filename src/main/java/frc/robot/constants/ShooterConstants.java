@@ -6,13 +6,18 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
 public class ShooterConstants {
-    public static final double shooterP = 0.02;
-    public static final double shooterI = 0.01;
+
+    public static final int shooterTopMotorID = 13;
+    public static final int shooterBottomMotorID = 14;
+
+//    public static final double shooterP = 0.02;
+    public static final double shooterP = 0.0;
+    public static final double shooterI = 0.0;
     public static final double shooterD = 0.0;
 
-    public static final SimpleMotorFeedforward shooterFF = new SimpleMotorFeedforward(0.05, 0.0179, 0.0008);
+    public static final SimpleMotorFeedforward shooterFF = new SimpleMotorFeedforward(0.25, 0.0175, 0.0);
 
-    public static final double shooterRPM = 6000;
+    public static final double shooterRPM = 6500;
     public static final double shooterWheelDiameterInches = 4.0;
     public static final double shooterWheelDiameterMeters = shooterWheelDiameterInches/39.37;
     public static final double shooterAngle = Math.toRadians(45);

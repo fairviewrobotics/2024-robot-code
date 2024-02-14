@@ -24,12 +24,12 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   public XboxController primaryController = new XboxController(0);
-  public XboxController secondaryController = new XboxController(1);
-  public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+//  public XboxController secondaryController = new XboxController(1);
+//  public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
-  public IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
-
-  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+//  public IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
+//
+//  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   public ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
@@ -42,46 +42,56 @@ public class RobotContainer {
 
   public void configureButtonBindings(){
 
-    swerveSubsystem.setDefaultCommand(new DriveCommands(
-            swerveSubsystem,
-            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 2.0,
-            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 2.0,
-            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 2.0,
-            true,
-            true
-    ));
+//    swerveSubsystem.setDefaultCommand(new DriveCommands(
+//            swerveSubsystem,
+//            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 2.0,
+//            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 2.0,
+//            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 2.0,
+//            true,
+//            true
+//    ));
+//
+//    indexerSubsystem.setDefaultCommand(new BaseCommand(indexerSubsystem));
+//
+//    // Primary controller
+//    new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
+//            new RunCommand(() -> swerveSubsystem.zeroGyro())
+//    );
+//
+//    // Secondary controller
+//    new JoystickButton(secondaryController, XboxController.Axis.kRightTrigger.value).whileTrue(
+//            new SpinUpCommand(shooterSubsystem)
+//    );
+//
+//    new JoystickButton(secondaryController, XboxController.Button.kRightBumper.value).whileTrue(
+//            new SpeakerCommand(indexerSubsystem, swerveSubsystem.getFieldRelativeChassisSpeeds(), swerveSubsystem.getPose())
+//    );
+//
+//    new JoystickButton(secondaryController, XboxController.Button.kLeftBumper.value).whileTrue(
+//            new AmpCommand(indexerSubsystem, secondaryController)
+//    );
+//
+//    new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
+//            new AmpCommand2(indexerSubsystem, secondaryController) // This is kinda fucked
+//    );
+//
+//    new JoystickButton(secondaryController, XboxController.Axis.kLeftTrigger.value).whileTrue(
+//            new IntakeCommand(intakeSubsystem, indexerSubsystem)
+//    );
+//
+//    new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
+//            new PathCommand(swerveSubsystem)
+//    );
 
-    indexerSubsystem.setDefaultCommand(new BaseCommand(indexerSubsystem));
-
-    // Primary controller
-    new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
-            new RunCommand(() -> swerveSubsystem.zeroGyro())
-    );
-
-    // Secondary controller
-    new JoystickButton(secondaryController, XboxController.Axis.kRightTrigger.value).whileTrue(
+    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
             new SpinUpCommand(shooterSubsystem)
     );
 
-    new JoystickButton(secondaryController, XboxController.Button.kRightBumper.value).whileTrue(
-            new SpeakerCommand(indexerSubsystem, swerveSubsystem.getFieldRelativeChassisSpeeds(), swerveSubsystem.getPose())
+    new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
+            new RunCommand(() -> shooterSubsystem.setVoltage(0.2,0.2))
     );
 
-    new JoystickButton(secondaryController, XboxController.Button.kLeftBumper.value).whileTrue(
-            new AmpCommand(indexerSubsystem, secondaryController)
-    );
 
-    new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
-            new AmpCommand2(indexerSubsystem, secondaryController) // This is kinda fucked
-    );
-
-    new JoystickButton(secondaryController, XboxController.Axis.kLeftTrigger.value).whileTrue(
-            new IntakeCommand(intakeSubsystem, indexerSubsystem)
-    );
-
-    new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
-            new PathCommand(swerveSubsystem)
-    );
 
 
   }

@@ -74,7 +74,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // Limelight Network Table
     // Relay data to driverstation using network table
-    private final NetworkTableUtils limelightTable = new NetworkTableUtils("limelight");
+
 
     // Convert Gyro angle to radians(-2pi to 2pi
 
