@@ -3,11 +3,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 
 public class IntakeCommand extends Command {
     private final IntakeSubsystem intakeSubsystem;
 
     private final IndexerSubsystem indexerSubsystem;
+
+    private LEDSubsystem ledSubsystem;
 
     /**
      * Command to run the intake
@@ -26,6 +29,7 @@ public class IntakeCommand extends Command {
         if (!indexerSubsystem.isCenter()) {
             intakeSubsystem.setSpeed(.9);
             indexerSubsystem.rotateAllWheelsPercent(.9);
+            ledSubsystem.setLED(-0.71);
         } else {
             intakeSubsystem.setSpeed(0);
             indexerSubsystem.rotateAllWheelsPercent(0);
