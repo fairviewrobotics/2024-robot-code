@@ -74,7 +74,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // Limelight Network Table
     // Relay data to driverstation using network table
-    private final NetworkTableUtils limelightTable = new NetworkTableUtils("limelight");
+
 
     // Convert Gyro angle to radians(-2pi to 2pi
 
@@ -280,6 +280,15 @@ public class SwerveSubsystem extends SubsystemBase {
                 rearRight.getState()
         );
 
+    }
+
+    public ChassisSpeeds getFieldRelativeChassisSpeeds() {
+        return new ChassisSpeeds(
+                getRobotRelativeSpeeds().vxMetersPerSecond * getPose().getRotation().getCos()
+                        - getRobotRelativeSpeeds().vyMetersPerSecond * getPose().getRotation().getSin(),
+                getRobotRelativeSpeeds().vyMetersPerSecond * getPose().getRotation().getCos()
+                        + getRobotRelativeSpeeds().vxMetersPerSecond * getPose().getRotation().getSin(),
+                getRobotRelativeSpeeds().omegaRadiansPerSecond);
     }
 
     /**

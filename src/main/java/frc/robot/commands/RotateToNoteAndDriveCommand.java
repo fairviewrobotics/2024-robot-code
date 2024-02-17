@@ -17,14 +17,22 @@ public class RotateToNoteAndDriveCommand extends Command {
     private final double visionRotation;
 
     private final ProfiledPIDController rotationPID = new ProfiledPIDController(
-            VisionConstants.rotateToNoteP,
-            VisionConstants.rotateToNoteI,
-            VisionConstants.rotateToNoteD,
-            VisionConstants.rotateToNoteConstraints
+            VisionConstants.rotateToP,
+            VisionConstants.rotateToI,
+            VisionConstants.rotateToD,
+            VisionConstants.rotateToConstraints
     );
 
     private final XboxController controller;
 
+    /**
+     * Rotates the robot to face the speaker, while still allowing the driver to control forward and backward movement
+     * @param swerveSubsystem The instance of {@link SwerveSubsystem}
+     * @param controller The instance of {@link XboxController}
+     * @param forward The desired forward percentage of the robot
+     * @param sideways The desired sideways percentage of the robot
+     * @param radians The desired rotation speed of the robot
+     */
     public RotateToNoteAndDriveCommand(SwerveSubsystem swerveSubsystem, XboxController controller, DoubleSupplier forward, DoubleSupplier sideways, DoubleSupplier radians) {
         this.swerveSubsystem = swerveSubsystem;
         this.forward = forward;
@@ -50,6 +58,7 @@ public class RotateToNoteAndDriveCommand extends Command {
                     true,
                     true
             );
+            controller.setRumble(GenericHID.RumbleType.kBothRumble, 0.0);
         } else {
             swerveSubsystem.drive(
                     forward.getAsDouble(),
