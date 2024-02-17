@@ -79,9 +79,9 @@ public class RobotContainer {
             new IntakeCommand(intakeSubsystem, indexerSubsystem)
     );
 
-    new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
-            new PathCommand(swerveSubsystem)
-    );
+//    new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
+//            new PathCommand(swerveSubsystem)
+//    );
 
   }
   /**
