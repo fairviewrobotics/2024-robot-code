@@ -7,6 +7,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShooterConstants;
 import frc.robot.utils.MathUtils;
@@ -25,6 +26,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final DoubleEntry ShooterSpeedBottom = NetworkTableInstance.getDefault()
             .getTable("Shooter").getDoubleTopic("Bottom").getEntry(0.0);
+
 
     public ShooterSubsystem(){
         topMotor.setInverted(true);
@@ -60,6 +62,13 @@ public class ShooterSubsystem extends SubsystemBase {
         topMotor.setVoltage(v1);
         bottomMotor.setVoltage(v2);
     }
+
+    /**
+     * Check if center limebreak is seeing something
+     * @return If the limebreak is seeing something
+     */
+
+
 
     @Override
     public void periodic() {

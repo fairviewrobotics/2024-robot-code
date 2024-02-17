@@ -14,7 +14,7 @@ public class AmpCommand extends Command {
 
 
     /**
-     * Moves the indexer to the amp
+     * Moves the indexer to the amp and scores
      * @param indexerSubsystem The instance of {@link IndexerSubsystem}
      * @param controller An instance of {@link XboxController}
      */

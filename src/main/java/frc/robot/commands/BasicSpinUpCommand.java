@@ -4,14 +4,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class SpinUpCommand extends Command {
+public class BasicSpinUpCommand extends Command {
     private final ShooterSubsystem shooterSubsystem;
 
     /**
      * Command to spin up the shooter
      * @param shooterSubsystem Instance of {@link ShooterSubsystem}
      */
-    public SpinUpCommand(ShooterSubsystem shooterSubsystem) {
+    public BasicSpinUpCommand(ShooterSubsystem shooterSubsystem) {
         this.shooterSubsystem = shooterSubsystem;
 
         addRequirements(shooterSubsystem);
