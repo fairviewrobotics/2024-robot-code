@@ -312,6 +312,21 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public void drive(double forwardMetersPerSecond, double sidewaysMetersPerSecond, double radiansPerSecond, boolean fieldRelative, boolean rateLimit) {
         // forward is xspeed, sideways is yspeed
+//        double xSpeedCommanded = 0.0;
+//        double ySpeedCommanded = 0.0;
+//
+//        double[] areaPoints = {0.0, 0.0, 2.0, 2.0};
+//        double poseX = getPose().getX();
+//        double poseY = getPose().getY();
+//
+//        boolean aboveMinPoints = poseX >= areaPoints[0] && poseY >= areaPoints[1];
+//        boolean belowMaxPoints = poseX <= areaPoints[2] && poseY <= areaPoints[3];
+//
+//        if (aboveMinPoints && belowMaxPoints) {
+//            xSpeedCommanded /= 2;
+//            ySpeedCommanded /= 2;
+//        }
+
         double xSpeedCommanded;
         double ySpeedCommanded;
 

@@ -27,7 +27,7 @@ public class DrivetrainConstants {
             new Translation2d(-wheelBase / 2, -trackWidth / 2)
     );
 
-    public static final double frontLeftChassisAngularOffset = 5.516 + Math.PI/2 + Math.PI;
+    public static final double frontLeftChassisAngularOffset = 5.516 - Math.PI/2;
     public static final double frontRightChassisAngularOffset = 6.107;
     public static final double rearLeftChassisAngularOffset = 0.876 + Math.PI;
     public static final double rearRightChassisAngularOffset = 1.036 + Math.PI/2;
@@ -45,13 +45,17 @@ public class DrivetrainConstants {
     public static final boolean gyroReversed = false;
     public static final boolean turningEncoderReversed = true;
 
-    public static final int drivingMotorPinionTeeth = 13;
+    public static final int drivingMotorPinionTeeth = 16;
 
-    public static final double freeSpeedRpm = 5676.0;
+    public static final int spurGearTeeth = 20;
+
+
+    //Free Speed RPM: 6784
+    public static final double freeSpeedRpm = 6784.0;
     public static final double drivingMotorFreeSpeedRps = freeSpeedRpm / 60.0;
     public static final double wheelDiameterMeters = 0.0762;
     public static final double wheelCircumferenceMeters = wheelDiameterMeters * Math.PI;
-    public static final double drivingMotorReduction = (45.0 * 22) / (drivingMotorPinionTeeth * 15);
+    public static final double drivingMotorReduction = (45.0 * spurGearTeeth) / (drivingMotorPinionTeeth * 15);
     public static final double driveWheelFreeSpeedRps = (drivingMotorFreeSpeedRps * wheelCircumferenceMeters) / drivingMotorReduction;
 
     public static final double drivingEncoderPositionFactor = (wheelDiameterMeters * Math.PI) / drivingMotorReduction;

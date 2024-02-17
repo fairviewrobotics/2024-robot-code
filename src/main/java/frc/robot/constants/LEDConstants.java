@@ -7,7 +7,12 @@ public class LEDConstants {
         MOVING,
         VISION_MOVING,
         TEST_1,
-        TEST_2
+        TEST_2,
+        SHOOTING,
+        INTAKINGINGING,
+        SPINUP,
+        CLIMBER_EXTENDING,
+        CLIMBER_RETRACTING
     }
 
 
