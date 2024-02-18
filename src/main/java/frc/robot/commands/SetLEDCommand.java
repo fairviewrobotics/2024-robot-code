@@ -27,7 +27,7 @@ public class SetLEDCommand extends Command {
             case IDLE:
                 //Solid, Gold
                 subsystem.setLED(0.69);
-            case INTAKINGINGING:
+            case INTAKING:
                 //Solid, Aqua
                 subsystem.setLED(0.81);
             case MOVING:
