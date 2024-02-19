@@ -1,7 +1,7 @@
 package frc.robot.constants;
 
 public class LEDConstants {
-    public static enum Status {
+    public enum Status {
         DISABLED,
         IDLE,
         MOVING,
@@ -9,7 +9,7 @@ public class LEDConstants {
         TEST_1,
         TEST_2,
         SHOOTING,
-        INTAKINGINGING,
+        INTAKING,
         SPINUP,
         CLIMBER_EXTENDING,
         CLIMBER_RETRACTING

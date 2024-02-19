@@ -4,14 +4,17 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
-import frc.robot.constants.*;
 
 
 /**
@@ -23,21 +26,37 @@ import frc.robot.constants.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  public XboxController primaryController = new XboxController(0);
-//  public XboxController secondaryController = new XboxController(1);
-//  public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  private final SendableChooser<Command> autoChooser;
 
-//  public IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
-//
-//  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public XboxController primaryController = new XboxController(0);
+  public XboxController secondaryController = new XboxController(1);
+  public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+
+  public IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
+
+  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   public ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+
+
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    autoChooser = AutoBuilder.buildAutoChooser();
+
+    // Another option that allows you to specify the default auto by its name
+    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
+    NamedCommands.registerCommand("AutoSpinUp", new BasicSpinUpCommand(shooterSubsystem));
+    NamedCommands.registerCommand("BaseCommand", new BaseCommand(indexerSubsystem));
+    NamedCommands.registerCommand("IntakeCommand", new IntakeCommand(intakeSubsystem, indexerSubsystem));
+    NamedCommands.registerCommand("AutoRotateAndShoot", new AutoRotateToSpeakerAndShoot(swerveSubsystem, indexerSubsystem));
   }
 
   public void configureButtonBindings(){
@@ -82,9 +101,9 @@ public class RobotContainer {
 //    new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
 //            new PathCommand(swerveSubsystem)
 //    );
-
+//
     new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
-            new SpinUpCommand(shooterSubsystem)
+            new BasicSpinUpCommand(shooterSubsystem)
     );
 
     new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
@@ -102,6 +121,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new InstantCommand();
+//    return new InstantCommand();
+    return autoChooser.getSelected();
   }
 }
