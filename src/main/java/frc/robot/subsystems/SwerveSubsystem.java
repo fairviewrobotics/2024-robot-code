@@ -74,7 +74,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // Limelight Network Table
     // Relay data to driverstation using network table
-    private final NetworkTableUtils limelightTable = new NetworkTableUtils("limelight");
+
 
     // Convert Gyro angle to radians(-2pi to 2pi
 
@@ -282,6 +282,15 @@ public class SwerveSubsystem extends SubsystemBase {
 
     }
 
+    public ChassisSpeeds getFieldRelativeChassisSpeeds() {
+        return new ChassisSpeeds(
+                getRobotRelativeSpeeds().vxMetersPerSecond * getPose().getRotation().getCos()
+                        - getRobotRelativeSpeeds().vyMetersPerSecond * getPose().getRotation().getSin(),
+                getRobotRelativeSpeeds().vyMetersPerSecond * getPose().getRotation().getCos()
+                        + getRobotRelativeSpeeds().vxMetersPerSecond * getPose().getRotation().getSin(),
+                getRobotRelativeSpeeds().omegaRadiansPerSecond);
+    }
+
     /**
      * @param pose Reset robot's position.
      */
@@ -312,6 +321,21 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public void drive(double forwardMetersPerSecond, double sidewaysMetersPerSecond, double radiansPerSecond, boolean fieldRelative, boolean rateLimit) {
         // forward is xspeed, sideways is yspeed
+//        double xSpeedCommanded = 0.0;
+//        double ySpeedCommanded = 0.0;
+//
+//        double[] areaPoints = {0.0, 0.0, 2.0, 2.0};
+//        double poseX = getPose().getX();
+//        double poseY = getPose().getY();
+//
+//        boolean aboveMinPoints = poseX >= areaPoints[0] && poseY >= areaPoints[1];
+//        boolean belowMaxPoints = poseX <= areaPoints[2] && poseY <= areaPoints[3];
+//
+//        if (aboveMinPoints && belowMaxPoints) {
+//            xSpeedCommanded /= 2;
+//            ySpeedCommanded /= 2;
+//        }
+
         double xSpeedCommanded;
         double ySpeedCommanded;
 
