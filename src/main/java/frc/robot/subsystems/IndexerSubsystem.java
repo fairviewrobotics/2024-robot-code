@@ -10,12 +10,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IndexerConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
-    private final CANSparkMax wheel1 = new CANSparkMax(IndexerConstants.wheel1ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax topWheel = new CANSparkMax(IndexerConstants.wheel1ID, CANSparkLowLevel.MotorType.kBrushless);
 
 
-    private final CANSparkMax wheel2 = new CANSparkMax(IndexerConstants.wheel2ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax bottomWheels = new CANSparkMax(IndexerConstants.wheel2ID, CANSparkLowLevel.MotorType.kBrushless);
 
-    private final CANSparkMax wheel3 = new CANSparkMax(IndexerConstants.wheel3ID, CANSparkLowLevel.MotorType.kBrushless);
 
     private final CANSparkMax indexerRotate = new CANSparkMax(IndexerConstants.indexerRotateID, CANSparkLowLevel.MotorType.kBrushless);
 
@@ -47,9 +46,8 @@ public class IndexerSubsystem extends SubsystemBase {
      */
     public void rotateMotorVolts(IndexerMotors motor, double volts) {
         switch (motor) {
-            case WHEEL_1 -> wheel1.setVoltage(volts);
-            case WHEEL_2 -> wheel2.setVoltage(volts);
-            case WHEEL_3 -> wheel3.setVoltage(volts);
+            case TOP_WHEEL -> topWheel.setVoltage(volts);
+            case BOTTOM_WHEELS -> bottomWheels.setVoltage(volts);
             case INDEXER_ROTATE -> indexerRotate.setVoltage(volts);
         }
     }
@@ -62,9 +60,8 @@ public class IndexerSubsystem extends SubsystemBase {
 
     public void rotateMotorPercent(IndexerMotors motor, double percent) {
         switch (motor) {
-            case WHEEL_1 -> wheel1.set(percent);
-            case WHEEL_2 -> wheel2.set(percent);
-            case WHEEL_3 -> wheel3.set(percent);
+            case TOP_WHEEL -> topWheel.set(percent);
+            case BOTTOM_WHEELS -> bottomWheels.set(percent);
             case INDEXER_ROTATE -> indexerRotate.set(percent);
         }
     }
@@ -74,10 +71,18 @@ public class IndexerSubsystem extends SubsystemBase {
      * @param percent Percent of motor speed to rotate
      */
     public void rotateAllWheelsPercent(double percent) {
-        rotateMotorPercent(IndexerMotors.WHEEL_1, percent);
-        rotateMotorPercent(IndexerMotors.WHEEL_2, percent);
-        rotateMotorPercent(IndexerMotors.WHEEL_3, percent);
+        rotateMotorPercent(IndexerMotors.TOP_WHEEL, percent);
+        rotateMotorPercent(IndexerMotors.BOTTOM_WHEELS, percent);
 
+    }
+
+    /**
+     * Rotate all indexer motors with a certain voltage
+     * @param volts Volts to rotate motor with
+     */
+    public void rotateAllWheelsVolts(double volts) {
+        rotateMotorVolts(IndexerMotors.TOP_WHEEL, volts);
+        rotateMotorVolts(IndexerMotors.BOTTOM_WHEELS, volts);
     }
 
     /**
@@ -86,8 +91,8 @@ public class IndexerSubsystem extends SubsystemBase {
      */
     public void moveIndexerToPos(double angle) {
         rotateMotorVolts(IndexerMotors.INDEXER_ROTATE,
-                indexerPID.calculate(indexerEncoder.getPosition(), angle) + IndexerConstants.indexerFF
-                        .calculate(indexerEncoder.getPosition(), 0.0));
+                indexerPID.calculate(indexerEncoder.getPosition(), angle) +
+                        IndexerConstants.indexerFF.calculate(indexerEncoder.getPosition(), 0.0));
     }
 
     /**
@@ -125,9 +130,8 @@ public class IndexerSubsystem extends SubsystemBase {
      * Enum of possible motors to control
      */
     public enum IndexerMotors {
-        WHEEL_1,
-        WHEEL_2,
-        WHEEL_3,
+        TOP_WHEEL,
+        BOTTOM_WHEELS,
         INDEXER_ROTATE
     }
 

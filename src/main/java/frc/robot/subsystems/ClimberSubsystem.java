@@ -25,11 +25,17 @@ public class ClimberSubsystem extends SubsystemBase {
 //        return rightSideEncoder;
 //    }
 
+    /**
+     * Extends the climber
+     */
     public void extend() {
         //rightSide.set(0.1);
         leftSide.set(0.1);
     }
 
+    /**
+     * Retracts the climber back down
+     */
     public void retract() {
         //rightSide.set(-0.1);
         leftSide.set(-0.1);
@@ -37,7 +43,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
 
     /**
-     * Put the brakes on the climber motors.
+     * Hold the motors (break mdoe)
      */
     public void hold() {
         leftSide.set(0.0);

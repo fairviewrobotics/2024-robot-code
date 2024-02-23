@@ -6,7 +6,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.constants.DrivetrainConstants;
 
-// TODO: Lots of deprecated stuff here
 public class SwerveModuleControlller {
     private final CANSparkMax drivingMotor;
     private final CANSparkMax turningMotor;
