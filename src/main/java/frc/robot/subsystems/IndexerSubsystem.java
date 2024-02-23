@@ -20,9 +20,9 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final AbsoluteEncoder indexerEncoder = indexerRotate.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
-    private final DigitalInput centerLimebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
+    DigitalInput centerLimebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
 
-    private final DigitalInput topLimebreak = new DigitalInput(IndexerConstants.topLimebreakID);
+    DigitalInput topLimebreak = new DigitalInput(IndexerConstants.topLimebreakID);
 
     private final ProfiledPIDController indexerPID = new ProfiledPIDController(
             IndexerConstants.indexerP,
@@ -31,11 +31,13 @@ public class IndexerSubsystem extends SubsystemBase {
             IndexerConstants.indexerTrapezoidProfile
     );
 
+
+
     /**
      * Indexer subsystem for everything indexer related
      */
     public IndexerSubsystem() {
-        indexerPID.setTolerance(0.2);
+        indexerPID.setTolerance(0.01);
     }
 
 
@@ -93,8 +95,8 @@ public class IndexerSubsystem extends SubsystemBase {
         rotateMotorVolts(IndexerMotors.INDEXER_ROTATE,
                 indexerPID.calculate(indexerEncoder.getPosition(), angle) +
                         IndexerConstants.indexerFF.calculate(indexerEncoder.getPosition(), 0.0));
+        //System.out.println(indexerEncoder.getPosition());
     }
-
     /**
      * Check if the indexer is at its goal
      * @return If the indexer is at its goal
@@ -108,7 +110,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the limebreak is seeing something
      */
     public boolean isCenter() {
-        return this.centerLimebreak.get();
+        return !centerLimebreak.get();
     }
 
     /**
@@ -116,7 +118,8 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the limebreak is seeing something
      */
     public boolean isTop() {
-        return this.topLimebreak.get();
+        return !topLimebreak.get();
+
     }
 
     /**
