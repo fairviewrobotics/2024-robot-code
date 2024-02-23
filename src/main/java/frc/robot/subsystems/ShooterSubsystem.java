@@ -6,8 +6,6 @@ import com.revrobotics.CANSparkLowLevel;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.units.Units;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShooterConstants;
 import frc.robot.utils.MathUtils;
@@ -18,16 +16,19 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final PIDController shooterPID = new PIDController(ShooterConstants.shooterP,ShooterConstants.shooterI, ShooterConstants.shooterD);
 
-    private final DoubleEntry ShooterSetpoint = NetworkTableInstance.getDefault()
+    private final DoubleEntry shooterSetpoint = NetworkTableInstance.getDefault()
             .getTable("Shooter").getDoubleTopic("Setpoint").getEntry(0.0);
 
-    private final DoubleEntry ShooterSpeedTop = NetworkTableInstance.getDefault()
+    private final DoubleEntry shooterSpeedTop = NetworkTableInstance.getDefault()
             .getTable("Shooter").getDoubleTopic("Top").getEntry(0.0);
 
-    private final DoubleEntry ShooterSpeedBottom = NetworkTableInstance.getDefault()
+    private final DoubleEntry shooterSpeedBottom = NetworkTableInstance.getDefault()
             .getTable("Shooter").getDoubleTopic("Bottom").getEntry(0.0);
 
 
+    /**
+     * Subsystem for all shooter related things
+     */
     public ShooterSubsystem(){
         topMotor.setInverted(true);
         bottomMotor.setInverted(true);
@@ -47,33 +48,39 @@ public class ShooterSubsystem extends SubsystemBase {
         bottomMotor.setVoltage(shooterPID.calculate(MathUtils.rpmToRadians(bottomMotor.getEncoder().getVelocity()), MathUtils.rpmToRadians(speed)) +
                 ShooterConstants.shooterFF.calculate(MathUtils.rpmToRadians(speed)));
 
-        ShooterSetpoint.set(speed);
+        shooterSetpoint.set(speed);
     }
 
+    /**
+     * Get the RPM of the top motor
+     * @return Returns RPM of the top motor
+     */
     public double getTopMotorRPM(){
         return topMotor.getEncoder().getVelocity();
     }
 
+    /**
+     * Get the RPM of the bottom motor
+     * @return Returns the RPM of the bottom motor
+     */
     public double getBottomMotorRPM(){
         return bottomMotor.getEncoder().getVelocity();
     }
 
-    public void setVoltage(double v1, double v2) {
-        topMotor.setVoltage(v1);
-        bottomMotor.setVoltage(v2);
-    }
-
     /**
-     * Check if center limebreak is seeing something
-     * @return If the limebreak is seeing something
+     * Sets the motors raw voltage input
+     * @param topVolts Volts to give the top motor (-12-12)
+     * @param bottomVolts Volts to give the bottom motor (-12-12)
      */
-
-
+    public void setVoltage(double topVolts, double bottomVolts) {
+        topMotor.setVoltage(topVolts);
+        bottomMotor.setVoltage(bottomVolts);
+    }
 
     @Override
     public void periodic() {
-        ShooterSpeedBottom.set(getBottomMotorRPM());
-        ShooterSpeedTop.set(getTopMotorRPM());
+        shooterSpeedBottom.set(getBottomMotorRPM());
+        shooterSpeedTop.set(getTopMotorRPM());
     }
 
 }

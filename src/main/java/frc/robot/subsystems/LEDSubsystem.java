@@ -7,12 +7,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
     Spark blinkinDriver = new Spark(9);
-    DoublePublisher LED_NT = NetworkTableInstance.getDefault().getTable("LEDs").getDoubleTopic("LEDValue").publish();
+    DoublePublisher ledPublisher = NetworkTableInstance.getDefault().getTable("LEDs").getDoubleTopic("LEDValue").publish();
+
     @Override
     public void periodic() {
-        super.periodic();
-        LED_NT.set(blinkinDriver.get());
+        ledPublisher.set(blinkinDriver.get());
     }
+
+    /**
+     * Sets the color of the LEDs on the robot
+     * @param value The color of LEDs (between 0-1, no clue how to figure out)
+     */
     public void setLED(double value) {
         blinkinDriver.set(value);
     }
