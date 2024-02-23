@@ -23,8 +23,8 @@ public class AmpCommand2 extends Command {
     @Override
     public void execute() {
        if (!indexerSubsystem.isTop()) {
-           indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_1, 0.4);
-           indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.WHEEL_2, -0.4);
+           indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.TOP_WHEEL, 0.4);
+           indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.BOTTOM_WHEELS, -0.4);
        } else {
            indexerSubsystem.moveIndexerToPos(160);
 

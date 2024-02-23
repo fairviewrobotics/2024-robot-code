@@ -137,6 +137,9 @@ public class SwerveSubsystem extends SubsystemBase {
     private final DoubleEntry rearleftpos = NetworkTableInstance.getDefault()
             .getTable("Swerve").getDoubleTopic("rlpos").getEntry(rearLeft.getPosition().angle.getRadians());
 
+    /**
+     * This subsystems manages all of the swerve drive logic and also give data to odometry
+     */
     public SwerveSubsystem() {
         // PathPlanner stuff
         AutoBuilder.configureHolonomic(
@@ -235,6 +238,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**
      * Get robot's pose.
+     * @return Returns the robots current position of the field as a {@link Pose2d}
      */
     public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
@@ -250,7 +254,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**
      * Get the pose estimator instance
-     * @return The current pose estimator
+     * @return Instance of the {@link SwerveDrivePoseEstimator}
      */
     public SwerveDrivePoseEstimator getPoseEstimator() {
         return this.poseEstimator;
@@ -282,6 +286,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
     }
 
+    /**
+     * Gets the robots chassis speed relative to the field
+     * @return Returns robot speed as a {@link ChassisSpeeds} in meters/second
+     */
     public ChassisSpeeds getFieldRelativeChassisSpeeds() {
         return new ChassisSpeeds(
                 getRobotRelativeSpeeds().vxMetersPerSecond * getPose().getRotation().getCos()
@@ -292,6 +300,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     /**
+     * Resets the robots position on the field
      * @param pose Reset robot's position.
      */
 
@@ -312,11 +321,11 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**
      * Swerve drive function.
-     * @param forwardMetersPerSecond
-     * @param sidewaysMetersPerSecond
-     * @param radiansPerSecond
-     * @param fieldRelative
-     * @param rateLimit
+     * @param forwardMetersPerSecond The target forward m/s
+     * @param sidewaysMetersPerSecond The target sideways m/s
+     * @param radiansPerSecond The target Rad/s
+     * @param fieldRelative If the robot is robot relative (forwards is front of robot) or field relative (forward is opposite side of field)
+     * @param rateLimit If we should apply slew rates (should always be true unless you know what your doing)
      */
 
     public void drive(double forwardMetersPerSecond, double sidewaysMetersPerSecond, double radiansPerSecond, boolean fieldRelative, boolean rateLimit) {
@@ -454,7 +463,6 @@ public class SwerveSubsystem extends SubsystemBase {
     /**
      * Reset the gyro
      */
-
     public void zeroGyro() {
         gyro.reset();
     }
@@ -462,7 +470,6 @@ public class SwerveSubsystem extends SubsystemBase {
     /**
      * Resets Gyro and odometry
      */
-
     public void zeroGyroAndOdometry() {
         gyro.reset();
         resetOdometry(new Pose2d(0.0, 0.0, new Rotation2d(0.0)));
@@ -470,9 +477,12 @@ public class SwerveSubsystem extends SubsystemBase {
 
     /**
      * Sets states of swerve modules
-     * @param desiredStates
+     * @param desiredStates target states for the swerve modules (requires a list of 4 {@link SwerveModuleState}s)
      */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
+        if (desiredStates.length != 4) {
+            System.out.println(String.format("Incorrect length of desiredStates, got %d expected 4", desiredStates.length));
+        }
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DrivetrainConstants.maxSpeedMetersPerSecond);
 
         frontLeft.setDesiredState(desiredStates[0]);
