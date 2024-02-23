@@ -10,6 +10,7 @@ public class IntakeCommand extends Command {
 
     private final IndexerSubsystem indexerSubsystem;
 
+
     private LEDSubsystem ledSubsystem;
 
     /**
@@ -28,11 +29,19 @@ public class IntakeCommand extends Command {
     public void execute() {
         if (!indexerSubsystem.isCenter()) {
             intakeSubsystem.setSpeed(.9);
-            indexerSubsystem.rotateAllWheelsPercent(.9);
+            indexerSubsystem.rotateAllWheelsPercent(.3);
             ledSubsystem.setLED(-0.71);
-        } else {
+        } else if (indexerSubsystem.isCenter()) {
             intakeSubsystem.setSpeed(0);
-            indexerSubsystem.rotateAllWheelsPercent(0);
+            try {
+                Thread.sleep(195);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (indexerSubsystem.isCenter()) {
+                indexerSubsystem.rotateAllWheelsPercent(0);
+            }
+
         }
     }
 
