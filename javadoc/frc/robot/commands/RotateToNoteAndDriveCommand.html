@@ -117,7 +117,9 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/DoubleSupplier.html" title="class or interface in java.util.function" class="external-link">DoubleSupplier</a>&nbsp;forward,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/DoubleSupplier.html" title="class or interface in java.util.function" class="external-link">DoubleSupplier</a>&nbsp;sideways,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/DoubleSupplier.html" title="class or interface in java.util.function" class="external-link">DoubleSupplier</a>&nbsp;radians)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Rotates the robot to face the speaker, while still allowing the driver to control forward and backward movement</div>
+</div>
 </div>
 </section>
 </li>
@@ -166,6 +168,15 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/DoubleSupplier.html" title="class or interface in java.util.function" class="external-link">DoubleSupplier</a>&nbsp;forward,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/DoubleSupplier.html" title="class or interface in java.util.function" class="external-link">DoubleSupplier</a>&nbsp;sideways,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/DoubleSupplier.html" title="class or interface in java.util.function" class="external-link">DoubleSupplier</a>&nbsp;radians)</span></div>
+<div class="block">Rotates the robot to face the speaker, while still allowing the driver to control forward and backward movement</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>swerveSubsystem</code> - The instance of <a href="../subsystems/SwerveSubsystem.html" title="class in frc.robot.subsystems"><code>SwerveSubsystem</code></a></dd>
+<dd><code>controller</code> - The instance of <code>XboxController</code></dd>
+<dd><code>forward</code> - The desired forward percentage of the robot</dd>
+<dd><code>sideways</code> - The desired sideways percentage of the robot</dd>
+<dd><code>radians</code> - The desired rotation speed of the robot</dd>
+</dl>
 </section>
 </li>
 </ul>

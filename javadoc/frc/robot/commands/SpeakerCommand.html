@@ -112,7 +112,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.robot.subsystems.IndexerSubsystem)" class="member-name-link">SpeakerCommand</a><wbr>(<a href="../subsystems/IndexerSubsystem.html" title="class in frc.robot.subsystems">IndexerSubsystem</a>&nbsp;indexerSubsystem)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.robot.subsystems.IndexerSubsystem,edu.wpi.first.math.kinematics.ChassisSpeeds,edu.wpi.first.math.geometry.Pose2d)" class="member-name-link">SpeakerCommand</a><wbr>(<a href="../subsystems/IndexerSubsystem.html" title="class in frc.robot.subsystems">IndexerSubsystem</a>&nbsp;indexerSubsystem,
+ edu.wpi.first.math.kinematics.ChassisSpeeds&nbsp;fieldRelativeSpeeds,
+ edu.wpi.first.math.geometry.Pose2d&nbsp;swervePose)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Command to shoot for the speaker once there is a note in the intake</div>
 </div>
@@ -157,13 +159,17 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(frc.robot.subsystems.IndexerSubsystem)">
+<section class="detail" id="&lt;init&gt;(frc.robot.subsystems.IndexerSubsystem,edu.wpi.first.math.kinematics.ChassisSpeeds,edu.wpi.first.math.geometry.Pose2d)">
 <h3>SpeakerCommand</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SpeakerCommand</span><wbr><span class="parameters">(<a href="../subsystems/IndexerSubsystem.html" title="class in frc.robot.subsystems">IndexerSubsystem</a>&nbsp;indexerSubsystem)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SpeakerCommand</span><wbr><span class="parameters">(<a href="../subsystems/IndexerSubsystem.html" title="class in frc.robot.subsystems">IndexerSubsystem</a>&nbsp;indexerSubsystem,
+ edu.wpi.first.math.kinematics.ChassisSpeeds&nbsp;fieldRelativeSpeeds,
+ edu.wpi.first.math.geometry.Pose2d&nbsp;swervePose)</span></div>
 <div class="block">Command to shoot for the speaker once there is a note in the intake</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>indexerSubsystem</code> - Instance of <a href="../subsystems/IndexerSubsystem.html" title="class in frc.robot.subsystems"><code>IndexerSubsystem</code></a></dd>
+<dd><code>fieldRelativeSpeeds</code> - Instance of <code>ChassisSpeeds</code></dd>
+<dd><code>swervePose</code> - Instance of <code>Pose2d</code></dd>
 </dl>
 </section>
 </li>
