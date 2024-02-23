@@ -5,6 +5,10 @@ import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.networktables.DoubleEntry;
+import edu.wpi.first.networktables.DoubleSubscriber;
+import edu.wpi.first.networktables.DoubleTopic;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IndexerConstants;
@@ -15,7 +19,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final CANSparkMax wheel2 = new CANSparkMax(IndexerConstants.wheel2ID, CANSparkLowLevel.MotorType.kBrushless);
 
-    private final CANSparkMax wheel3 = new CANSparkMax(IndexerConstants.wheel3ID, CANSparkLowLevel.MotorType.kBrushless);
+//    private final CANSparkMax wheel3 = new CANSparkMax(IndexerConstants.wheel3ID, CANSparkLowLevel.MotorType.kBrushless);
 
     private final CANSparkMax indexerRotate = new CANSparkMax(IndexerConstants.indexerRotateID, CANSparkLowLevel.MotorType.kBrushless);
 
@@ -25,6 +29,8 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final DigitalInput topLimebreak = new DigitalInput(IndexerConstants.topLimebreakID);
 
+
+
     private final ProfiledPIDController indexerPID = new ProfiledPIDController(
             IndexerConstants.indexerP,
             IndexerConstants.indexerI,
@@ -32,11 +38,22 @@ public class IndexerSubsystem extends SubsystemBase {
             IndexerConstants.indexerTrapezoidProfile
     );
 
+    private final DoubleTopic pPub = NetworkTableInstance.getDefault().getTable("Indexer").getDoubleTopic("P");
+
+    private final DoubleSubscriber pSub;
+
+
     /**
      * Indexer subsystem for everything indexer related
      */
     public IndexerSubsystem() {
+
         indexerPID.setTolerance(0.2);
+        pSub = pPub.subscribe(0.0);
+    }
+
+    public void changePID(double p, double i, double d) {
+        indexerPID.setPID(p, i, d);
     }
 
 
@@ -49,7 +66,7 @@ public class IndexerSubsystem extends SubsystemBase {
         switch (motor) {
             case WHEEL_1 -> wheel1.setVoltage(volts);
             case WHEEL_2 -> wheel2.setVoltage(volts);
-            case WHEEL_3 -> wheel3.setVoltage(volts);
+//            case WHEEL_3 -> wheel3.setVoltage(volts);
             case INDEXER_ROTATE -> indexerRotate.setVoltage(volts);
         }
     }
@@ -64,7 +81,7 @@ public class IndexerSubsystem extends SubsystemBase {
         switch (motor) {
             case WHEEL_1 -> wheel1.set(percent);
             case WHEEL_2 -> wheel2.set(percent);
-            case WHEEL_3 -> wheel3.set(percent);
+//            case WHEEL_3 -> wheel3.set(percent);
             case INDEXER_ROTATE -> indexerRotate.set(percent);
         }
     }
@@ -76,7 +93,7 @@ public class IndexerSubsystem extends SubsystemBase {
     public void rotateAllWheelsPercent(double percent) {
         rotateMotorPercent(IndexerMotors.WHEEL_1, percent);
         rotateMotorPercent(IndexerMotors.WHEEL_2, percent);
-        rotateMotorPercent(IndexerMotors.WHEEL_3, percent);
+//        rotateMotorPercent(IndexerMotors.WHEEL_3, percent);
 
     }
 
@@ -131,5 +148,8 @@ public class IndexerSubsystem extends SubsystemBase {
         INDEXER_ROTATE
     }
 
-
+    @Override
+    public void periodic() {
+        changePID(pSub.get(), 0.0,0.0);
+    }
 }

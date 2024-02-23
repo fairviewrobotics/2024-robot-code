@@ -4,8 +4,8 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 public class IndexerConstants {
-    public final static int wheel1ID = 11;
-    public final static int wheel2ID = 12;
+    public final static int wheel1ID = 9;
+    public final static int wheel2ID = 10;
     public final static int wheel3ID = 13;
     public final static int indexerRotateID = 14;
 

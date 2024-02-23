@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.constants.DrivetrainConstants;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 
@@ -26,15 +27,15 @@ import frc.robot.commands.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final SendableChooser<Command> autoChooser;
+//  private final SendableChooser<Command> superSecretMissileTech;
 
   public XboxController primaryController = new XboxController(0);
   public XboxController secondaryController = new XboxController(1);
-  public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+//  public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   public IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 
-  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+//  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   public ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
@@ -46,40 +47,70 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    autoChooser = AutoBuilder.buildAutoChooser();
-
-    // Another option that allows you to specify the default auto by its name
-    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
-
-    SmartDashboard.putData("Auto Chooser", autoChooser);
-
-    NamedCommands.registerCommand("AutoSpinUp", new BasicSpinUpCommand(shooterSubsystem));
-    NamedCommands.registerCommand("BaseCommand", new BaseCommand(indexerSubsystem));
-    NamedCommands.registerCommand("IntakeCommand", new IntakeCommand(intakeSubsystem, indexerSubsystem));
-    NamedCommands.registerCommand("AutoRotateAndShoot", new AutoRotateToSpeakerAndShoot(swerveSubsystem, indexerSubsystem));
+//    superSecretMissileTech = AutoBuilder.buildAutoChooser();
+//
+//    SmartDashboard.putData("Auto Chooser", superSecretMissileTech);
+//
+//    NamedCommands.registerCommand("AutoSpinUp", new BasicSpinUpCommand(shooterSubsystem));
+//    NamedCommands.registerCommand("BaseCommand", new BaseCommand(indexerSubsystem));
+//    NamedCommands.registerCommand("IntakeCommand", new IntakeCommand(intakeSubsystem, indexerSubsystem));
+//    NamedCommands.registerCommand("AutoRotateAndShoot", new AutoRotateToSpeakerAndShoot(swerveSubsystem, indexerSubsystem));
   }
 
   public void configureButtonBindings(){
 
+    //DEFAULT COMMANDS
+
 //    swerveSubsystem.setDefaultCommand(new DriveCommands(
 //            swerveSubsystem,
-//            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 2.0,
-//            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 2.0,
-//            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 2.0,
+//            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar,
+//            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar,
+//            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar,
 //            true,
 //            true
 //    ));
-//
+
 //    indexerSubsystem.setDefaultCommand(new BaseCommand(indexerSubsystem));
-//
-//    // Primary controller
+
+
+    // PRIMARY CONTROLLER
+
+//    new JoystickButton(primaryController, XboxController.Button.kRightBumper.value).whileTrue(
+//            new DriveCommands(swerveSubsystem,
+//                    () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 2.0,
+//                    () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 2.0,
+//                    () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 2.0,
+//                    true,
+//                    true
+//            )
+//    );
+
 //    new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
 //            new RunCommand(() -> swerveSubsystem.zeroGyro())
 //    );
 //
-//    // Secondary controller
-//    new JoystickButton(secondaryController, XboxController.Axis.kRightTrigger.value).whileTrue(
-//            new SpinUpCommand(shooterSubsystem)
+//    new JoystickButton(primaryController, XboxController.Button.kX.value).whileTrue(
+//            new RunCommand(() -> swerveSubsystem.setX())
+//    );
+
+
+
+
+
+
+    // SECONDARY CONTROLLER
+
+
+    new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
+            new BasicSpinUpCommand(shooterSubsystem)
+    );
+
+    new JoystickButton(secondaryController, XboxController.Axis.kRightY.value).whileTrue(
+            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.5))
+    );
+
+//    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
+//            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.2))
 //    );
 //
 //    new JoystickButton(secondaryController, XboxController.Button.kRightBumper.value).whileTrue(
@@ -121,7 +152,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-//    return new InstantCommand();
-    return autoChooser.getSelected();
+    return new InstantCommand();
+//    return autoChooser.getSelected();
   }
 }
