@@ -10,7 +10,6 @@ public class AmpCommand extends Command {
 
     private final XboxController xboxController;
 
-    private boolean reversed = false;
 
 
     /**
@@ -26,21 +25,22 @@ public class AmpCommand extends Command {
 
     @Override
     public void execute() {
-        if (indexerSubsystem.isCenter() && !reversed) {
-            indexerSubsystem.rotateAllWheelsPercent(0.5);
-        } else {
-            reversed = true;
+
+        while (!indexerSubsystem.isTop()) {
+            indexerSubsystem.topWheel.set(0.22);
+            indexerSubsystem.bottomWheels.set(-0.22);
+        }
+        if (indexerSubsystem.isTop()) {
+            indexerSubsystem.topWheel.set(0.0);
+            indexerSubsystem.bottomWheels.set(0.0);
+           indexerSubsystem.moveIndexerToPos(140);
+
+            //the following doesn;t work yet
+            if (xboxController.getRightBumper() && indexerSubsystem.isIndexerRotated()) {
+                indexerSubsystem.rotateAllWheelsPercent(-0.5);
+            }
         }
 
-        if (reversed && !indexerSubsystem.isTop()) {
-            indexerSubsystem.rotateAllWheelsPercent(-0.5);
-        } else if (reversed && indexerSubsystem.isTop()) {
-            indexerSubsystem.moveIndexerToPos(160);
-        }
-
-        if (xboxController.getRightBumper() && indexerSubsystem.isIndexerRotated()) {
-            indexerSubsystem.rotateAllWheelsPercent(-0.5);
-        }
     }
 
     @Override

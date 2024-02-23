@@ -30,11 +30,11 @@ public class IntakeCommand extends Command {
         if (!indexerSubsystem.isCenter()) {
             intakeSubsystem.setSpeed(.9);
             indexerSubsystem.rotateAllWheelsPercent(.3);
-            ledSubsystem.setLED(-0.71);
+            //ledSubsystem.setLED(-0.71);
         } else if (indexerSubsystem.isCenter()) {
             intakeSubsystem.setSpeed(0);
             try {
-                Thread.sleep(195);
+                Thread.sleep(105);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
