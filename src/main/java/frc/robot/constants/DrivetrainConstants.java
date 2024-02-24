@@ -7,7 +7,7 @@ import edu.wpi.first.math.util.Units;
 
 public class DrivetrainConstants {
 
-    public static final double maxSpeedMetersPerSecond = 1.0;
+    public static final double maxSpeedMetersPerSecond = 3.0;
     public static final double maxAngularSpeed = Math.PI;
 
     public static final double directionSlewRate = 4.0; // rads/sec - turning
@@ -27,10 +27,10 @@ public class DrivetrainConstants {
             new Translation2d(-wheelBase / 2, -trackWidth / 2)
     );
 
-    public static final double frontLeftChassisAngularOffset = 5.516 - Math.PI/2;
-    public static final double frontRightChassisAngularOffset = 6.107;
-    public static final double rearLeftChassisAngularOffset = 0.876 + Math.PI;
-    public static final double rearRightChassisAngularOffset = 1.036 + Math.PI/2;
+    public static final double frontLeftChassisAngularOffset = 1.036 + Math.PI/2;
+    public static final double frontRightChassisAngularOffset = 1.943 - Math.PI;
+    public static final double rearLeftChassisAngularOffset = 0.871;
+    public static final double rearRightChassisAngularOffset = 5.412 - Math.PI/2;
 
     public static final int frontLeftDrivingPort = 7;
     public static final int rearLeftDrivingPort = 5;
