@@ -15,7 +15,11 @@
 <script type="text/javascript" src="../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="package-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../";
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
+var pathtoroot = "../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -82,44 +86,40 @@ loadScripts(document, 'script');</script>
 </li>
 <li>
 <div id="class-summary">
-<div class="caption"><span>Classes</span></div>
-<div class="summary-table two-column-summary">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button><button id="class-summary-tab3" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab3', 2)" class="table-tab">Enum Classes</button></div>
+<div id="class-summary.tabpanel" role="tabpanel">
+<div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AdvancedSpinUpCommand.html" title="class in frc.robot.commands">AdvancedSpinUpCommand</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AmpCommand.html" title="class in frc.robot.commands">AmpCommand</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AutoRotateToSpeakerAndShoot.html" title="class in frc.robot.commands">AutoRotateToSpeakerAndShoot</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="BaseCommand.html" title="class in frc.robot.commands">BaseCommand</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BasicSpinUpCommand.html" title="class in frc.robot.commands">BasicSpinUpCommand</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ClimbCommand.html" title="class in frc.robot.commands">ClimbCommand</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ClimbWithIndexerCommand.html" title="class in frc.robot.commands">ClimbWithIndexerCommand</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="ClimbCommand.Mode.html" title="enum class in frc.robot.commands">ClimbCommand.Mode</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DriveCommands.html" title="class in frc.robot.commands">DriveCommands</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ExtendClimberCommand.html" title="class in frc.robot.commands">ExtendClimberCommand</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="IndexerCommand.html" title="class in frc.robot.commands">IndexerCommand</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="IntakeCommand.html" title="class in frc.robot.commands">IntakeCommand</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="IntakeFromSourceCommand.html" title="class in frc.robot.commands">IntakeFromSourceCommand</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="IntakeCommand.Targets.html" title="enum class in frc.robot.commands">IntakeCommand.Targets</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="PathCommand.html" title="class in frc.robot.commands">PathCommand</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RetractClimberCommand.html" title="class in frc.robot.commands">RetractClimberCommand</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RotateToNoteAndDriveCommand.html" title="class in frc.robot.commands">RotateToNoteAndDriveCommand</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RotateToNoteAndDriveCommand.html" title="class in frc.robot.commands">RotateToNoteAndDriveCommand</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RotateToSpeakerAndDriveCommand.html" title="class in frc.robot.commands">RotateToSpeakerAndDriveCommand</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RotateToSpeakerAndDriveCommand.html" title="class in frc.robot.commands">RotateToSpeakerAndDriveCommand</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SetLEDCommand.html" title="class in frc.robot.commands">SetLEDCommand</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SetLEDCommand.html" title="class in frc.robot.commands">SetLEDCommand</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SpinUpCommand.html" title="class in frc.robot.commands">SpinUpCommand</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SpeakerCommand.html" title="class in frc.robot.commands">SpeakerCommand</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="TranslateCommand.html" title="class in frc.robot.commands">TranslateCommand</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="TranslateCommand.html" title="class in frc.robot.commands">TranslateCommand</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+</div>
 </div>
 </div>
 </li>
