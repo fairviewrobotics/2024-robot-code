@@ -13,17 +13,17 @@ import frc.robot.commands.DriveCommands;
 
 public class ClimberSubsystem extends SubsystemBase {
     private final CANSparkMax leftSide = new CANSparkMax(ClimberConstants.leftSideID, CANSparkLowLevel.MotorType.kBrushless);
-    // private CANSparkMax rightSide = new CANSparkMax(ClimberConstants.leftSideID, CANSparkLowLevel.MotorType.kBrushless);
+    private CANSparkMax rightSide = new CANSparkMax(ClimberConstants.leftSideID, CANSparkLowLevel.MotorType.kBrushless);
     private final RelativeEncoder leftSideEncoder = leftSide.getEncoder();
-//    private final RelativeEncoder rightSideEncoder = rightSide.getEncoder();
+    private final RelativeEncoder rightSideEncoder = rightSide.getEncoder();
 
     public RelativeEncoder getLeftEncoder() {
         return leftSideEncoder;
     }
 
-//    public RelativeEncoder getRightEncoder() {
-//        return rightSideEncoder;
-//    }
+    public RelativeEncoder getRightEncoder() {
+        return rightSideEncoder;
+    }
 
     /**
      * Extends the climber

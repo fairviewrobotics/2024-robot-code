@@ -4,11 +4,7 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -101,6 +97,7 @@ public class RobotContainer {
     // SECONDARY CONTROLLER
 
 
+
     new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
             new BasicSpinUpCommand(shooterSubsystem)
     );
@@ -108,6 +105,7 @@ public class RobotContainer {
     new JoystickButton(secondaryController, XboxController.Axis.kRightY.value).whileTrue(
             new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.5))
     );
+
 
 //    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
 //            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.2))
@@ -133,13 +131,13 @@ public class RobotContainer {
 //            new PathCommand(swerveSubsystem)
 //    );
 //
-    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
-            new BasicSpinUpCommand(shooterSubsystem)
-    );
-
-    new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
-            new RunCommand(() -> shooterSubsystem.setVoltage(0.2,0.2))
-    );
+//    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
+//            new BasicSpinUpCommand(shooterSubsystem)
+//    );
+//
+//    new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
+//            new RunCommand(() -> shooterSubsystem.setVoltage(0.2,0.2))
+//    );
 
 
 
@@ -156,3 +154,10 @@ public class RobotContainer {
 //    return autoChooser.getSelected();
   }
 }
+
+
+
+
+
+
+

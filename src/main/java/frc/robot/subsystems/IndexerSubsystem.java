@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IndexerConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
-    private final CANSparkMax topWheel = new CANSparkMax(IndexerConstants.wheel1ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax topWheel = new CANSparkMax(IndexerConstants.topMotorID, CANSparkLowLevel.MotorType.kBrushless);
 
 
-    private final CANSparkMax bottomWheels = new CANSparkMax(IndexerConstants.wheel2ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax bottomWheels = new CANSparkMax(IndexerConstants.bottomMotorID, CANSparkLowLevel.MotorType.kBrushless);
 
     private final CANSparkMax indexerRotate = new CANSparkMax(IndexerConstants.indexerRotateID, CANSparkLowLevel.MotorType.kBrushless);
 
@@ -46,12 +46,15 @@ public class IndexerSubsystem extends SubsystemBase {
      */
     public IndexerSubsystem() {
 
-        indexerPID.setTolerance(0.2);
-        pSub = pPub.subscribe(0.0);
-    }
 
-    public void changePID(double p, double i, double d) {
-        indexerPID.setPID(p, i, d);
+
+        indexerPID.setTolerance(0.02);
+        indexerEncoder.setPositionConversionFactor(2.0 * Math.PI);
+        indexerEncoder.setVelocityConversionFactor((2.0 * Math.PI)/ 60.0);
+        indexerEncoder.setInverted(true);
+        indexerRotate.setInverted(false);
+
+
     }
 
 
@@ -92,6 +95,8 @@ public class IndexerSubsystem extends SubsystemBase {
         rotateMotorPercent(IndexerMotors.BOTTOM_WHEELS, percent);
     }
 
+
+
     /**
      * Rotate all indexer motors with a certain voltage
      * @param volts Volts to rotate motor with
@@ -107,9 +112,12 @@ public class IndexerSubsystem extends SubsystemBase {
      */
     public void moveIndexerToPos(double angle) {
         rotateMotorVolts(IndexerMotors.INDEXER_ROTATE,
-                indexerPID.calculate(indexerEncoder.getPosition(), angle) +
-                        IndexerConstants.indexerFF.calculate(indexerEncoder.getPosition(), 0.0));
+
+                indexerPID.calculate(getIndexerAngle(), angle) +
+                        IndexerConstants.indexerFF.calculate(getIndexerAngle(), 0.0));
+        //System.out.println(indexerEncoder.getPosition());
     }
+ 
 
     /**
      * Check if the indexer is at its goal
@@ -140,7 +148,11 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return The current angle of the indexer
      */
     public double getIndexerAngle() {
-        return this.indexerEncoder.getPosition();
+        double initPos = this.indexerEncoder.getPosition();
+//        System.out.println(initPos + "initPos\n-------");
+//        if (indexerEncoder.getPosition() > Math.PI && indexerEncoder.getPosition() < Math.PI * 2) { initPos -= Math.PI * 2; }
+        if (initPos >= 5.0) { initPos = 0; }
+        return initPos;
     }
     /**
      * Enum of possible motors to control
@@ -153,6 +165,11 @@ public class IndexerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        changePID(pSub.get(), 0.0,0.0);
+
+        System.out.println("----------------------------------------------");
+        System.out.println("Current indexer position: " + getIndexerAngle());
+        System.out.println("Current indexer goal: " + indexerPID.getGoal().position);
+        System.out.println("----------------------------------------------");
+
     }
 }
