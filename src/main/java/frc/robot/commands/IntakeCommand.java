@@ -10,6 +10,10 @@ public class IntakeCommand extends Command {
 
     private final IndexerSubsystem indexerSubsystem;
 
+    private final Targets target;
+
+    private final boolean source;
+
     private LEDSubsystem ledSubsystem;
 
     /**
@@ -17,22 +21,57 @@ public class IntakeCommand extends Command {
      * @param intakeSubsystem The instance of {@link IntakeSubsystem}
      * @param indexerSubsystem The instance of {@link IndexerSubsystem} (needed for limebreak detection to stop intake motor)
      */
-    public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem) {
+    public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, Targets target, boolean source) {
         this.intakeSubsystem = intakeSubsystem;
         this.indexerSubsystem = indexerSubsystem;
+        this.target = target;
+        this.source = source;
 
         addRequirements(intakeSubsystem, indexerSubsystem);
     }
 
     @Override
     public void execute() {
-        if (!indexerSubsystem.isCenter()) {
-            intakeSubsystem.setSpeed(.9);
-            indexerSubsystem.rotateAllWheelsPercent(.9);
-            ledSubsystem.setLED(-0.71);
-        } else {
-            intakeSubsystem.setSpeed(0);
-            indexerSubsystem.rotateAllWheelsPercent(0);
+//        if (!indexerSubsystem.isCenter()) {
+//            intakeSubsystem.setSpeed(.9);
+//            indexerSubsystem.rotateAllWheelsPercent(.9);
+//            ledSubsystem.setLED(-0.71);
+//        } else {
+//            intakeSubsystem.setSpeed(0);
+//            indexerSubsystem.rotateAllWheelsPercent(0);
+//        }
+        if (source) {
+            indexerSubsystem.moveIndexerToPos(160);
+        }
+
+        switch (target) {
+            case AMP -> {
+                if (!indexerSubsystem.isTop()) {
+                    indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.TOP_WHEEL, 0.22);
+                    indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.BOTTOM_WHEELS, -0.22);
+                    intakeSubsystem.setSpeed(0.9);
+                } else if (indexerSubsystem.isTop()) {
+                    indexerSubsystem.rotateAllWheelsPercent(0.0);
+                    intakeSubsystem.setSpeed(0.0);
+                }
+            }
+            case SPEAKER -> {
+                if (!indexerSubsystem.isCenter()) {
+                    intakeSubsystem.setSpeed(.9);
+                    indexerSubsystem.rotateAllWheelsPercent(0.3);
+                } else if (indexerSubsystem.isCenter()) {
+                    intakeSubsystem.setSpeed(0);
+                    try {
+                        Thread.sleep(105);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (indexerSubsystem.isCenter()) {
+                        indexerSubsystem.rotateAllWheelsPercent(0);
+                    }
+
+                }
+            }
         }
     }
 
@@ -40,5 +79,10 @@ public class IntakeCommand extends Command {
     public void end(boolean interrupted) {
         intakeSubsystem.setSpeed(0);
         indexerSubsystem.rotateAllWheelsPercent(0);
+    }
+
+    public enum Targets {
+        AMP,
+        SPEAKER
     }
 }

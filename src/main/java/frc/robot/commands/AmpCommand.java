@@ -10,9 +10,6 @@ public class AmpCommand extends Command {
 
     private final XboxController xboxController;
 
-    private boolean reversed = false;
-
-
     /**
      * Moves the indexer to the amp and scores
      * @param indexerSubsystem The instance of {@link IndexerSubsystem}
@@ -26,20 +23,19 @@ public class AmpCommand extends Command {
 
     @Override
     public void execute() {
-        if (indexerSubsystem.isCenter() && !reversed) {
-            indexerSubsystem.rotateAllWheelsPercent(0.5);
-        } else {
-            reversed = true;
-        }
+        if (indexerSubsystem.isTop()) {
+            indexerSubsystem.rotateAllWheelsPercent(0.0);
+            indexerSubsystem.moveIndexerToPos(120);
 
-        if (reversed && !indexerSubsystem.isTop()) {
-            indexerSubsystem.rotateAllWheelsPercent(-0.5);
-        } else if (reversed && indexerSubsystem.isTop()) {
-            indexerSubsystem.moveIndexerToPos(160);
-        }
-
-        if (xboxController.getRightBumper() && indexerSubsystem.isIndexerRotated()) {
-            indexerSubsystem.rotateAllWheelsPercent(-0.5);
+            if (xboxController.getRightBumper()) {
+                if (indexerSubsystem.isCenter()) {
+                    indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.TOP_WHEEL, 0.25);
+                    indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.BOTTOM_WHEELS, -0.25);
+                }
+            } else {
+                indexerSubsystem.rotateAllWheelsPercent(0.0);
+                indexerSubsystem.moveIndexerToPos(0.0);
+            }
         }
     }
 

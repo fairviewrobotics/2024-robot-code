@@ -77,6 +77,14 @@ public class ShooterSubsystem extends SubsystemBase {
         bottomMotor.setVoltage(bottomVolts);
     }
 
+    /**
+     * Set the voltage of both top and bottom motors
+     * @param volts Target volts for the motors
+     */
+    public void setVoltage(double volts) {
+        setVoltage(volts, volts);
+    }
+
     @Override
     public void periodic() {
         shooterSpeedBottom.set(getBottomMotorRPM());

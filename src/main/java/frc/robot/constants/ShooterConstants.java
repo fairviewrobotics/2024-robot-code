@@ -17,7 +17,7 @@ public class ShooterConstants {
 
     public static final SimpleMotorFeedforward shooterFF = new SimpleMotorFeedforward(0.25, 0.0175, 0.0);
 
-    public static final double shooterRPM = 6500;
+    public static final double shooterRPM = 4500;
     public static final double shooterWheelDiameterInches = 4.0;
     public static final double shooterWheelDiameterMeters = shooterWheelDiameterInches/39.37;
     public static final double shooterAngle = Math.toRadians(45);

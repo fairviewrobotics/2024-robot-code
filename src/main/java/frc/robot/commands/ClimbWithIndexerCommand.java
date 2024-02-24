@@ -14,6 +14,6 @@ public class ClimbWithIndexerCommand extends Command {
 
     @Override
     public void execute() {
-        indexerSubsystem.moveIndexerToPos(160);
+        indexerSubsystem.moveIndexerToPos(90);
     }
 }

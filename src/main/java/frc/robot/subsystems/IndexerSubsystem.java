@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IndexerConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
-    private final CANSparkMax topWheel = new CANSparkMax(IndexerConstants.wheel1ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax topWheel = new CANSparkMax(IndexerConstants.topMotorID, CANSparkLowLevel.MotorType.kBrushless);
 
 
-    private final CANSparkMax bottomWheels = new CANSparkMax(IndexerConstants.wheel2ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax bottomWheels = new CANSparkMax(IndexerConstants.bottomMotorID, CANSparkLowLevel.MotorType.kBrushless);
 
 
     private final CANSparkMax indexerRotate = new CANSparkMax(IndexerConstants.indexerRotateID, CANSparkLowLevel.MotorType.kBrushless);
@@ -75,6 +75,8 @@ public class IndexerSubsystem extends SubsystemBase {
         rotateMotorPercent(IndexerMotors.BOTTOM_WHEELS, percent);
 
     }
+
+
 
     /**
      * Rotate all indexer motors with a certain voltage
