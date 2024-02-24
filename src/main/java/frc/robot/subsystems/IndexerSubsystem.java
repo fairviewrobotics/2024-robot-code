@@ -10,19 +10,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IndexerConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
-    public final CANSparkMax topWheel = new CANSparkMax(IndexerConstants.wheel1ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax topWheel = new CANSparkMax(IndexerConstants.topMotorID, CANSparkLowLevel.MotorType.kBrushless);
 
 
-    public final CANSparkMax bottomWheels = new CANSparkMax(IndexerConstants.wheel2ID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax bottomWheels = new CANSparkMax(IndexerConstants.bottomMotorID, CANSparkLowLevel.MotorType.kBrushless);
 
 
     private final CANSparkMax indexerRotate = new CANSparkMax(IndexerConstants.indexerRotateID, CANSparkLowLevel.MotorType.kBrushless);
 
     private final AbsoluteEncoder indexerEncoder = indexerRotate.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
-    DigitalInput centerLimebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
+    private final DigitalInput centerLimebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
 
-    DigitalInput topLimebreak = new DigitalInput(IndexerConstants.topLimebreakID);
+    private final DigitalInput topLimebreak = new DigitalInput(IndexerConstants.topLimebreakID);
 
     private final ProfiledPIDController indexerPID = new ProfiledPIDController(
             IndexerConstants.indexerP,
@@ -31,18 +31,18 @@ public class IndexerSubsystem extends SubsystemBase {
             IndexerConstants.indexerTrapezoidProfile
     );
 
-
-
     /**
      * Indexer subsystem for everything indexer related
      */
     public IndexerSubsystem() {
+
 
         indexerPID.setTolerance(0.02);
         indexerEncoder.setPositionConversionFactor(2.0 * Math.PI);
         indexerEncoder.setVelocityConversionFactor((2.0 * Math.PI)/ 60.0);
         indexerEncoder.setInverted(true);
         indexerRotate.setInverted(false);
+
     }
 
 
@@ -83,6 +83,8 @@ public class IndexerSubsystem extends SubsystemBase {
 
     }
 
+
+
     /**
      * Rotate all indexer motors with a certain voltage
      * @param volts Volts to rotate motor with
@@ -98,13 +100,12 @@ public class IndexerSubsystem extends SubsystemBase {
      */
     public void moveIndexerToPos(double angle) {
         rotateMotorVolts(IndexerMotors.INDEXER_ROTATE,
+
                 indexerPID.calculate(getIndexerAngle(), angle) +
                         IndexerConstants.indexerFF.calculate(getIndexerAngle(), 0.0));
         //System.out.println(indexerEncoder.getPosition());
     }
-    public void printPos() {
-        System.out.println(indexerEncoder.getPosition());
-    }
+ 
 
     /**
      * Check if the indexer is at its goal
@@ -119,7 +120,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the limebreak is seeing something
      */
     public boolean isCenter() {
-        return !centerLimebreak.get();
+        return this.centerLimebreak.get();
     }
 
     /**
@@ -127,8 +128,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the limebreak is seeing something
      */
     public boolean isTop() {
-        return !topLimebreak.get();
-
+        return this.topLimebreak.get();
     }
 
     /**
