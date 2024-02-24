@@ -5,6 +5,10 @@ import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.networktables.DoubleEntry;
+import edu.wpi.first.networktables.DoubleSubscriber;
+import edu.wpi.first.networktables.DoubleTopic;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IndexerConstants;
@@ -15,7 +19,6 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final CANSparkMax bottomWheels = new CANSparkMax(IndexerConstants.bottomMotorID, CANSparkLowLevel.MotorType.kBrushless);
 
-
     private final CANSparkMax indexerRotate = new CANSparkMax(IndexerConstants.indexerRotateID, CANSparkLowLevel.MotorType.kBrushless);
 
     private final AbsoluteEncoder indexerEncoder = indexerRotate.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
@@ -24,6 +27,8 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final DigitalInput topLimebreak = new DigitalInput(IndexerConstants.topLimebreakID);
 
+
+
     private final ProfiledPIDController indexerPID = new ProfiledPIDController(
             IndexerConstants.indexerP,
             IndexerConstants.indexerI,
@@ -31,10 +36,16 @@ public class IndexerSubsystem extends SubsystemBase {
             IndexerConstants.indexerTrapezoidProfile
     );
 
+    private final DoubleTopic pPub = NetworkTableInstance.getDefault().getTable("Indexer").getDoubleTopic("P");
+
+    private final DoubleSubscriber pSub;
+
+
     /**
      * Indexer subsystem for everything indexer related
      */
     public IndexerSubsystem() {
+
 
 
         indexerPID.setTolerance(0.02);
@@ -42,6 +53,7 @@ public class IndexerSubsystem extends SubsystemBase {
         indexerEncoder.setVelocityConversionFactor((2.0 * Math.PI)/ 60.0);
         indexerEncoder.setInverted(true);
         indexerRotate.setInverted(false);
+
 
     }
 
@@ -53,6 +65,7 @@ public class IndexerSubsystem extends SubsystemBase {
      */
     public void rotateMotorVolts(IndexerMotors motor, double volts) {
         switch (motor) {
+
             case TOP_WHEEL -> topWheel.setVoltage(volts);
             case BOTTOM_WHEELS -> bottomWheels.setVoltage(volts);
             case INDEXER_ROTATE -> indexerRotate.setVoltage(volts);
@@ -80,7 +93,6 @@ public class IndexerSubsystem extends SubsystemBase {
     public void rotateAllWheelsPercent(double percent) {
         rotateMotorPercent(IndexerMotors.TOP_WHEEL, percent);
         rotateMotorPercent(IndexerMotors.BOTTOM_WHEELS, percent);
-
     }
 
 
@@ -153,9 +165,11 @@ public class IndexerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+
         System.out.println("----------------------------------------------");
         System.out.println("Current indexer position: " + getIndexerAngle());
         System.out.println("Current indexer goal: " + indexerPID.getGoal().position);
         System.out.println("----------------------------------------------");
+
     }
 }

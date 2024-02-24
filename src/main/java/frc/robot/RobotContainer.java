@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.constants.DrivetrainConstants;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 
@@ -26,7 +27,7 @@ public class RobotContainer {
 
   public XboxController primaryController = new XboxController(0);
   public XboxController secondaryController = new XboxController(1);
-  public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+//  public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   public IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 
@@ -95,19 +96,16 @@ public class RobotContainer {
 
     // SECONDARY CONTROLLER
 
+
+
     new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
-            new SpinUpCommand(shooterSubsystem)
+            new BasicSpinUpCommand(shooterSubsystem)
     );
 
-    new JoystickButton(secondaryController, XboxController.Button.kY.value).whileTrue(
+    new JoystickButton(secondaryController, XboxController.Axis.kRightY.value).whileTrue(
             new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.5))
     );
 
-    new JoystickButton(secondaryController, XboxController.Button.kX.value).whileTrue(
-            new RunCommand(() -> {
-              System.out.println(indexerSubsystem.isCenter());
-            })
-    );
 
 //    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
 //            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.2))
