@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -27,13 +31,15 @@ public class RobotContainer {
 
   public XboxController primaryController = new XboxController(0);
   public XboxController secondaryController = new XboxController(1);
-//  public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   public IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 
 //  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   public ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+
+  private boolean isRed = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red);
 
 
 
@@ -99,11 +105,16 @@ public class RobotContainer {
 
 
     new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
-            new BasicSpinUpCommand(shooterSubsystem)
+            new SpinUpCommand(shooterSubsystem)
     );
 
     new JoystickButton(secondaryController, XboxController.Axis.kRightY.value).whileTrue(
             new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.5))
+    );
+
+    new JoystickButton(secondaryController, XboxController.Button.kY.value).whileTrue(
+            isRed ? new PathCommand(swerveSubsystem, new Pose2d(new Translation2d(1.15, 1), new Rotation2d(-120))) :
+                    new PathCommand(swerveSubsystem, new Pose2d(new Translation2d(15.4, 1), new Rotation2d(120)))
     );
 
 
