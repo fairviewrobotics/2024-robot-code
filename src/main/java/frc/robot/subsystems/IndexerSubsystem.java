@@ -35,7 +35,14 @@ public class IndexerSubsystem extends SubsystemBase {
      * Indexer subsystem for everything indexer related
      */
     public IndexerSubsystem() {
-        indexerPID.setTolerance(0.2);
+
+
+        indexerPID.setTolerance(0.02);
+        indexerEncoder.setPositionConversionFactor(2.0 * Math.PI);
+        indexerEncoder.setVelocityConversionFactor((2.0 * Math.PI)/ 60.0);
+        indexerEncoder.setInverted(true);
+        indexerRotate.setInverted(false);
+
     }
 
 
@@ -93,9 +100,12 @@ public class IndexerSubsystem extends SubsystemBase {
      */
     public void moveIndexerToPos(double angle) {
         rotateMotorVolts(IndexerMotors.INDEXER_ROTATE,
-                indexerPID.calculate(indexerEncoder.getPosition(), angle) +
-                        IndexerConstants.indexerFF.calculate(indexerEncoder.getPosition(), 0.0));
+
+                indexerPID.calculate(getIndexerAngle(), angle) +
+                        IndexerConstants.indexerFF.calculate(getIndexerAngle(), 0.0));
+        //System.out.println(indexerEncoder.getPosition());
     }
+ 
 
     /**
      * Check if the indexer is at its goal
@@ -126,7 +136,11 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return The current angle of the indexer
      */
     public double getIndexerAngle() {
-        return this.indexerEncoder.getPosition();
+        double initPos = this.indexerEncoder.getPosition();
+//        System.out.println(initPos + "initPos\n-------");
+//        if (indexerEncoder.getPosition() > Math.PI && indexerEncoder.getPosition() < Math.PI * 2) { initPos -= Math.PI * 2; }
+        if (initPos >= 5.0) { initPos = 0; }
+        return initPos;
     }
     /**
      * Enum of possible motors to control
@@ -137,5 +151,11 @@ public class IndexerSubsystem extends SubsystemBase {
         INDEXER_ROTATE
     }
 
-
+    @Override
+    public void periodic() {
+        System.out.println("----------------------------------------------");
+        System.out.println("Current indexer position: " + getIndexerAngle());
+        System.out.println("Current indexer goal: " + indexerPID.getGoal().position);
+        System.out.println("----------------------------------------------");
+    }
 }
