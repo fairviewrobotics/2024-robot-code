@@ -10,16 +10,29 @@ public class SpinUpCommand extends Command {
 
     private final boolean advanced;
 
-    private final Pose2d robotPose;
+    private Pose2d robotPose;
 
     /**
-     * Command to spin up the shooter
+     * Command to spin up the shooter, simply just spins the motors to shooterRPM (defined in {@link ShooterConstants})
      * @param shooterSubsystem Instance of {@link ShooterSubsystem}
      */
-    public SpinUpCommand(ShooterSubsystem shooterSubsystem, Pose2d robotPose, boolean advanced) {
+    public SpinUpCommand(ShooterSubsystem shooterSubsystem) {
         this.shooterSubsystem = shooterSubsystem;
-        this.advanced = advanced;
+        this.advanced = false;
+
+        addRequirements(shooterSubsystem);
+    }
+
+
+    /**
+     * Spins up the shooter if we are close to the speaker
+     * @param shooterSubsystem Instance of the {@link ShooterSubsystem}
+     * @param robotPose Pose2d of the robots current position
+     */
+    public SpinUpCommand(ShooterSubsystem shooterSubsystem, Pose2d robotPose) {
+        this.shooterSubsystem = shooterSubsystem;
         this.robotPose = robotPose;
+        this.advanced = true;
 
         addRequirements(shooterSubsystem);
     }

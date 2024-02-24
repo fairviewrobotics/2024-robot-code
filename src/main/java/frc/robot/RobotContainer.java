@@ -96,7 +96,7 @@ public class RobotContainer {
     // SECONDARY CONTROLLER
 
     new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
-            new SpinUpCommand(shooterSubsystem, swerveSubsystem.getPose(), false)
+            new SpinUpCommand(shooterSubsystem)
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kY.value).whileTrue(
