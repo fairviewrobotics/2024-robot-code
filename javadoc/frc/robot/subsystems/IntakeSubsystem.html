@@ -111,9 +111,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSpeed(double)" class="member-name-link">setSpeed</a><wbr>(double&nbsp;speed)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setBottomSpeed(double)" class="member-name-link">setBottomSpeed</a><wbr>(double&nbsp;speed2)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Set speed of intake</div>
+<div class="block">Set speed of bottom intake wheel</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSpeed(double)" class="member-name-link">setSpeed</a><wbr>(double&nbsp;speed3)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Set speed of both intake wheels</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTopSpeed(double)" class="member-name-link">setTopSpeed</a><wbr>(double&nbsp;speed1)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Set speed of top intake wheel</div>
 </div>
 </div>
 </div>
@@ -153,13 +163,35 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="setSpeed(double)">
-<h3>setSpeed</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSpeed</span><wbr><span class="parameters">(double&nbsp;speed)</span></div>
-<div class="block">Set speed of intake</div>
+<section class="detail" id="setTopSpeed(double)">
+<h3>setTopSpeed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTopSpeed</span><wbr><span class="parameters">(double&nbsp;speed1)</span></div>
+<div class="block">Set speed of top intake wheel</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>speed</code> - Target speed in percent</dd>
+<dd><code>speed1</code> - Target speed in percent</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setBottomSpeed(double)">
+<h3>setBottomSpeed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setBottomSpeed</span><wbr><span class="parameters">(double&nbsp;speed2)</span></div>
+<div class="block">Set speed of bottom intake wheel</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>speed2</code> - Target speed in percent</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setSpeed(double)">
+<h3>setSpeed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSpeed</span><wbr><span class="parameters">(double&nbsp;speed3)</span></div>
+<div class="block">Set speed of both intake wheels</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>speed3</code> - Target speed in percent</dd>
 </dl>
 </section>
 </li>
