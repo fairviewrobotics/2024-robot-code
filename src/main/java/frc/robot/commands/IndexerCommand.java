@@ -20,10 +20,10 @@ public class IndexerCommand extends Command {
     private Pose2d swervePose;
 
 
-    public IndexerCommand(IndexerSubsystem indexerSubsystem, XboxController controller) {
+    public IndexerCommand(IndexerSubsystem indexerSubsystem, XboxController controller, Mode mode) {
         this.indexerSubsystem = indexerSubsystem;
         this.controller = controller;
-        this.mode = Mode.AMP;
+        this.mode = mode;
 
         addRequirements(indexerSubsystem);
     }
@@ -45,9 +45,9 @@ public class IndexerCommand extends Command {
             case AMP -> {
                 if (indexerSubsystem.isTop()) {
                     indexerSubsystem.rotateAllWheelsPercent(0.0);
-                    indexerSubsystem.moveIndexerToPos(120);
+                    //indexerSubsystem.moveIndexerToPos(Math.toDegrees(140));
 
-                    if (controller.getRightBumper()) {
+                    if (controller.getLeftTriggerAxis() > 0.1) {
                         if (indexerSubsystem.isCenter()) {
                             indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.TOP_WHEEL, 0.25);
                             indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.BOTTOM_WHEELS, -0.25);
@@ -120,9 +120,10 @@ public class IndexerCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         indexerSubsystem.rotateAllWheelsPercent(0);
+       // indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_ROTATE, 0.0);
     }
 
-    private enum Mode {
+    public enum Mode {
         AMP,
         SPEAKER
     }

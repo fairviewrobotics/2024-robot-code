@@ -7,7 +7,7 @@ import edu.wpi.first.math.util.Units;
 
 public class DrivetrainConstants {
 
-    public static final double maxSpeedMetersPerSecond = 3.0;
+    public static final double maxSpeedMetersPerSecond = 7.0; //note, maybe it needs to come down, if its too high it will stop working or something, troubleshoot from coronado
     public static final double maxAngularSpeed = Math.PI;
 
     public static final double directionSlewRate = 4.0; // rads/sec - turning
@@ -15,7 +15,7 @@ public class DrivetrainConstants {
     public static final double rotationalSlewRate = 12.0; // percent/second (1 = 100%) - rotation
 
     public static final double drivingSpeedScalar = 1.0;
-    public static final double rotationSpeedScalar = -2.0;
+    public static final double rotationSpeedScalar = 2.0;
 
     public static final double trackWidth = Units.inchesToMeters(18);
     public static final double wheelBase = Units.inchesToMeters(22.5);
@@ -27,10 +27,10 @@ public class DrivetrainConstants {
             new Translation2d(-wheelBase / 2, -trackWidth / 2)
     );
 
-    public static final double frontLeftChassisAngularOffset = 1.036 + Math.PI/2;
-    public static final double frontRightChassisAngularOffset = 1.943 - Math.PI;
-    public static final double rearLeftChassisAngularOffset = 0.871;
-    public static final double rearRightChassisAngularOffset = 5.412 - Math.PI/2;
+    public static final double frontLeftChassisAngularOffset = 1.029 + Math.PI/2;
+    public static final double frontRightChassisAngularOffset = 5.0268 - Math.PI;
+    public static final double rearLeftChassisAngularOffset = 0.8645;
+    public static final double rearRightChassisAngularOffset = 5.399 - Math.PI/2;
 
     public static final int frontLeftDrivingPort = 7;
     public static final int rearLeftDrivingPort = 5;

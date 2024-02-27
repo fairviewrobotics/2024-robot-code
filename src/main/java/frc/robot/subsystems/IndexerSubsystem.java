@@ -11,7 +11,10 @@ import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.IndexerConstants;
+import frc.robot.utils.MathUtils;
+import frc.robot.utils.NetworkTableUtils;
 
 public class IndexerSubsystem extends SubsystemBase {
     private final CANSparkMax topWheel = new CANSparkMax(IndexerConstants.topMotorID, CANSparkLowLevel.MotorType.kBrushless);
@@ -27,6 +30,8 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final DigitalInput topLimebreak = new DigitalInput(IndexerConstants.topLimebreakID);
 
+    private final NetworkTableUtils nt = new NetworkTableUtils("debug");
+
 
 
     private final ProfiledPIDController indexerPID = new ProfiledPIDController(
@@ -36,23 +41,18 @@ public class IndexerSubsystem extends SubsystemBase {
             IndexerConstants.indexerTrapezoidProfile
     );
 
-    private final DoubleTopic pPub = NetworkTableInstance.getDefault().getTable("Indexer").getDoubleTopic("P");
-
-    private final DoubleSubscriber pSub;
-
 
     /**
      * Indexer subsystem for everything indexer related
      */
     public IndexerSubsystem() {
-
-
-
+        indexerPID.enableContinuousInput(0, 4.367);
         indexerPID.setTolerance(0.02);
-        indexerEncoder.setPositionConversionFactor(2.0 * Math.PI);
+        indexerEncoder.setPositionConversionFactor((2.0 * Math.PI)/23 * 16);
         indexerEncoder.setVelocityConversionFactor((2.0 * Math.PI)/ 60.0);
         indexerEncoder.setInverted(true);
         indexerRotate.setInverted(false);
+        indexerRotate.setSmartCurrentLimit(1);
 
 
     }
@@ -111,10 +111,9 @@ public class IndexerSubsystem extends SubsystemBase {
      * @param angle The target angle for the indexer
      */
     public void moveIndexerToPos(double angle) {
+        angle = MathUtils.inRange(angle, IndexerConstants.indexerMinAngle, IndexerConstants.indexerMaxAngle);
         rotateMotorVolts(IndexerMotors.INDEXER_ROTATE,
-
-                indexerPID.calculate(getIndexerAngle(), angle) +
-                        IndexerConstants.indexerFF.calculate(getIndexerAngle(), 0.0));
+                indexerPID.calculate(getIndexerAngle(), angle) + IndexerConstants.indexerFF.calculate(getIndexerAngle(), 0.0));
         //System.out.println(indexerEncoder.getPosition());
     }
  
@@ -132,7 +131,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the limebreak is seeing something
      */
     public boolean isCenter() {
-        return this.centerLimebreak.get();
+        return !centerLimebreak.get();
     }
 
     /**
@@ -140,7 +139,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the limebreak is seeing something
      */
     public boolean isTop() {
-        return this.topLimebreak.get();
+        return !topLimebreak.get();
     }
 
     /**
@@ -151,7 +150,7 @@ public class IndexerSubsystem extends SubsystemBase {
         double initPos = this.indexerEncoder.getPosition();
 //        System.out.println(initPos + "initPos\n-------");
 //        if (indexerEncoder.getPosition() > Math.PI && indexerEncoder.getPosition() < Math.PI * 2) { initPos -= Math.PI * 2; }
-        if (initPos >= 5.0) { initPos = 0; }
+//        if (initPos >= 5.75) { initPos = 0; }
         return initPos;
     }
     /**
@@ -169,7 +168,12 @@ public class IndexerSubsystem extends SubsystemBase {
         System.out.println("----------------------------------------------");
         System.out.println("Current indexer position: " + getIndexerAngle());
         System.out.println("Current indexer goal: " + indexerPID.getGoal().position);
+        System.out.println("Current indexer error: " + indexerPID.getPositionError());
         System.out.println("----------------------------------------------");
+
+        nt.setDouble("Current", getIndexerAngle());
+        nt.setDouble("Goal", indexerPID.getGoal().position);
+        nt.setDouble("Error", indexerPID.getPositionError());
 
     }
 }

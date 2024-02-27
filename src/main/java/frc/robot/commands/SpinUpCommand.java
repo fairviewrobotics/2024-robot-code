@@ -16,9 +16,9 @@ public class SpinUpCommand extends Command {
      * Command to spin up the shooter, simply just spins the motors to shooterRPM (defined in {@link ShooterConstants})
      * @param shooterSubsystem Instance of {@link ShooterSubsystem}
      */
-    public SpinUpCommand(ShooterSubsystem shooterSubsystem) {
+    public SpinUpCommand(ShooterSubsystem shooterSubsystem, boolean advanced) {
         this.shooterSubsystem = shooterSubsystem;
-        this.advanced = false;
+        this.advanced = advanced;
 
         addRequirements(shooterSubsystem);
     }
