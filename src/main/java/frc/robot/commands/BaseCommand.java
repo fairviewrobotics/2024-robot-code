@@ -12,15 +12,17 @@ public class BaseCommand extends Command {
      */
     public BaseCommand(IndexerSubsystem indexerSubsystem) {
         this.indexerSubsystem = indexerSubsystem;
+        addRequirements(indexerSubsystem);
     }
 
     @Override
     public void execute() {
-        if (indexerSubsystem.getIndexerAngle() > Math.PI/6) {
-            indexerSubsystem.moveIndexerToPos(10);
+        indexerSubsystem.rotateAllWheelsPercent(0.0);
+        if (indexerSubsystem.getIndexerAngle() > Math.toRadians(75)) {
+            indexerSubsystem.moveIndexerToPos(Math.toRadians(75.0));
         } else {
             indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_ROTATE, 0.0);
-        }
+       }
     }
 
     @Override

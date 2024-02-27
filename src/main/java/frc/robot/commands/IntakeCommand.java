@@ -5,6 +5,8 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 
+import java.rmi.MarshalException;
+
 public class IntakeCommand extends Command {
     private final IntakeSubsystem intakeSubsystem;
 
@@ -14,7 +16,7 @@ public class IntakeCommand extends Command {
 
     private final boolean source;
 
-    private LEDSubsystem ledSubsystem;
+    //private LEDSubsystem ledSubsystem;
 
     /**
      * Command to run the intake
@@ -41,7 +43,10 @@ public class IntakeCommand extends Command {
 //            indexerSubsystem.rotateAllWheelsPercent(0);
 //        }
         if (source) {
-            indexerSubsystem.moveIndexerToPos(160);
+            indexerSubsystem.moveIndexerToPos(Math.toRadians(140));
+        } else {
+            indexerSubsystem.moveIndexerToPos(Math.toRadians(7.0));
+            indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_ROTATE, 0.0);
         }
 
         switch (target) {
@@ -49,7 +54,8 @@ public class IntakeCommand extends Command {
                 if (!indexerSubsystem.isTop()) {
                     indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.TOP_WHEEL, 0.22);
                     indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.BOTTOM_WHEELS, -0.22);
-                    intakeSubsystem.setSpeed(0.9);
+                    intakeSubsystem.setTopSpeed(0.4);
+                    intakeSubsystem.setBottomSpeed(0.7);
                 } else if (indexerSubsystem.isTop()) {
                     indexerSubsystem.rotateAllWheelsPercent(0.0);
                     intakeSubsystem.setSpeed(0.0);
@@ -57,10 +63,11 @@ public class IntakeCommand extends Command {
             }
             case SPEAKER -> {
                 if (!indexerSubsystem.isCenter()) {
-                    intakeSubsystem.setSpeed(.9);
+                    intakeSubsystem.setTopSpeed(0.4);
+                    intakeSubsystem.setBottomSpeed(0.7);
                     indexerSubsystem.rotateAllWheelsPercent(0.3);
                 } else if (indexerSubsystem.isCenter()) {
-                    intakeSubsystem.setSpeed(0);
+                   // intakeSubsystem.setSpeed(0);
                     try {
                         Thread.sleep(105);
                     } catch (InterruptedException e) {
@@ -68,6 +75,7 @@ public class IntakeCommand extends Command {
                     }
                     if (indexerSubsystem.isCenter()) {
                         indexerSubsystem.rotateAllWheelsPercent(0);
+                        intakeSubsystem.setSpeed(0.0);
                     }
 
                 }
