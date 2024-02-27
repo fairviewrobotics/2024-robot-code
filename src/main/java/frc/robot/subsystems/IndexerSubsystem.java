@@ -6,13 +6,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.networktables.DoubleEntry;
-import edu.wpi.first.networktables.DoubleSubscriber;
-import edu.wpi.first.networktables.DoubleTopic;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.IndexerConstants;
 import frc.robot.utils.MathUtils;
 import frc.robot.utils.NetworkTableUtils;
@@ -27,9 +22,9 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final AbsoluteEncoder indexerEncoder = indexerRotate.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
-    private final DigitalInput centerLimebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
+    private final DigitalInput centerLinebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
 
-    private final DigitalInput topLimebreak = new DigitalInput(IndexerConstants.topLimebreakID);
+    private final DigitalInput topLinebreak = new DigitalInput(IndexerConstants.topLimebreakID);
 
     private final NetworkTableUtils nt = new NetworkTableUtils("debug");
 
@@ -137,7 +132,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the limebreak is seeing something
      */
     public boolean isCenter() {
-        return !centerLimebreak.get();
+        return !centerLinebreak.get();
     }
 
     /**
@@ -145,7 +140,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the limebreak is seeing something
      */
     public boolean isTop() {
-        return !topLimebreak.get();
+        return !topLinebreak.get();
     }
 
     /**
