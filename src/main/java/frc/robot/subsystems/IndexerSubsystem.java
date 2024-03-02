@@ -13,16 +13,17 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.IndexerConstants;
+import frc.robot.utils.CANUtils;
 import frc.robot.utils.MathUtils;
 import frc.robot.utils.NetworkTableUtils;
 
 public class IndexerSubsystem extends SubsystemBase {
-    private final CANSparkMax topWheel = new CANSparkMax(IndexerConstants.topMotorID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax topWheel = CANUtils.configure(new CANSparkMax(IndexerConstants.topMotorID, CANSparkLowLevel.MotorType.kBrushless));
 
 
-    private final CANSparkMax bottomWheels = new CANSparkMax(IndexerConstants.bottomMotorID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax bottomWheels = CANUtils.configure(new CANSparkMax(IndexerConstants.bottomMotorID, CANSparkLowLevel.MotorType.kBrushless));
 
-    private final CANSparkMax indexerRotate = new CANSparkMax(IndexerConstants.indexerRotateID, CANSparkLowLevel.MotorType.kBrushless);
+    private final CANSparkMax indexerRotate = CANUtils.configure(new CANSparkMax(IndexerConstants.indexerRotateID, CANSparkLowLevel.MotorType.kBrushless));
 
     private final AbsoluteEncoder indexerEncoder = indexerRotate.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
@@ -165,11 +166,11 @@ public class IndexerSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
 
-        System.out.println("----------------------------------------------");
-        System.out.println("Current indexer position: " + getIndexerAngle());
-        System.out.println("Current indexer goal: " + indexerPID.getGoal().position);
-        System.out.println("Current indexer error: " + indexerPID.getPositionError());
-        System.out.println("----------------------------------------------");
+//        System.out.println("----------------------------------------------");
+//        System.out.println("Current indexer position: " + getIndexerAngle());
+//        System.out.println("Current indexer goal: " + indexerPID.getGoal().position);
+//        System.out.println("Current indexer error: " + indexerPID.getPositionError());
+//        System.out.println("----------------------------------------------");
 
         nt.setDouble("Current", getIndexerAngle());
         nt.setDouble("Goal", indexerPID.getGoal().position);

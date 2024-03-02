@@ -8,14 +8,12 @@ import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShooterConstants;
+import frc.robot.utils.CANUtils;
 import frc.robot.utils.MathUtils;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private final CANSparkFlex topMotor = new CANSparkFlex(ShooterConstants.shooterTopMotorID, CANSparkLowLevel.MotorType.kBrushless);
-    private final CANSparkFlex bottomMotor = new CANSparkFlex(ShooterConstants.shooterBottomMotorID, CANSparkLowLevel.MotorType.kBrushless);
-
-    private final PIDController shooterPID = new PIDController(ShooterConstants.shooterP,ShooterConstants.shooterI, ShooterConstants.shooterD);
-
+    private final CANSparkFlex topMotor = CANUtils.configure(new CANSparkFlex(ShooterConstants.shooterTopMotorID, CANSparkLowLevel.MotorType.kBrushless));
+    private final CANSparkFlex bottomMotor = CANUtils.configure(new CANSparkFlex(ShooterConstants.shooterBottomMotorID, CANSparkLowLevel.MotorType.kBrushless));
     private final DoubleEntry shooterSetpoint = NetworkTableInstance.getDefault()
             .getTable("Shooter").getDoubleTopic("Setpoint").getEntry(0.0);
 
@@ -42,10 +40,10 @@ public class ShooterSubsystem extends SubsystemBase {
      * @param speed target speed in rpm
      */
     public void setSpeed(double speed) {
-        topMotor.setVoltage(shooterPID.calculate(MathUtils.rpmToRadians(topMotor.getEncoder().getVelocity()), MathUtils.rpmToRadians(speed)) +
+        topMotor.setVoltage(ShooterConstants.shooterPID.calculate(MathUtils.rpmToRadians(topMotor.getEncoder().getVelocity()), MathUtils.rpmToRadians(speed)) +
                 ShooterConstants.shooterFF.calculate(MathUtils.rpmToRadians(speed)));
 
-        bottomMotor.setVoltage(shooterPID.calculate(MathUtils.rpmToRadians(bottomMotor.getEncoder().getVelocity()), MathUtils.rpmToRadians(speed)) +
+        bottomMotor.setVoltage(ShooterConstants.shooterPID.calculate(MathUtils.rpmToRadians(bottomMotor.getEncoder().getVelocity()), MathUtils.rpmToRadians(speed)) +
                 ShooterConstants.shooterFF.calculate(MathUtils.rpmToRadians(speed)));
 
         shooterSetpoint.set(speed);
@@ -90,5 +88,4 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterSpeedBottom.set(getBottomMotorRPM());
         shooterSpeedTop.set(getTopMotorRPM());
     }
-
 }

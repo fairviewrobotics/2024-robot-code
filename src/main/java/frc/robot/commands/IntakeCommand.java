@@ -45,8 +45,8 @@ public class IntakeCommand extends Command {
         if (source) {
             indexerSubsystem.moveIndexerToPos(Math.toRadians(140));
         } else {
-            indexerSubsystem.moveIndexerToPos(Math.toRadians(7.0));
-            indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_ROTATE, 0.0);
+//            indexerSubsystem.moveIndexerToPos(Math.toRadians(7.0));
+//            indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_ROTATE, 0.0);
         }
 
         switch (target) {
@@ -54,8 +54,8 @@ public class IntakeCommand extends Command {
                 if (!indexerSubsystem.isTop()) {
                     indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.TOP_WHEEL, 0.22);
                     indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.BOTTOM_WHEELS, -0.22);
-                    intakeSubsystem.setTopSpeed(0.4);
-                    intakeSubsystem.setBottomSpeed(0.7);
+                    intakeSubsystem.setTopSpeed(-0.4);
+                    intakeSubsystem.setBottomSpeed(-0.7);
                 } else if (indexerSubsystem.isTop()) {
                     indexerSubsystem.rotateAllWheelsPercent(0.0);
                     intakeSubsystem.setSpeed(0.0);
@@ -64,7 +64,7 @@ public class IntakeCommand extends Command {
             case SPEAKER -> {
                 if (!indexerSubsystem.isCenter()) {
                     intakeSubsystem.setTopSpeed(0.4);
-                    intakeSubsystem.setBottomSpeed(0.7);
+                    intakeSubsystem.setBottomSpeed(0.4);
                     indexerSubsystem.rotateAllWheelsPercent(0.3);
                 } else if (indexerSubsystem.isCenter()) {
                    // intakeSubsystem.setSpeed(0);
