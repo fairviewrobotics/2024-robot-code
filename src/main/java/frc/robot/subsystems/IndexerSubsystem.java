@@ -5,13 +5,9 @@ import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.networktables.DoubleEntry;
-import edu.wpi.first.networktables.DoubleSubscriber;
-import edu.wpi.first.networktables.DoubleTopic;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.IndexerConstants;
 import frc.robot.utils.CANUtils;
 import frc.robot.utils.MathUtils;
@@ -27,11 +23,14 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final AbsoluteEncoder indexerEncoder = indexerRotate.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
-    private final DigitalInput centerLimebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
+    private final DigitalInput centerLinebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
 
-    private final DigitalInput topLimebreak = new DigitalInput(IndexerConstants.topLimebreakID);
+    private final DigitalInput topLinebreak = new DigitalInput(IndexerConstants.topLimebreakID);
 
     private final NetworkTableUtils nt = new NetworkTableUtils("debug");
+
+    private Rotation2d indexerPosFirst = new Rotation2d(indexerEncoder.getPosition());
+    private double indexerPosRadians = indexerPosFirst.minus(new Rotation2d(IndexerConstants.posOffset)).getRadians();
 
 
 
@@ -46,14 +45,15 @@ public class IndexerSubsystem extends SubsystemBase {
     /**
      * Indexer subsystem for everything indexer related
      */
+
     public IndexerSubsystem() {
-        indexerPID.enableContinuousInput(0, 4.367);
+        indexerPID.enableContinuousInput(-Math.PI, Math.PI);
         indexerPID.setTolerance(0.02);
         indexerEncoder.setPositionConversionFactor((2.0 * Math.PI)/23 * 16);
         indexerEncoder.setVelocityConversionFactor((2.0 * Math.PI)/ 60.0);
         indexerEncoder.setInverted(true);
         indexerRotate.setInverted(false);
-        indexerRotate.setSmartCurrentLimit(1);
+//        indexerRotate.setSmartCurrentLimit(1);
 
 
     }
@@ -61,7 +61,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
     /**
      * rotateMotorVolts rotates one of the motors by setting the voltage applied to the motor
-     * @param motor The target motor, can be WHEEL_1, WHEEL_2, WHEEL_3, or INDEXER_POS
+     * @param motor The target motor, can be TOP_WHEEL, BOTTOM_WHEELS, or INDEXER_POS
      * @param volts The target voltage.
      */
     public void rotateMotorVolts(IndexerMotors motor, double volts) {
@@ -114,7 +114,8 @@ public class IndexerSubsystem extends SubsystemBase {
     public void moveIndexerToPos(double angle) {
         angle = MathUtils.inRange(angle, IndexerConstants.indexerMinAngle, IndexerConstants.indexerMaxAngle);
         rotateMotorVolts(IndexerMotors.INDEXER_ROTATE,
-                indexerPID.calculate(getIndexerAngle(), angle) + IndexerConstants.indexerFF.calculate(getIndexerAngle(), 0.0));
+                indexerPID.calculate(indexerPosRadians, angle) +
+                        IndexerConstants.indexerFF.calculate(indexerPosRadians, 0.0));
         //System.out.println(indexerEncoder.getPosition());
     }
  
@@ -132,7 +133,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the limebreak is seeing something
      */
     public boolean isCenter() {
-        return !centerLimebreak.get();
+        return !centerLinebreak.get();
     }
 
     /**
@@ -140,7 +141,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @return If the limebreak is seeing something
      */
     public boolean isTop() {
-        return !topLimebreak.get();
+        return !topLinebreak.get();
     }
 
     /**
@@ -165,6 +166,8 @@ public class IndexerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        indexerPosFirst = new Rotation2d(indexerEncoder.getPosition());
+        indexerPosRadians = indexerPosFirst.minus(new Rotation2d(IndexerConstants.posOffset)).getRadians();
 
 //        System.out.println("----------------------------------------------");
 //        System.out.println("Current indexer position: " + getIndexerAngle());
