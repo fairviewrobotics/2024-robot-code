@@ -21,6 +21,8 @@ public class IndexerConstants {
     public final static double indexerMinAngle = Math.toRadians(2.0);
     public final static double indexerMaxAngle = Math.toRadians(190.0);
 
+    //public final static double indexerPositionConversionFactor = ((2.0 * Math.PI) * 23/16 * 48);
+    //public final static double indexerVelocityConversionFactor = ((2.0 * Math.PI)/ 60.0);
     //public final static double maxIndexerAngle = Math.toDegrees(0.4);
     //public final static double minIndexerAngle = Math.toDegrees(-0.10);
 
