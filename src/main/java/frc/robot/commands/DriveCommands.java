@@ -35,11 +35,11 @@ public class DriveCommands extends Command {
     // Don't write javadoc for wpilib functions
     @Override
     public void execute() {
-        double forwardDesired = MathUtil.applyDeadband(forward.getAsDouble(), 0.06);
-        double sidewaysDesired = MathUtil.applyDeadband(sideways.getAsDouble(), 0.06);
-        double radiansDesired = MathUtil.applyDeadband(radians.getAsDouble(), 0.06);
+        double forwardDesired = MathUtil.applyDeadband(forward.getAsDouble(), 0.03);
+        double sidewaysDesired = MathUtil.applyDeadband(sideways.getAsDouble(), 0.03);
+        double radiansDesired = MathUtil.applyDeadband(radians.getAsDouble(), 0.03);
 
-        swerveSubsystem.drive(forwardDesired, sidewaysDesired, radiansDesired, fieldRelativeFromButton, true);
+        swerveSubsystem.drive(-forwardDesired, -sidewaysDesired, radiansDesired, fieldRelativeFromButton, true);
     }
 
     @Override

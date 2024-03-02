@@ -26,7 +26,8 @@ public class VisionUtils {
         String suffix = (useAlliance && DriverStation.getAlliance().isPresent()) ?
                 ((DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) ? "_wpiblue" : "_wpired") : "";
 
-        double[] returnedPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry(pose + suffix).getDoubleArray(new double[0]);
+
+        double[] returnedPose = NetworkTableInstance.getDefault().getTable("limelight-april").getEntry(pose + suffix).getDoubleArray(new double[0]);
         if (returnedPose.length == 0) return new Pose3d();
 
         return new Pose3d(
@@ -56,9 +57,11 @@ public class VisionUtils {
      * @return The distance (in meters) from the AprilTag
      */
     public static double getDistanceFromTag() {
+
         Pose3d returnedPose = getBotPoseTargetSpace();
 
         return -returnedPose.getZ();
+
     }
 
     /**
@@ -66,7 +69,7 @@ public class VisionUtils {
      * @return The latency
      */
     public static double getLatencyPipeline() {
-        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tl").getDouble(0.0);
+        return NetworkTableInstance.getDefault().getTable("limelight_april").getEntry("tl").getDouble(0.0);
     }
 
     /**
@@ -74,7 +77,7 @@ public class VisionUtils {
      * @return The latency
      */
     public static double getLatencyCapture() {
-        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("cl").getDouble(0.0);
+        return NetworkTableInstance.getDefault().getTable("limelight_april").getEntry("cl").getDouble(0.0);
     }
 
     public static double getNoteTX(){

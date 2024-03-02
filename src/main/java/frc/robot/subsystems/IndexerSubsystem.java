@@ -27,7 +27,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final DigitalInput topLinebreak = new DigitalInput(IndexerConstants.topLimebreakID);
 
-    private final NetworkTableUtils nt = new NetworkTableUtils("debug");
+    private final NetworkTableUtils nt = new NetworkTableUtils("Indexer");
 
     private Rotation2d indexerPosFirst = new Rotation2d(indexerEncoder.getPosition());
     private double indexerPosRadians = indexerPosFirst.minus(new Rotation2d(IndexerConstants.posOffset)).getRadians();
@@ -166,18 +166,18 @@ public class IndexerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        indexerPosFirst = new Rotation2d(indexerEncoder.getPosition());
-        indexerPosRadians = indexerPosFirst.minus(new Rotation2d(IndexerConstants.posOffset)).getRadians();
+//        indexerPosFirst = new Rotation2d(indexerEncoder.getPosition());
+//        indexerPosRadians = indexerPosFirst.minus(new Rotation2d(IndexerConstants.posOffset)).getRadians();
+//
+////        System.out.println("----------------------------------------------");
+////        System.out.println("Current indexer position: " + getIndexerAngle());
+////        System.out.println("Current indexer goal: " + indexerPID.getGoal().position);
+////        System.out.println("Current indexer error: " + indexerPID.getPositionError());
+////        System.out.println("----------------------------------------------");
+//
+//        nt.setEntry("Top Linebreak", isTop());
+//        nt.setEntry("Center Linebreak", isCenter());
 
-//        System.out.println("----------------------------------------------");
-//        System.out.println("Current indexer position: " + getIndexerAngle());
-//        System.out.println("Current indexer goal: " + indexerPID.getGoal().position);
-//        System.out.println("Current indexer error: " + indexerPID.getPositionError());
-//        System.out.println("----------------------------------------------");
-
-        nt.setDouble("Current", getIndexerAngle());
-        nt.setDouble("Goal", indexerPID.getGoal().position);
-        nt.setDouble("Error", indexerPID.getPositionError());
 
     }
 }

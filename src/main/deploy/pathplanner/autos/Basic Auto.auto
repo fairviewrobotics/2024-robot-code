@@ -1,12 +1,6 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 1.448713652056934,
-      "y": 1.6820031232655064
-    },
-    "rotation": 180.0
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
@@ -15,6 +9,19 @@
           "type": "path",
           "data": {
             "pathName": "Basic Path"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoSpinUp"
+                }
+              }
+            ]
           }
         }
       ]
