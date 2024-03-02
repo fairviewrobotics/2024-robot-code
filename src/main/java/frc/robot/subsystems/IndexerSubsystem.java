@@ -48,8 +48,8 @@ public class IndexerSubsystem extends SubsystemBase {
     public IndexerSubsystem() {
         indexerPID.enableContinuousInput(0, 4.367);
         indexerPID.setTolerance(0.02);
-        indexerEncoder.setPositionConversionFactor((2.0 * Math.PI)/23 * 16);
-        indexerEncoder.setVelocityConversionFactor((2.0 * Math.PI)/ 60.0);
+        indexerEncoder.setPositionConversionFactor((2.0 * Math.PI)/23 * 16); //use constants
+        indexerEncoder.setVelocityConversionFactor((2.0 * Math.PI)/ 60.0); //use constants
         indexerEncoder.setInverted(true);
         indexerRotate.setInverted(false);
         indexerRotate.setSmartCurrentLimit(1);

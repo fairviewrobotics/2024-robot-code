@@ -7,7 +7,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.constants.DrivetrainConstants;
 
 public class SwerveModuleControlller {
-    private final CANSparkMax drivingMotor;
+    private final CANSparkFlex drivingMotor;
     private final CANSparkMax turningMotor;
     private final RelativeEncoder drivingEncoder;
     private final AbsoluteEncoder turningEncoder;
@@ -25,7 +25,7 @@ public class SwerveModuleControlller {
     public SwerveModuleControlller(int drivingPort, int turningPort, double chassisAngularOffset) {
 
         this.chassisAngularOffset = chassisAngularOffset;
-        drivingMotor = new CANSparkMax(drivingPort, CANSparkLowLevel.MotorType.kBrushless);
+        drivingMotor = new CANSparkFlex(drivingPort, CANSparkLowLevel.MotorType.kBrushless);
         turningMotor = new CANSparkMax(turningPort, CANSparkLowLevel.MotorType.kBrushless);
 //        drivingEncoder = drivingMotor.getEncoder();
         drivingEncoder = drivingMotor.getEncoder();
