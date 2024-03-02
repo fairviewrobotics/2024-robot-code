@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DrivetrainConstants;
+import frc.robot.constants.ShooterConstants;
 import frc.robot.controllers.SwerveModuleControlller;
 import frc.robot.utils.NetworkTableUtils;
 import frc.robot.utils.SwerveUtils;
@@ -348,6 +349,9 @@ public class SwerveSubsystem extends SubsystemBase {
 //        if (aboveMinPoints && belowMaxPoints) {
 //            xSpeedCommanded /= 2;
 //            ySpeedCommanded /= 2;
+//        }
+//        if (ShooterConstants.shooterPID.getSetpoint() != 0 && ShooterConstants.isActive) {
+//            forwardMetersPerSecond = forwardMetersPerSecond;
 //        }
 
         double xSpeedCommanded;

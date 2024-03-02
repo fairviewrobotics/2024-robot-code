@@ -51,7 +51,13 @@ public class SpinUpCommand extends Command {
     }
 
     @Override
+    public void initialize() {
+        ShooterConstants.isActive = true;
+    }
+
+    @Override
     public void end(boolean interrupted) {
+        ShooterConstants.isActive = false;
         shooterSubsystem.setVoltage(0);
     }
 }

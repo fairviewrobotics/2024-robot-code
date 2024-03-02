@@ -1,6 +1,7 @@
 package frc.robot.constants;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -17,6 +18,8 @@ public class ShooterConstants {
 
     public static final SimpleMotorFeedforward shooterFF = new SimpleMotorFeedforward(0.25, 0.0175, 0.0);
 
+    public static final PIDController shooterPID = new PIDController(ShooterConstants.shooterP,ShooterConstants.shooterI, ShooterConstants.shooterD);
+    public static boolean isActive = false;
     public static final double shooterRPM = 4500;
     public static final double shooterWheelDiameterInches = 4.0;
     public static final double shooterWheelDiameterMeters = shooterWheelDiameterInches/39.37;
