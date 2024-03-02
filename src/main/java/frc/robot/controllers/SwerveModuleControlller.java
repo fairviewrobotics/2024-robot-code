@@ -106,8 +106,8 @@ public class SwerveModuleControlller {
                 new Rotation2d(turningEncoder.getPosition()));
 
         // Command driving and turning SPARKS MAX towards their respective setpoints.
-        drivingPID.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
-        turningPID.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
+        drivingPID.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkBase.ControlType.kVelocity);
+        turningPID.setReference(optimizedDesiredState.angle.getRadians(), CANSparkBase.ControlType.kPosition);
 
         m_desiredState = desiredState;
 

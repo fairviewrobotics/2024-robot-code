@@ -17,6 +17,7 @@ public class IndexerConstants {
     public final static double indexerI = 0.0;
     public final static double indexerD = 0.0;
 
+    public final static double posOffset = 0.0;
     public final static double indexerMinAngle = Math.toRadians(2.0);
     public final static double indexerMaxAngle = Math.toRadians(190.0);
 

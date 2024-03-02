@@ -30,7 +30,7 @@ public class DrivetrainConstants {
     public static final double frontLeftChassisAngularOffset = 1.029 + Math.PI/2;
     public static final double frontRightChassisAngularOffset = 5.0268 - Math.PI;
     public static final double rearLeftChassisAngularOffset = 0.8645;
-    public static final double rearRightChassisAngularOffset = 5.399 - Math.PI/2;
+    public static final double rearRightChassisAngularOffset = 5.449 - Math.PI/2;
 
     public static final int frontLeftDrivingPort = 7;
     public static final int rearLeftDrivingPort = 5;
