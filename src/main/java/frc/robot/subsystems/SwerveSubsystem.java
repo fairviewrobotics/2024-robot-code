@@ -146,21 +146,25 @@ public class SwerveSubsystem extends SubsystemBase {
     public SwerveSubsystem() {
         // PathPlanner stuff
         AutoBuilder.configureHolonomic(
-                this::getPathplannerPose,
+                this::getPose,
                 this::resetOdometry,
                 this::getRobotRelativeSpeeds,
                 this::driveRobotRelative,
                 new HolonomicPathFollowerConfig(
                         new PIDConstants(1.0, 0.0, 0.0),
                         new PIDConstants(1.0, 0.0, 0.0),
-                        1.5,
-                         Units.inchesToMeters(11.875),
-                        new ReplanningConfig(true, false)
+                        1.5, //swervesubsystem.setmodulestate
+                        0.301625,//11.875 meters
+                        new ReplanningConfig()
                 ),
-//                () -> DriverStation.getAlliance().filter(value -> value == DriverStation.Alliance.Red).isPresent(),
-                () -> true,
+                () -> {
+                    var alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                },
                 this
-
         );
 
 
@@ -295,11 +299,19 @@ public class SwerveSubsystem extends SubsystemBase {
      * @param chassisSpeeds {@link ChassisSpeeds} object
      */
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
-        double forward = -chassisSpeeds.vxMetersPerSecond;
-        double sideways = -chassisSpeeds.vyMetersPerSecond;
-        double rotation = chassisSpeeds.omegaRadiansPerSecond;
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            double forward = -chassisSpeeds.vxMetersPerSecond;
+            double sideways = -chassisSpeeds.vyMetersPerSecond;
+            double rotation = chassisSpeeds.omegaRadiansPerSecond;
 
-        drive(-forward, -sideways, rotation, false, true);
+            drive(-forward, -sideways, rotation, false, true);
+        } else {
+            double forward = -chassisSpeeds.vxMetersPerSecond;
+            double sideways = -chassisSpeeds.vyMetersPerSecond;
+            double rotation = chassisSpeeds.omegaRadiansPerSecond;
+
+            drive(-forward, -sideways, rotation, false, true);
+        }
     }
 
     /**

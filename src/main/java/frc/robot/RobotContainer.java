@@ -48,7 +48,7 @@ public class RobotContainer {
   public ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
-  private boolean isRed = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red);
+//  private boolean isRed = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red);
 
 
 
@@ -56,24 +56,32 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    configureButtonBindings();
+    //configureButtonBindings();
+
+//    indexerSubsystem = new IndexerSubsystem();
+//    shooterSubsystem = new ShooterSubsystem();
+//    intakeSubsystem = new IntakeSubsystem();
+
+//FOR ALL: tune timeouts
+
+    NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem, false).withTimeout(3.0));
+    NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem, false).withTimeout(1.5));
+
+    NamedCommands.registerCommand("IntakeCommand", new IntakeCommand(intakeSubsystem, indexerSubsystem, IntakeCommand.Targets.SPEAKER, false).withTimeout(1.5));
+
+    NamedCommands.registerCommand("AutoShoot", new AutoShoot(indexerSubsystem).withTimeout(1.5));
 
     superSecretMissileTech = AutoBuilder.buildAutoChooser();
-
     SmartDashboard.putData("Auto Chooser", superSecretMissileTech);
 
-    NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem, false));
-    NamedCommands.registerCommand("BaseCommand", new BaseCommand(indexerSubsystem));
-    NamedCommands.registerCommand("IntakeCommand", new IntakeCommand(intakeSubsystem, indexerSubsystem, IntakeCommand.Targets.SPEAKER, false));
-    NamedCommands.registerCommand("AutoRotateAndShoot", new AutoRotateToSpeakerAndShoot(swerveSubsystem, indexerSubsystem));
-    NamedCommands.registerCommand("AutoShoot", new AutoShoot(indexerSubsystem));
+    configureButtonBindings();
   }
 
   public void configureButtonBindings() {
 
     //DEFAULT COMMANDS
 
-    //indexerSubsystem.setDefaultCommand(new BaseCommand(indexerSubsystem));
+
 
     // PRIMARY CONTROLLER
 

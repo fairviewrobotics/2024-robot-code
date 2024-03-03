@@ -25,7 +25,7 @@ public class SwerveModuleControlller {
     public SwerveModuleControlller(int drivingPort, int turningPort, double chassisAngularOffset) {
 
         this.chassisAngularOffset = chassisAngularOffset;
-        drivingMotor = new CANSparkFlex(drivingPort, CANSparkLowLevel.MotorType.kBrushless);
+        drivingMotor = new CANSparkFlex(drivingPort, CANSparkFlex.MotorType.kBrushless);
         turningMotor = new CANSparkMax(turningPort, CANSparkLowLevel.MotorType.kBrushless);
 //        drivingEncoder = drivingMotor.getEncoder();
         drivingEncoder = drivingMotor.getEncoder();
