@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.08,
-      "y": 1.74
+      "x": 0.51,
+      "y": 2.03
     },
     "rotation": 0
   },
@@ -15,38 +15,6 @@
           "type": "path",
           "data": {
             "pathName": "Basic Path"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoSpinUp"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeCommand"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoSpinForShoot"
-                }
-              }
-            ]
           }
         }
       ]

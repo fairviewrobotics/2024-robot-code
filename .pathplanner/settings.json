@@ -8,7 +8,11 @@
     "FrontFromStart",
     "Shoot"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Center",
+    "Amp",
+    "Source"
+  ],
   "defaultMaxVel": 6.5,
   "defaultMaxAccel": 3.5,
   "defaultMaxAngVel": 540.0,

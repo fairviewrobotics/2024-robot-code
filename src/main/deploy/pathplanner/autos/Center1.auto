@@ -38,13 +38,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AutoRotateAndShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
+                              "name": "AutoShoot"
                             }
                           }
                         ]
@@ -59,6 +53,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Center",
   "choreoAuto": false
 }

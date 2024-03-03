@@ -64,7 +64,7 @@ public class RobotContainer {
 
 //FOR ALL: tune timeouts
 
-    NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem, indexerSubsystem, false).withTimeout(3.0));
+    NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem, indexerSubsystem, false).withTimeout(15.0));
     NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem, indexerSubsystem, false).withTimeout(1.5));
 
     NamedCommands.registerCommand("IntakeCommand", new IntakeCommand(intakeSubsystem, indexerSubsystem, IntakeCommand.Targets.SPEAKER, false).withTimeout(1.5));

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.392941927563015,
-      "y": 5.493265083231815
+      "x": 1.3741268732537468,
+      "y": 5.543591073293259
     },
-    "rotation": 1.2649112786590153
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -32,16 +32,9 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoShoot"
-                            }
-                          }
-                        ]
+                        "name": "AutoShoot"
                       }
                     },
                     {
@@ -66,7 +59,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "AmpShoot"
+                        "pathName": "InitialShootCenter"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoShoot"
                       }
                     },
                     {
@@ -76,10 +75,59 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AutoShoot"
+                              "name": "IntakeCommand"
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Front1FromShoot"
                             }
                           }
                         ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "AmpShoot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoShoot"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeCommand"
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Front3FromShoot"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "InitialShootRight"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoShoot"
                       }
                     },
                     {
@@ -108,54 +156,9 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoShoot"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "parallel",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "IntakeCommand"
-                            }
-                          },
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Back3"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "StageShoot"
-                      }
-                    },
-                    {
-                      "type": "parallel",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoShoot"
-                            }
-                          }
-                        ]
+                        "name": "AutoShoot"
                       }
                     }
                   ]

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.75,
-      "y": 4.55
+      "x": 0.7996424002107265,
+      "y": 6.654613401819397
     },
-    "rotation": 120.0
+    "rotation": 63.22185660754615
   },
   "command": {
     "type": "sequential",
@@ -28,7 +28,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "InitialShootRight"
+                        "pathName": "InitialShootLeft"
                       }
                     },
                     {
@@ -38,13 +38,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AutoRotateAndShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
+                              "name": "AutoShoot"
                             }
                           }
                         ]
@@ -63,7 +57,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Back1"
+                              "pathName": "Front2FromShoot"
                             }
                           }
                         ]
@@ -72,7 +66,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Shoot"
+                        "pathName": "AmpShoot"
                       }
                     },
                     {
@@ -82,13 +76,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AutoRotateAndShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
+                              "name": "AutoShoot"
                             }
                           }
                         ]
@@ -107,7 +95,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Back2"
+                              "pathName": "Front1FromShoot"
                             }
                           }
                         ]
@@ -116,7 +104,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Shoot"
+                        "pathName": "AmpShoot"
                       }
                     },
                     {
@@ -126,57 +114,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AutoRotateAndShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "parallel",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "IntakeCommand"
-                            }
-                          },
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Back3"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Shoot"
-                      }
-                    },
-                    {
-                      "type": "parallel",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoRotateAndShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
+                              "name": "AutoShoot"
                             }
                           }
                         ]
@@ -191,6 +129,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Amp",
   "choreoAuto": false
 }

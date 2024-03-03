@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.75,
-      "y": 6.55
+      "x": 1.3684259729630575,
+      "y": 5.486344532874251
     },
-    "rotation": -120.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -28,26 +28,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "InitialShootLeft"
+                        "pathName": "InitialShootCenter"
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoRotateAndShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
-                            }
-                          }
-                        ]
+                        "name": "AutoShoot"
                       }
                     },
                     {
@@ -63,7 +50,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Back1"
+                              "pathName": "Front2FromShoot"
                             }
                           }
                         ]
@@ -72,26 +59,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Shoot"
+                        "pathName": "InitialShootCenter"
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoRotateAndShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
-                            }
-                          }
-                        ]
+                        "name": "AutoShoot"
                       }
                     },
                     {
@@ -107,7 +81,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Back2"
+                              "pathName": "Front1FromShoot"
                             }
                           }
                         ]
@@ -116,7 +90,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Shoot"
+                        "pathName": "AmpShoot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoShoot"
                       }
                     },
                     {
@@ -126,16 +106,28 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AutoRotateAndShoot"
+                              "name": "IntakeCommand"
                             }
                           },
                           {
-                            "type": "wait",
+                            "type": "path",
                             "data": {
-                              "waitTime": 1.0
+                              "pathName": "Front3FromShoot"
                             }
                           }
                         ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "InitialShootRight"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoShoot"
                       }
                     }
                   ]
@@ -147,6 +139,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Center",
   "choreoAuto": false
 }
