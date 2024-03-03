@@ -64,8 +64,8 @@ public class RobotContainer {
 
 //FOR ALL: tune timeouts
 
-    NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem, false).withTimeout(3.0));
-    NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem, false).withTimeout(1.5));
+    NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem, indexerSubsystem, false).withTimeout(15.0));
+    NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem, indexerSubsystem, false).withTimeout(1.5));
 
     NamedCommands.registerCommand("IntakeCommand", new IntakeCommand(intakeSubsystem, indexerSubsystem, IntakeCommand.Targets.SPEAKER, false).withTimeout(1.5));
 
@@ -81,6 +81,8 @@ public class RobotContainer {
 
     //DEFAULT COMMANDS
 
+    //Test!!:
+//    shooterSubsystem.setDefaultCommand(new SpinUpCommand(shooterSubsystem, indexerSubsystem, true));
 
 
     // PRIMARY CONTROLLER
@@ -176,7 +178,7 @@ public class RobotContainer {
 
 
     new JoystickButton(secondaryController, XboxController.Button.kRightBumper.value).whileTrue(
-            new SpinUpCommand(shooterSubsystem, false)
+            new SpinUpCommand(shooterSubsystem, indexerSubsystem, false)
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kLeftBumper.value).whileTrue(

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.75,
-      "y": 6.55
+      "x": 0.7834304650090783,
+      "y": 4.419504181600956
     },
-    "rotation": -120.0
+    "rotation": -60.59807475383338
   },
   "command": {
     "type": "sequential",
@@ -28,7 +28,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "InitialShootLeft"
+                        "pathName": "InitialShootRight"
                       }
                     },
                     {
@@ -38,13 +38,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "AutoRotateAndShoot"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
+                              "name": "AutoShoot"
                             }
                           }
                         ]
@@ -59,6 +53,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Source",
   "choreoAuto": false
 }
