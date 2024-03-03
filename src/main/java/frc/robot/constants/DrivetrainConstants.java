@@ -7,15 +7,15 @@ import edu.wpi.first.math.util.Units;
 
 public class DrivetrainConstants {
 
-    public static final double maxSpeedMetersPerSecond = 6.5; //note, maybe it needs to come down, if its too high it will stop working or something, troubleshoot from coronado
+    public static final double maxSpeedMetersPerSecond = 1.5; //note, maybe it needs to come down, if its too high it will stop working or something, troubleshoot from coronado
     public static final double maxAngularSpeed = Math.PI;
 
     public static final double directionSlewRate = 3.0; // rads/sec - turning was 4.0
     public static final double magnitudeSlewRate = 4.0; // percent/second (1 = 100%) - forward/backward/traverse
     public static final double rotationalSlewRate = 10.0; // percent/second (1 = 100%) - rotation was 12.0
 
-    public static final double drivingSpeedScalar = 1.0;
-    public static final double rotationSpeedScalar = 2.0;
+    public static final double drivingSpeedScalar = -1.0;
+    public static final double rotationSpeedScalar = -2.0;
 
     public static final double trackWidth = Units.inchesToMeters(18);
     public static final double wheelBase = Units.inchesToMeters(22.5);
@@ -27,10 +27,10 @@ public class DrivetrainConstants {
             new Translation2d(-wheelBase / 2, -trackWidth / 2)
     );
 
-    public static final double frontLeftChassisAngularOffset = 1.029 + Math.PI/2;
-    public static final double frontRightChassisAngularOffset = 5.0268 - Math.PI;
-    public static final double rearLeftChassisAngularOffset = 0.8645;
-    public static final double rearRightChassisAngularOffset = 5.449 - Math.PI/2;
+    public static final double frontLeftChassisAngularOffset = 1.029 + Math.PI/2 + Math.PI;
+    public static final double frontRightChassisAngularOffset = 5.0268 - Math.PI + Math.PI;
+    public static final double rearLeftChassisAngularOffset = 0.8645 + Math.PI;
+    public static final double rearRightChassisAngularOffset = 5.449 - Math.PI/2 + Math.PI;
 
     public static final int frontLeftDrivingPort = 7;
     public static final int rearLeftDrivingPort = 5;

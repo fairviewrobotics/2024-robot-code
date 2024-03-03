@@ -146,24 +146,25 @@ public class SwerveSubsystem extends SubsystemBase {
     public SwerveSubsystem() {
         // PathPlanner stuff
         AutoBuilder.configureHolonomic(
-                this::getPose,
+                this::getPathplannerPose,
                 this::resetOdometry,
                 this::getRobotRelativeSpeeds,
                 this::driveRobotRelative,
                 new HolonomicPathFollowerConfig(
-                        new PIDConstants(0.2, 0.0, 0.0),
-                        new PIDConstants(0.2, 0.0, 0.0),
-                        0.4,
-                         Units.inchesToMeters(14.4),
-                        new ReplanningConfig()
+                        new PIDConstants(1.0, 0.0, 0.0),
+                        new PIDConstants(1.0, 0.0, 0.0),
+                        1.5,
+                         Units.inchesToMeters(11.875),
+                        new ReplanningConfig(true, false)
                 ),
-            () -> DriverStation.getAlliance().filter(value -> value != DriverStation.Alliance.Red).isPresent(),
+//                () -> DriverStation.getAlliance().filter(value -> value == DriverStation.Alliance.Red).isPresent(),
+                () -> true,
                 this
 
         );
 
 
-        gyro.setAngleAdjustment(180);
+        gyro.setAngleAdjustment(0);
     }
 
 
@@ -184,26 +185,38 @@ public class SwerveSubsystem extends SubsystemBase {
         // Add vision measurement to odometry
         Pose3d visionMeasurement = VisionUtils.getBotPoseFieldSpace();
 
-        if ((visionMeasurement.getY() != 0 || visionMeasurement.getX() != 0) && VisionUtils.getDistanceFromTag() > 3) {
-//            distanceToTag = VisionUtils.getDistanceFromTag();
+//        System.out.println(visionMeasurement.getY());
+//        System.out.println(visionMeasurement.getX());
 //
-//            double visionTrust = 0.075 * Math.pow(distanceToTag, 2.5);
-//            double rotationVisionTrust = Math.pow(distanceToTag, 2.5) / 5;
-//
-//            if (distanceToTag < 3) {
-//                poseEstimator.setVisionMeasurementStdDevs(
-//                        VecBuilder.fill(
-//                                visionTrust,
-//                                visionTrust,
-//                                Units.degreesToRadians(20 * ((distanceToTag < 1.5) ? rotationVisionTrust : 9999))
-//                        )
-//                );
-//            } else {
-//                // If we're 3 meters away, limelight is too unreliable. Don't trust it!
-//                poseEstimator.setVisionMeasurementStdDevs(
-//                        VecBuilder.fill(9999, 9999, 9999)
-//                );
-//            }
+//        System.out.println(VisionUtils.getDistanceFromTag());
+
+
+        if ((visionMeasurement.getY() != 0 || visionMeasurement.getX() != 0) && VisionUtils.getDistanceFromTag() < 3) {
+            distanceToTag = VisionUtils.getDistanceFromTag();
+           // System.out.println(distanceToTag);
+
+
+            double visionTrust = 0.075 * Math.pow(distanceToTag, 2.5);
+            double rotationVisionTrust = Math.pow(distanceToTag, 2.5) / 5;
+
+            if (distanceToTag < 3) {
+                poseEstimator.setVisionMeasurementStdDevs(
+                        VecBuilder.fill(
+                                visionTrust,
+                                visionTrust,
+                                Units.degreesToRadians(20 * ((distanceToTag < 2.0) ? rotationVisionTrust : 9999))
+                        )
+
+                );
+                //System.out.println(visionTrust);
+            } else {
+
+
+                // If we're 3 meters away, limelight is too unreliable. Don't trust it!
+                poseEstimator.setVisionMeasurementStdDevs(
+                        VecBuilder.fill(9999, 9999, 9999)
+                );
+            }
 
             poseEstimator.addVisionMeasurement(
                     new Pose2d(
@@ -238,6 +251,7 @@ public class SwerveSubsystem extends SubsystemBase {
         });
 
         gyroHeading.set(heading());
+
     }
 
     // Define robot pose
@@ -249,13 +263,23 @@ public class SwerveSubsystem extends SubsystemBase {
     public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
     }
+//make if statement if blue, keep pose the same, if red, make pose negative x negative y
 
+    public Pose2d getPathplannerPose() {
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            double newX = poseEstimator.getEstimatedPosition().getX();
+            double newY = 16.59128 - poseEstimator.getEstimatedPosition().getY();
+            Rotation2d newRot = poseEstimator.getEstimatedPosition().getRotation();
+
+            return new Pose2d(newX, newY, newRot);
+        } else { return poseEstimator.getEstimatedPosition(); }
+    }
     /**
      * Get current heading of robot
      * @return Heading of robot in radians
      */
     public double heading() {
-        return Units.degreesToRadians(-1 * (gyro.getAngle() + 180.0) % 360.0);
+        return Units.degreesToRadians(-1 * (gyro.getAngle() + 0.0) % 360.0);
     }
 
     /**
@@ -272,10 +296,10 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
         double forward = -chassisSpeeds.vxMetersPerSecond;
-        double sideways = chassisSpeeds.vyMetersPerSecond;
+        double sideways = -chassisSpeeds.vyMetersPerSecond;
         double rotation = chassisSpeeds.omegaRadiansPerSecond;
 
-        drive(forward, sideways, rotation, true, true);
+        drive(-forward, -sideways, rotation, false, true);
     }
 
     /**

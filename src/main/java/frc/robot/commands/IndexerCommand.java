@@ -108,11 +108,11 @@ public class IndexerCommand extends Command {
 
                 //Execute shoot
                 if (difference < 0.4){
-                    indexerSubsystem.rotateAllWheelsPercent(1.0);
+                    indexerSubsystem.rotateAllWheelsPercent(0.6);
                     System.out.println("Shooting!!!!!");
                 }
 
-                System.out.println("----------------------------------------");
+
             }
         }
     }
