@@ -20,7 +20,7 @@ public class ShooterConstants {
 
     public static final PIDController shooterPID = new PIDController(ShooterConstants.shooterP,ShooterConstants.shooterI, ShooterConstants.shooterD);
     public static boolean isActive = false;
-    public static final double shooterRPM = 6000;
+    public static final double shooterRPM = 1000;
     public static final double shooterWheelDiameterInches = 4.0;
     public static final double shooterWheelDiameterMeters = shooterWheelDiameterInches/39.37;
     public static final double shooterAngle = Math.toRadians(38);
