@@ -15,13 +15,13 @@ public class ClimbCommand extends Command {
 
     private RelativeEncoder rightEncoder;
 
-    private Mode mode;
+    private Climb climb;
 
     private boolean isIndexer;
 
-    public ClimbCommand(ClimberSubsystem climberSubsystem, Mode mode) {
+    public ClimbCommand(ClimberSubsystem climberSubsystem, Climb climb) {
         this.climberSubsystem = climberSubsystem;
-        this.mode = mode;
+        this.climb = climb;
 
         this.leftEncoder = climberSubsystem.getLeftEncoder();
         this.rightEncoder = climberSubsystem.getRightEncoder();
@@ -30,10 +30,10 @@ public class ClimbCommand extends Command {
         addRequirements(climberSubsystem);
     }
 
-    public ClimbCommand(IndexerSubsystem indexerSubsystem, Mode mode) {
+    public ClimbCommand(IndexerSubsystem indexerSubsystem, Climb climb) {
         this.indexerSubsystem = indexerSubsystem;
 
-        this.mode = mode;
+        this.climb = climb;
         this.isIndexer = false;
 
         addRequirements(indexerSubsystem);
@@ -41,7 +41,7 @@ public class ClimbCommand extends Command {
 
     @Override
     public void execute() {
-        switch (mode) {
+        switch (climb) {
             case EXTEND -> {
                 if (isIndexer) {
                     indexerSubsystem.moveIndexerToPos(90);
@@ -74,7 +74,7 @@ public class ClimbCommand extends Command {
         }
     }
 
-    public enum Mode {
+    public enum Climb {
         EXTEND,
         RETRACT
     }

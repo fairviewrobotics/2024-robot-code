@@ -6,15 +6,11 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -24,7 +20,6 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.constants.*;
 
 
 /**
@@ -48,32 +43,25 @@ public class RobotContainer {
   public ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
-//  private boolean isRed = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red);
-
 
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    //configureButtonBindings();
 
-//    indexerSubsystem = new IndexerSubsystem();
-//    shooterSubsystem = new ShooterSubsystem();
-//    intakeSubsystem = new IntakeSubsystem();
 
 //FOR ALL: tune timeouts
 
-    NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem, indexerSubsystem, false).withTimeout(15.0));
-    NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem, indexerSubsystem, false).withTimeout(1.5));
-
-    NamedCommands.registerCommand("IntakeCommand", new IntakeCommand(intakeSubsystem, indexerSubsystem, IntakeCommand.Targets.SPEAKER, false).withTimeout(1.5));
-
-    NamedCommands.registerCommand("AutoShoot", new AutoShoot(indexerSubsystem).withTimeout(1.5));
-
+    NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem).withTimeout(15.0));
+    NamedCommands.registerCommand("IntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(1.5));
+    NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem).withTimeout(1.5));
+    NamedCommands.registerCommand("AutoShoot", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.SHOOT).withTimeout(1.5));
+//
     superSecretMissileTech = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", superSecretMissileTech);
 
+    // Configure the button bindings
     configureButtonBindings();
   }
 
@@ -82,7 +70,7 @@ public class RobotContainer {
     //DEFAULT COMMANDS
 
     //Test!!:
-//    shooterSubsystem.setDefaultCommand(new SpinUpCommand(shooterSubsystem, indexerSubsystem, true));
+    shooterSubsystem.setDefaultCommand(new AdvancedSpinUp(shooterSubsystem, indexerSubsystem));
 
 
     // PRIMARY CONTROLLER
@@ -178,7 +166,7 @@ public class RobotContainer {
 
 
     new JoystickButton(secondaryController, XboxController.Button.kRightBumper.value).whileTrue(
-            new SpinUpCommand(shooterSubsystem, indexerSubsystem, false)
+            new SpinUpCommand(shooterSubsystem)
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kLeftBumper.value).whileTrue(

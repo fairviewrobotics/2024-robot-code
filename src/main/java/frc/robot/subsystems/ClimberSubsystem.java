@@ -13,7 +13,7 @@ import frc.robot.commands.DriveCommands;
 
 public class ClimberSubsystem extends SubsystemBase {
     private final CANSparkMax leftSide = new CANSparkMax(ClimberConstants.leftSideID, CANSparkLowLevel.MotorType.kBrushless);
-    private CANSparkMax rightSide = new CANSparkMax(ClimberConstants.leftSideID, CANSparkLowLevel.MotorType.kBrushless);
+    private CANSparkMax rightSide = new CANSparkMax(ClimberConstants.rightSideID, CANSparkLowLevel.MotorType.kBrushless);
     private final RelativeEncoder leftSideEncoder = leftSide.getEncoder();
     private final RelativeEncoder rightSideEncoder = rightSide.getEncoder();
 
@@ -29,7 +29,7 @@ public class ClimberSubsystem extends SubsystemBase {
      * Extends the climber
      */
     public void extend() {
-        //rightSide.set(0.1);
+        rightSide.set(0.1);
         leftSide.set(0.1);
     }
 
@@ -37,7 +37,7 @@ public class ClimberSubsystem extends SubsystemBase {
      * Retracts the climber back down
      */
     public void retract() {
-        //rightSide.set(-0.1);
+        rightSide.set(-0.1);
         leftSide.set(-0.1);
     }
 
@@ -47,9 +47,9 @@ public class ClimberSubsystem extends SubsystemBase {
      */
     public void hold() {
         leftSide.set(0.0);
-        //rightSide.set(0.0);
+        rightSide.set(0.0);
         leftSide.setIdleMode(CANSparkBase.IdleMode.kBrake);
-        //rightSide.setIdleMode(CANSparkBase.IdleMode.kBrake);
+        rightSide.setIdleMode(CANSparkBase.IdleMode.kBrake);
     }
 
 }

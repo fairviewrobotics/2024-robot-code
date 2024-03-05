@@ -141,7 +141,7 @@ public class SwerveSubsystem extends SubsystemBase {
             .getTable("Swerve").getDoubleTopic("rlpos").getEntry(rearLeft.getPosition().angle.getRadians());
 
     /**
-     * This subsystems manages all of the swerve drive logic and also give data to odometry
+     * This subsystems manages all of the swerve drive logic and also gives data to odometry
      */
     public SwerveSubsystem() {
         // PathPlanner stuff
@@ -153,7 +153,7 @@ public class SwerveSubsystem extends SubsystemBase {
                 new HolonomicPathFollowerConfig(
                         new PIDConstants(1.0, 0.0, 0.0),
                         new PIDConstants(1.0, 0.0, 0.0),
-                        1.5, //swervesubsystem.setmodulestate
+                        6.7, //swervesubsystem.setmodulestate
                         0.301625,//11.875 meters
                         new ReplanningConfig()
                 ),
@@ -267,17 +267,6 @@ public class SwerveSubsystem extends SubsystemBase {
     public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
     }
-//make if statement if blue, keep pose the same, if red, make pose negative x negative y
-
-    public Pose2d getPathplannerPose() {
-        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-            double newX = poseEstimator.getEstimatedPosition().getX();
-            double newY = 16.59128 - poseEstimator.getEstimatedPosition().getY();
-            Rotation2d newRot = poseEstimator.getEstimatedPosition().getRotation();
-
-            return new Pose2d(newX, newY, newRot);
-        } else { return poseEstimator.getEstimatedPosition(); }
-    }
     /**
      * Get current heading of robot
      * @return Heading of robot in radians
@@ -299,19 +288,12 @@ public class SwerveSubsystem extends SubsystemBase {
      * @param chassisSpeeds {@link ChassisSpeeds} object
      */
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
-        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
             double forward = -chassisSpeeds.vxMetersPerSecond;
             double sideways = -chassisSpeeds.vyMetersPerSecond;
             double rotation = chassisSpeeds.omegaRadiansPerSecond;
 
             drive(-forward, -sideways, rotation, false, true);
-        } else {
-            double forward = -chassisSpeeds.vxMetersPerSecond;
-            double sideways = -chassisSpeeds.vyMetersPerSecond;
-            double rotation = chassisSpeeds.omegaRadiansPerSecond;
 
-            drive(-forward, -sideways, rotation, false, true);
-        }
     }
 
     /**
