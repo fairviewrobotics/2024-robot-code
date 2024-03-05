@@ -16,6 +16,16 @@ public class VisionUtils {
     public static double height = 0.4;
     public static double forward = 0.4;
 
+    private static boolean enabled = true;
+
+    /**
+     * Toggle if vision is enable or not
+     * @param b Set if vision is enabled or not
+     */
+    public static void visionEnabled(boolean b) {
+        enabled = b;
+    }
+
     /**
      * Gets the requested entry from as well as optionally adding the alliance. Used internally
      * @param pose The pose you want as defined by https://docs.limelightvision.io/docs/docs-limelight/apis/complete-networktables-api#apriltag-and-3d-data
@@ -23,6 +33,7 @@ public class VisionUtils {
      * @return The pose from the limelight
      */
     private static Pose3d getPose(String pose, boolean useAlliance) {
+        if (!enabled) return new Pose3d();
         String suffix = (useAlliance && DriverStation.getAlliance().isPresent()) ?
                 ((DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) ? "_wpiblue" : "_wpired") : "";
 
