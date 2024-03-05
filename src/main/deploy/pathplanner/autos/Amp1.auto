@@ -32,16 +32,9 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoShoot"
-                            }
-                          }
-                        ]
+                        "name": "AutoShoot"
                       }
                     }
                   ]
