@@ -22,4 +22,8 @@ public class VisionConstants {
     public static final double rotateToI = 0;
     public static final double rotateToD = 0;
     public static final TrapezoidProfile.Constraints rotateToConstraints = new TrapezoidProfile.Constraints(Math.PI, Math.PI/2);
+
+    public static final double fieldLenMeters = 16.54;
+
+    public static final double fieldHighMeters = 8.21;
 }
