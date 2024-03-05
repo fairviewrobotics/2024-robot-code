@@ -70,7 +70,7 @@ public class RobotContainer {
     //DEFAULT COMMANDS
 
     //Test!!:
-    shooterSubsystem.setDefaultCommand(new AdvancedSpinUp(shooterSubsystem, indexerSubsystem));
+    shooterSubsystem.setDefaultCommand(new SpinUpCommand(shooterSubsystem, indexerSubsystem));
 
 
     // PRIMARY CONTROLLER
