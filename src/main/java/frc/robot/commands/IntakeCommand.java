@@ -51,15 +51,15 @@ public class IntakeCommand extends Command {
 
         switch (target) {
             case AMP -> {
-                if (!indexerSubsystem.isTop()) {
+//                if (!indexerSubsystem.isTop()) {
                     indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.TOP_WHEEL, 0.22);
                     indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.BOTTOM_WHEELS, -0.22);
                     intakeSubsystem.setTopSpeed(-0.4);
                     intakeSubsystem.setBottomSpeed(-0.7);
-                } else if (indexerSubsystem.isTop()) {
+//                } else if (indexerSubsystem.isTop()) {
                     indexerSubsystem.rotateAllWheelsPercent(0.0);
                     intakeSubsystem.setSpeed(0.0);
-                }
+//                }
             }
             case SPEAKER -> {
                 if (!indexerSubsystem.isCenter()) {
