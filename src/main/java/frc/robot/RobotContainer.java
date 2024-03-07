@@ -70,7 +70,7 @@ public class RobotContainer {
     //DEFAULT COMMANDS
 
     //Test!!:
-    shooterSubsystem.setDefaultCommand(new SpinUpCommand(shooterSubsystem, indexerSubsystem));
+//    shooterSubsystem.setDefaultCommand(new SpinUpCommand(shooterSubsystem, indexerSubsystem));
 
 
     // PRIMARY CONTROLLER
@@ -171,10 +171,6 @@ public class RobotContainer {
 
     new JoystickButton(secondaryController, XboxController.Button.kLeftBumper.value).whileTrue(
             new IntakeCommand(intakeSubsystem, indexerSubsystem, IntakeCommand.Targets.SPEAKER, false)
-    );
-
-    new POVButton(secondaryController, 180).whileTrue(
-            new IndexerCommand(indexerSubsystem, secondaryController, IndexerCommand.Mode.SPEAKER)
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(

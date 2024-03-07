@@ -9,7 +9,7 @@ import edu.wpi.first.math.util.Units;
 public class DrivetrainConstants {
 
     public static final double maxSpeedMetersPerSecond = 7.0; //note, maybe it needs to come down, if its too high it will stop working or something, troubleshoot from coronado
-    public static final double maxAngularSpeed = Math.PI;
+    public static final double maxAngularSpeed = 2 * Math.PI;
 
     public static final double directionSlewRate = 3.0; // rads/sec - turning was 4.0
     public static final double magnitudeSlewRate = 4.0; // percent/second (1 = 100%) - forward/backward/traverse
