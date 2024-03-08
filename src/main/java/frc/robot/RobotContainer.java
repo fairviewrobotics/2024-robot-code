@@ -189,15 +189,17 @@ public class RobotContainer {
             new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
     );
 
-    new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
-            new ParallelCommandGroup(
-
-              new RunCommand(() ->  indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.BOTTOM_WHEELS, -0.6)),
-              new RunCommand(() -> indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.TOP_WHEEL, -0.6))
-            )
-    ).whileFalse(
-            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
-    );
+//    new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
+//            new ParallelCommandGroup(
+//              new RunCommand(() ->  indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.BOTTOM_WHEELS, -0.6)),
+//              new RunCommand(() -> indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.TOP_WHEEL, -0.6)),
+//              new RunCommand(() -> intakeSubsystem.setTopSpeed(-0.4)),
+//              new RunCommand(() -> intakeSubsystem.setTopSpeed(-0.4))
+//            )
+//    ).whileFalse(
+//            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0)),
+//            new RunCommand(() -> int)
+//    );
 //    new JoystickButton(secondaryController, XboxController.Button.kY.value).whileTrue(
 //            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(1.0))
 //    );
