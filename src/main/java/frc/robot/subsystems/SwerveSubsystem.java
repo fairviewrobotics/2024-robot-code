@@ -151,18 +151,15 @@ public class SwerveSubsystem extends SubsystemBase {
                 this::getRobotRelativeSpeeds,
                 this::driveRobotRelative,
                 new HolonomicPathFollowerConfig(
-                        new PIDConstants(1.0, 0.0, 0.0),
-                        new PIDConstants(1.0, 0.0, 0.0),
-                        6.7, //swervesubsystem.setmodulestate
+                        new PIDConstants(2.0, 0.0, 0.0),
+                        new PIDConstants(1, 0.0, 0.0),
+                        5.5, //swervesubsystem.setmodulestate
                         0.301625,//11.875 meters
                         new ReplanningConfig()
                 ),
                 () -> {
-                    var alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
+                    Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+                    return alliance.filter(value -> value == DriverStation.Alliance.Red).isPresent();
                 },
                 this
         );
@@ -492,6 +489,7 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public void zeroGyro() {
         gyro.reset();
+
     }
 
     /**
