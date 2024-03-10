@@ -102,6 +102,17 @@ public class RobotContainer {
             new RunCommand(() -> swerveSubsystem.setX())
     );
 
+    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
+            new RunCommand(() ->  shooterSubsystem.setBottomVolts(12))
+    ).whileFalse(
+            new RunCommand(() ->  shooterSubsystem.setBottomVolts(0))
+    );
+    new JoystickButton(primaryController, XboxController.Button.kB.value).whileTrue(
+            new RunCommand(() ->  shooterSubsystem.setTopVolts(12))
+    ).whileFalse(
+            new RunCommand(() ->  shooterSubsystem.setTopVolts(0))
+    );
+
 //    new JoystickButton(primaryController, XboxController.Button.kB.value).whileTrue(
 //            new RunCommand(() -> intakeSubsystem.setSpeed(0.5))
 //    );
@@ -188,6 +199,16 @@ public class RobotContainer {
     ).whileFalse(
             new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
     );
+    new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
+            new RunCommand(() -> shooterSubsystem.setSpeed(1400))
+    ).whileFalse(
+            new RunCommand(() -> shooterSubsystem.setSpeed(0))
+    );
+
+//
+//    new JoystickButton(secondaryController, XboxController.Button.kX.value).whileTrue(
+//            new RunCommand(() ->  shooterSubsystem.setBottomSpeed(6500))
+//    );
 
 //    new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
 //            new ParallelCommandGroup(
