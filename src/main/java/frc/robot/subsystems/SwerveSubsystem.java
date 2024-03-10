@@ -151,8 +151,8 @@ public class SwerveSubsystem extends SubsystemBase {
                 this::getRobotRelativeSpeeds,
                 this::driveRobotRelative,
                 new HolonomicPathFollowerConfig(
-                        new PIDConstants(2.0, 0.0, 0.0),
-                        new PIDConstants(1, 0.0, 0.0),
+                        new PIDConstants(1.8, 0.0, 0.0), //1.8 // 2.7
+                        new PIDConstants(1.0, 0.0, 0.0), //1.0 // 1.8
                         5.5, //swervesubsystem.setmodulestate
                         0.301625,//11.875 meters
                         new ReplanningConfig()
@@ -172,6 +172,11 @@ public class SwerveSubsystem extends SubsystemBase {
     // Periodic
     @Override
     public void periodic() {
+        if (!DriverStation.isAutonomous())
+            gyro.setAngleAdjustment(180);
+        else
+            gyro.setAngleAdjustment(0);
+
         // Add wheel measurements to odometry
         poseEstimator.update(
                 Rotation2d.fromRadians(heading()),
@@ -289,7 +294,7 @@ public class SwerveSubsystem extends SubsystemBase {
             double sideways = -chassisSpeeds.vyMetersPerSecond;
             double rotation = chassisSpeeds.omegaRadiansPerSecond;
 
-            drive(-forward, -sideways, rotation, false, true);
+            drive(-forward, -sideways, rotation, false, false);//ratelimit was true, to be tested
 
     }
 

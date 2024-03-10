@@ -6,6 +6,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.networktables.BooleanEntry;
+import edu.wpi.first.networktables.DoubleEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IndexerConstants;
@@ -25,9 +28,10 @@ public class IndexerSubsystem extends SubsystemBase {
 
     private final DigitalInput centerLinebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
 
-//    private final DigitalInput topLinebreak = new DigitalInput(IndexerConstants.topLimebreakID);
 
-    private final NetworkTableUtils nt = new NetworkTableUtils("Indexer");
+
+    private final BooleanEntry centerLinebreaknt = NetworkTableInstance.getDefault()
+            .getTable("Indexer").getBooleanTopic("Center Linebreak").getEntry(!centerLinebreak.get());
 
     private Rotation2d indexerPosFirst = new Rotation2d(indexerEncoder.getPosition());
     private double indexerPosRadians = indexerPosFirst.minus(new Rotation2d(IndexerConstants.posOffset)).getRadians();
@@ -178,6 +182,6 @@ public class IndexerSubsystem extends SubsystemBase {
 //        nt.setEntry("Top Linebreak", isTop());
 //        nt.setEntry("Center Linebreak", isCenter());
 
-
+        centerLinebreaknt.set(!centerLinebreak.get());
     }
 }
