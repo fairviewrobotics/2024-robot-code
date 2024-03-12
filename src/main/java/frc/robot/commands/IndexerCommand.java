@@ -43,7 +43,7 @@ public class IndexerCommand extends Command {
     public void execute() {
         switch (mode) {
             case AMP -> {
-                if (indexerSubsystem.isTop()) {
+//                if (indexerSubsystem.isTop()) {
                     indexerSubsystem.rotateAllWheelsPercent(0.0);
                     //indexerSubsystem.moveIndexerToPos(Math.toDegrees(140));
 
@@ -56,7 +56,7 @@ public class IndexerCommand extends Command {
                         indexerSubsystem.rotateAllWheelsPercent(0.0);
                         indexerSubsystem.moveIndexerToPos(0.0);
                     }
-                }
+//                }
             }
             case SPEAKER -> {
                 double robotXSpeed = fieldRelativeSpeeds.vxMetersPerSecond;

@@ -7,12 +7,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
     Spark blinkinDriver = new Spark(9);
-    DoublePublisher ledPublisher = NetworkTableInstance.getDefault().getTable("LEDs").getDoubleTopic("LEDValue").publish();
-
-    @Override
-    public void periodic() {
-        ledPublisher.set(blinkinDriver.get());
-    }
 
     /**
      * Sets the color of the LEDs on the robot

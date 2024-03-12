@@ -49,6 +49,30 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterSetpoint.set(speed);
     }
 
+    public void setBottomSpeed(double speed) {
+
+        bottomMotor.setVoltage(ShooterConstants.shooterPID.calculate(MathUtils.rpmToRadians(bottomMotor.getEncoder().getVelocity()), MathUtils.rpmToRadians(speed)) +
+                ShooterConstants.shooterFF.calculate(MathUtils.rpmToRadians(speed)));
+
+        shooterSetpoint.set(speed);
+    }
+
+    public void setTopSeed(double speed) {
+
+        topMotor.setVoltage(ShooterConstants.shooterPID.calculate(MathUtils.rpmToRadians(topMotor.getEncoder().getVelocity()), MathUtils.rpmToRadians(speed)) +
+                ShooterConstants.shooterFF.calculate(MathUtils.rpmToRadians(speed)));
+
+        shooterSetpoint.set(speed);
+    }
+
+    public void setBottomVolts(double volts) {
+        bottomMotor.setVoltage(volts);
+    }
+
+    public void setTopVolts(double volts) {
+        topMotor.setVoltage(volts);
+    }
+
     /**
      * Get the RPM of the top motor
      * @return Returns RPM of the top motor
