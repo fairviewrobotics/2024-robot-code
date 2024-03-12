@@ -1,11 +1,10 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
-
-import java.rmi.MarshalException;
 
 public class IntakeCommand extends Command {
     private final IntakeSubsystem intakeSubsystem;
@@ -16,6 +15,11 @@ public class IntakeCommand extends Command {
 
     private final boolean source;
 
+
+
+    private final XboxController primaryController;
+    private final XboxController secondaryController;
+
     //private LEDSubsystem ledSubsystem;
 
     /**
@@ -23,14 +27,17 @@ public class IntakeCommand extends Command {
      * @param intakeSubsystem The instance of {@link IntakeSubsystem}
      * @param indexerSubsystem The instance of {@link IndexerSubsystem} (needed for limebreak detection to stop intake motor)
      */
-    public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, Targets target, boolean source) {
+    public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, Targets target, boolean source, XboxController primaryController, XboxController secondaryController) {
         this.intakeSubsystem = intakeSubsystem;
         this.indexerSubsystem = indexerSubsystem;
         this.target = target;
         this.source = source;
+        this.primaryController = primaryController;
+        this.secondaryController = secondaryController;
 
         addRequirements(intakeSubsystem, indexerSubsystem);
     }
+
 
     @Override
     public void execute() {
@@ -42,12 +49,12 @@ public class IntakeCommand extends Command {
 //            intakeSubsystem.setSpeed(0);
 //            indexerSubsystem.rotateAllWheelsPercent(0);
 //        }
-        if (source) {
-            indexerSubsystem.moveIndexerToPos(Math.toRadians(140));
-        } else {
+//        if (source) {
+//            indexerSubsystem.moveIndexerToPos(Math.toRadians(140));
+//        } else {
 //            indexerSubsystem.moveIndexerToPos(Math.toRadians(7.0));
 //            indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_ROTATE, 0.0);
-        }
+//        }
 
         switch (target) {
             case AMP -> {
@@ -76,6 +83,8 @@ public class IntakeCommand extends Command {
                     if (indexerSubsystem.isCenter()) {
                         indexerSubsystem.rotateAllWheelsPercent(0);
                         intakeSubsystem.setSpeed(0.0);
+                        primaryController.setRumble(GenericHID.RumbleType.kBothRumble, 1.0);
+                        secondaryController.setRumble(GenericHID.RumbleType.kBothRumble, 1.0);
                     }
 
                 }
