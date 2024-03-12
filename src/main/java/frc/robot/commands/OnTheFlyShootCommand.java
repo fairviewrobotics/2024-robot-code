@@ -5,7 +5,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.ShooterConstants;
-import frc.robot.constants.VisionConstants;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -19,10 +18,10 @@ public class OnTheFlyShootCommand extends Command {
 
 
     private final ProfiledPIDController rotationPID = new ProfiledPIDController(
-            VisionConstants.rotateToP,
-            VisionConstants.rotateToI,
-            VisionConstants.rotateToD,
-            VisionConstants.rotateToConstraints
+            ShooterConstants.rotateP,
+            ShooterConstants.rotateI,
+            ShooterConstants.rotateD,
+            ShooterConstants.rotateConstraints
     );
 
     /**
@@ -77,7 +76,8 @@ public class OnTheFlyShootCommand extends Command {
         double angle = Math.atan2((speakerPose.getY() + speakerYTranslation) - robotPose.getY(), speakerPose.getX()-robotPose.getX());
 
         //Rotation PID Calculations
-        odometryRotation = rotationPID.calculate(robotPose.getRotation().getRadians(), angle);
+        rotationPID.setGoal(angle);
+        odometryRotation = rotationPID.calculate(robotPose.getRotation().getRadians());
 
 
 
@@ -145,5 +145,10 @@ public class OnTheFlyShootCommand extends Command {
             System.out.println("Shooting!!!!!");
         }
 
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        indexerSubsystem.rotateAllWheelsPercent(0.0);
     }
 }
