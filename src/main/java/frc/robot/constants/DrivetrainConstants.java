@@ -8,7 +8,7 @@ import edu.wpi.first.math.util.Units;
 
 public class DrivetrainConstants {
 
-    public static final double maxSpeedMetersPerSecond = 6.0;
+    public static final double maxSpeedMetersPerSecond = 3;
     public static final double maxAngularSpeed = 2 * Math.PI;
 
     public static final double directionSlewRate = 20; // rads/sec - turning was 4.0
