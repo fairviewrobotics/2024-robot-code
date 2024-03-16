@@ -11,7 +11,7 @@ public class SpinUpCommand extends Command {
 
     private IndexerSubsystem indexerSubsystem;
 
-    private boolean advanced;
+    private final boolean advanced;
 
     private Pose2d robotPose;
 

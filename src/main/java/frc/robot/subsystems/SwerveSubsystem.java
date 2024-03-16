@@ -151,9 +151,9 @@ public class SwerveSubsystem extends SubsystemBase {
                 this::getRobotRelativeSpeeds,
                 this::driveRobotRelative,
                 new HolonomicPathFollowerConfig(
-                        new PIDConstants(1.8, 0.0, 0.0), //1.8 // 2.7
-                        new PIDConstants(1.0, 0.0, 0.0), //1.0 // 1.8
-                        5.5, //swervesubsystem.setmodulestate
+                        new PIDConstants(5, 0.0, 0.0), //1.8 // 2.7
+                        new PIDConstants(4, 0.0, 0.0), //1.0 // 1.8
+                        3, //swervesubsystem.setmodulestate
                         0.301625,//11.875 meters
                         new ReplanningConfig()
                 ),
@@ -290,11 +290,11 @@ public class SwerveSubsystem extends SubsystemBase {
      * @param chassisSpeeds {@link ChassisSpeeds} object
      */
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
-            double forward = -chassisSpeeds.vxMetersPerSecond;
-            double sideways = -chassisSpeeds.vyMetersPerSecond;
+            double forward = chassisSpeeds.vxMetersPerSecond;
+            double sideways = chassisSpeeds.vyMetersPerSecond;
             double rotation = chassisSpeeds.omegaRadiansPerSecond;
 
-            drive(-forward, -sideways, rotation, false, false);//ratelimit was true, to be tested
+            drive(forward, sideways, rotation, false, false);//ratelimit was true, to be tested
 
     }
 
@@ -494,7 +494,6 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public void zeroGyro() {
         gyro.reset();
-
     }
 
     /**

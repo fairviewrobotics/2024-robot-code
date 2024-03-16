@@ -1,62 +1,71 @@
 package frc.robot.commands;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.GoalEndState;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
-import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.units.Units;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.constants.DrivetrainConstants;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.utils.NetworkTableUtils;
-
-import java.util.List;
 
 public class PathCommand extends Command {
 
-    private final SwerveSubsystem swerveSubsystem;
+    private SwerveSubsystem swerveSubsystem;
 
-    private PathPlannerPath path;
+    private double kP = 3;
+    private double kI = 0;
 
-    private Pose2d endPose;
+    private double kD = 0;
+
+    public static final double kMaxSpeedPerSecondSquared = Math.pow(DrivetrainConstants.maxSpeedMetersPerSecond, 2); // Same as above, but squared
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(DrivetrainConstants.maxSpeedMetersPerSecond, kMaxSpeedPerSecondSquared);
+
+    public ProfiledPIDController snapController = new ProfiledPIDController(kP, kI, kD, kThetaControllerConstraints);
+    public ProfiledPIDController xController = new ProfiledPIDController(kP, kI, kD, kThetaControllerConstraints);
+    public ProfiledPIDController yController = new ProfiledPIDController(kP, kI, kD, kThetaControllerConstraints);
+
+    private double x, y, angle;
 
 
-    public PathCommand(SwerveSubsystem swerveSubsystem, Pose2d endPose) {
-        this.swerveSubsystem = swerveSubsystem;
-        this.endPose = endPose;
+    public PathCommand(SwerveSubsystem swerveSubsystem, double x, double y, double angle) {
+       this.swerveSubsystem = swerveSubsystem;
+       this.x = x;
+       this.y = y;
+       this.angle = angle;
+       xController.setTolerance(0.2);
+       yController.setTolerance(0.2);
+       snapController.setTolerance(0.2);
+       snapController.enableContinuousInput(-Math.PI, Math.PI);
 
-        addRequirements(swerveSubsystem);
+       addRequirements(swerveSubsystem);
     }
 
     @Override
-    public void initialize() {
-        Pose2d startPos = new Pose2d(
-                swerveSubsystem.getPose().getTranslation(),
-                new Rotation2d()
-        );
+    public void execute() {
+        // The second number here is 0 because we want the robot to have no more velocity when it reaches the target
+        xController.setGoal(new TrapezoidProfile.State(x, 0));
+        yController.setGoal(new TrapezoidProfile.State(y, 0));
+        snapController.setGoal(new TrapezoidProfile.State(angle, 0.0));
 
-        Pose2d endPos = new Pose2d(endPose.getTranslation(), new Rotation2d());
+        // getPose() should return the robot's position on the field in meters, probably from odometry
+        // getYaw180 just returns the reading from the gyro
+        double xAdjustment = xController.calculate(swerveSubsystem.getPose().getX());
+        double yAdjustment = yController.calculate(swerveSubsystem.getPose().getY());
+        double angleAdjustment = snapController.calculate(swerveSubsystem.heading());
 
-        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(startPos, endPos);
-        path = new PathPlannerPath(
-                bezierPoints,
-                new PathConstraints(
-                        4.0, 4.0,
-                        2 * Math.PI, 2.5 * Math.PI
-                ),
-                new GoalEndState(0.0, endPos.getRotation())
-        );
+        System.out.println("\n");
+        System.out.println("XError:         " + xController.getPositionError());
+        System.out.println("YError:         " + yController.getPositionError());
+        System.out.println("AngleError:     " + snapController.getPositionError());
 
-        path.preventFlipping = true;
 
-        AutoBuilder.followPath(path).schedule();
+        swerveSubsystem.driveRobotRelative(ChassisSpeeds.
+                fromFieldRelativeSpeeds(-xAdjustment, -yAdjustment, angleAdjustment, Rotation2d.fromRadians(swerveSubsystem.heading())));
 
     }
 
     @Override
-    public void end(boolean i) {
+    public void end(boolean interrupted) {
         swerveSubsystem.drive(0, 0, 0, false, false);
     }
 }

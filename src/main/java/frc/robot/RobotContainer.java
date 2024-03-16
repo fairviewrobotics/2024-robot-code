@@ -37,11 +37,11 @@ public class RobotContainer {
   public XboxController secondaryController = new XboxController(1);
   public SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
-  public IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
+//  public IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 
 
-  public ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+//  public ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+//  public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   private LEDSubsystem ledSubsystem = new LEDSubsystem();
 
@@ -54,11 +54,11 @@ public class RobotContainer {
 
 //FOR ALL: tune timeouts
 
-    NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem).withTimeout(15.0));
-    NamedCommands.registerCommand("IntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(1.5));
-    NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem).withTimeout(1.5));
-    NamedCommands.registerCommand("AutoShoot", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.SHOOT).withTimeout(1.5));
-//
+//    NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem).withTimeout(15.0));
+//    NamedCommands.registerCommand("IntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(1.5));
+//    NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem).withTimeout(1.5));
+//    NamedCommands.registerCommand("AutoShoot", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.SHOOT).withTimeout(1.5));
+////
     superSecretMissileTech = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", superSecretMissileTech);
 
@@ -98,21 +98,31 @@ public class RobotContainer {
     new JoystickButton(primaryController, XboxController.Button.kY.value).whileTrue(
             new RunCommand(() -> swerveSubsystem.zeroGyro())
     );
+
+    new JoystickButton(primaryController, XboxController.Button.kB.value).whileTrue(
+            new RunCommand(() -> swerveSubsystem.zeroGyroAndOdometry())
+    );
 //
     new JoystickButton(primaryController, XboxController.Button.kX.value).whileTrue(
             new RunCommand(() -> swerveSubsystem.setX())
     );
 
     new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
-            new RunCommand(() ->  shooterSubsystem.setBottomVolts(12))
-    ).whileFalse(
-            new RunCommand(() ->  shooterSubsystem.setBottomVolts(0))
+            new PathCommand(swerveSubsystem, 0, 0, 0)
     );
-    new JoystickButton(primaryController, XboxController.Button.kB.value).whileTrue(
-            new RunCommand(() ->  shooterSubsystem.setTopVolts(12))
-    ).whileFalse(
-            new RunCommand(() ->  shooterSubsystem.setTopVolts(0))
-    );
+
+
+
+//    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
+//            new RunCommand(() ->  shooterSubsystem.setBottomVolts(12))
+//    ).whileFalse(
+//            new RunCommand(() ->  shooterSubsystem.setBottomVolts(0))
+//    );
+//    new JoystickButton(primaryController, XboxController.Button.kB.value).whileTrue(
+//            new RunCommand(() ->  shooterSubsystem.setTopVolts(12))
+//    ).whileFalse(
+//            new RunCommand(() ->  shooterSubsystem.setTopVolts(0))
+////    );
 
 //    new JoystickButton(primaryController, XboxController.Button.kB.value).whileTrue(
 //            new RunCommand(() -> intakeSubsystem.setSpeed(0.5))
@@ -175,36 +185,36 @@ public class RobotContainer {
 
     // SECONDARY CONTROLLER
 
-
-
-    new JoystickButton(secondaryController, XboxController.Button.kRightBumper.value).whileTrue(
-            new SpinUpCommand(shooterSubsystem)
-    );
-
-    new JoystickButton(secondaryController, XboxController.Button.kLeftBumper.value).whileTrue(
-            new IntakeCommand(intakeSubsystem, indexerSubsystem, ledSubsystem,IntakeCommand.Targets.SPEAKER, false)
-    );
-
-    new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
-            new RunCommand(() ->  indexerSubsystem.rotateAllWheelsPercent(0.6))
-    ).whileFalse(
-            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
-    );
-    new JoystickButton(secondaryController, XboxController.Button.kY.value).whileTrue(
-            new RunCommand(() ->  indexerSubsystem.rotateAllWheelsPercent(0.15))
-    ).whileFalse(
-            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
-    );
-    new JoystickButton(secondaryController, XboxController.Button.kX.value).whileTrue(
-            new RunCommand(() ->  indexerSubsystem.rotateAllWheelsPercent(-0.15))
-    ).whileFalse(
-            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
-    );
-    new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
-            new RunCommand(() -> shooterSubsystem.setSpeed(1400))
-    ).whileFalse(
-            new RunCommand(() -> shooterSubsystem.setSpeed(0))
-    );
+//
+//
+//    new JoystickButton(secondaryController, XboxController.Button.kRightBumper.value).whileTrue(
+//            new SpinUpCommand(shooterSubsystem)
+//    );
+//
+//    new JoystickButton(secondaryController, XboxController.Button.kLeftBumper.value).whileTrue(
+//            new IntakeCommand(intakeSubsystem, indexerSubsystem, IntakeCommand.Targets.SPEAKER, false)
+//    );
+//
+//    new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
+//            new RunCommand(() ->  indexerSubsystem.rotateAllWheelsPercent(0.6))
+//    ).whileFalse(
+//            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
+//    );
+//    new JoystickButton(secondaryController, XboxController.Button.kY.value).whileTrue(
+//            new RunCommand(() ->  indexerSubsystem.rotateAllWheelsPercent(0.15))
+//    ).whileFalse(
+//            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
+//    );
+//    new JoystickButton(secondaryController, XboxController.Button.kX.value).whileTrue(
+//            new RunCommand(() ->  indexerSubsystem.rotateAllWheelsPercent(-0.15))
+//    ).whileFalse(
+//            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
+//    );
+//    new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
+//            new RunCommand(() -> shooterSubsystem.setSpeed(1400))
+//    ).whileFalse(
+//            new RunCommand(() -> shooterSubsystem.setSpeed(0))
+//    );
 
 //
 //    new JoystickButton(secondaryController, XboxController.Button.kX.value).whileTrue(

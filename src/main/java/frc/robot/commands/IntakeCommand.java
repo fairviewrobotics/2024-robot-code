@@ -1,11 +1,10 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
-
-import java.rmi.MarshalException;
 
 public class IntakeCommand extends Command {
     private final IntakeSubsystem intakeSubsystem;
@@ -17,6 +16,11 @@ public class IntakeCommand extends Command {
     private final Targets target;
 
     private final boolean source;
+
+
+
+    private final XboxController primaryController;
+    private final XboxController secondaryController;
 
     //private LEDSubsystem ledSubsystem;
 
@@ -31,9 +35,12 @@ public class IntakeCommand extends Command {
         this.ledSubsystem = ledSubsystem;
         this.target = target;
         this.source = source;
+        this.primaryController = primaryController;
+        this.secondaryController = secondaryController;
 
         addRequirements(intakeSubsystem, indexerSubsystem);
     }
+
 
     @Override
     public void execute() {
@@ -43,10 +50,8 @@ public class IntakeCommand extends Command {
         if (source) {
             indexerSubsystem.moveIndexerToPos(Math.toRadians(140));
         } else {
-//            indexerSubsystem.moveIndexerToPos(Math.toRadians(7.0));
-//            indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_ROTATE, 0.0);
-        }
-
+//        if (!indexerSubsystem.isCenter()) {
+//
 
         switch (target) {
             case AMP -> {
@@ -75,6 +80,8 @@ public class IntakeCommand extends Command {
                     if (indexerSubsystem.isCenter()) {
                         indexerSubsystem.rotateAllWheelsPercent(0);
                         intakeSubsystem.setSpeed(0.0);
+                        primaryController.setRumble(GenericHID.RumbleType.kBothRumble, 1.0);
+                        secondaryController.setRumble(GenericHID.RumbleType.kBothRumble, 1.0);
                     }
 
                 }
