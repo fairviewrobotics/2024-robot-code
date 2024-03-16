@@ -12,6 +12,8 @@ public class IntakeCommand extends Command {
 
     private final IndexerSubsystem indexerSubsystem;
 
+    private final LEDSubsystem ledSubsystem;
+
     private final Targets target;
 
     private final boolean source;
@@ -23,9 +25,10 @@ public class IntakeCommand extends Command {
      * @param intakeSubsystem The instance of {@link IntakeSubsystem}
      * @param indexerSubsystem The instance of {@link IndexerSubsystem} (needed for limebreak detection to stop intake motor)
      */
-    public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, Targets target, boolean source) {
+    public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, LEDSubsystem ledSubsystem, Targets target, boolean source) {
         this.intakeSubsystem = intakeSubsystem;
         this.indexerSubsystem = indexerSubsystem;
+        this.ledSubsystem = ledSubsystem;
         this.target = target;
         this.source = source;
 
@@ -34,20 +37,16 @@ public class IntakeCommand extends Command {
 
     @Override
     public void execute() {
-//        if (!indexerSubsystem.isCenter()) {
-//            intakeSubsystem.setSpeed(.9);
-//            indexerSubsystem.rotateAllWheelsPercent(.9);
-//            ledSubsystem.setLED(-0.71);
-//        } else {
-//            intakeSubsystem.setSpeed(0);
-//            indexerSubsystem.rotateAllWheelsPercent(0);
-//        }
+        if (!indexerSubsystem.isCenter())
+            ledSubsystem.setLED(0.5);
+
         if (source) {
             indexerSubsystem.moveIndexerToPos(Math.toRadians(140));
         } else {
 //            indexerSubsystem.moveIndexerToPos(Math.toRadians(7.0));
 //            indexerSubsystem.rotateMotorVolts(IndexerSubsystem.IndexerMotors.INDEXER_ROTATE, 0.0);
         }
+
 
         switch (target) {
             case AMP -> {

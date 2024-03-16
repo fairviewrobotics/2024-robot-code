@@ -43,6 +43,7 @@ public class RobotContainer {
   public ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
+  private LEDSubsystem ledSubsystem = new LEDSubsystem();
 
 
 
@@ -181,7 +182,7 @@ public class RobotContainer {
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kLeftBumper.value).whileTrue(
-            new IntakeCommand(intakeSubsystem, indexerSubsystem, IntakeCommand.Targets.SPEAKER, false)
+            new IntakeCommand(intakeSubsystem, indexerSubsystem, ledSubsystem,IntakeCommand.Targets.SPEAKER, false)
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
