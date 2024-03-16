@@ -494,7 +494,6 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public void zeroGyro() {
         gyro.reset();
-
     }
 
     /**
