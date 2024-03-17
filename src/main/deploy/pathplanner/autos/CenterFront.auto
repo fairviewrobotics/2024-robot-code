@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3684259729630575,
-      "y": 5.486344532874251
+      "x": 1.3164584504524461,
+      "y": 5.487694894228651
     },
     "rotation": 0
   },
@@ -44,7 +44,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "IntakeCommand"
+                              "name": "ShortIntakeCommand"
                             }
                           },
                           {
@@ -75,7 +75,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "IntakeCommand"
+                              "name": "MediumIntakeCommand"
                             }
                           },
                           {
@@ -106,7 +106,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "IntakeCommand"
+                              "name": "LongIntakeCommand"
                             }
                           },
                           {

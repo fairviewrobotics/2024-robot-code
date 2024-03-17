@@ -16,37 +16,31 @@
     },
     {
       "anchor": {
-        "x": 2.4363352430408565,
-        "y": 5.54353168891523
+        "x": 2.1764895688508483,
+        "y": 5.557979166945176
       },
       "prevControl": {
-        "x": 7.526759423889221,
-        "y": 8.617129488518252
+        "x": 7.787513187416726,
+        "y": 7.656538344189628
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.95,
-      "rotationDegrees": 0,
-      "rotateFast": true
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.0,
-    "maxAcceleration": 0.5,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 180.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 1.8248185957352634,
-    "rotateFast": false
+    "rotation": 0.0,
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "Shoot",

@@ -14,7 +14,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @param speed Target speed in percent
      */
     public void setTopSpeed(double speed) {
-        intakeTop.set(speed);
+        intakeTop.set(-speed);
 
     }
 
@@ -23,7 +23,7 @@ public class IntakeSubsystem extends SubsystemBase {
      * @param speed Target speed in percent
      */
     public void setBottomSpeed(double speed) {
-        intakeBottom.set(speed);
+        intakeBottom.set(-speed);
     }
 
     /**

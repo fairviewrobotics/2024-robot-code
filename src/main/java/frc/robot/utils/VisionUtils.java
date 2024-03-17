@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.constants.VisionConstants;
 
 public class VisionUtils {
 
@@ -16,6 +17,16 @@ public class VisionUtils {
     public static double height = 0.4;
     public static double forward = 0.4;
 
+    private static boolean enabled = true;
+
+    /**
+     * Toggle if vision is enable or not
+     * @param b Set if vision is enabled or not
+     */
+    public static void visionEnabled(boolean b) {
+        enabled = b;
+    }
+
     /**
      * Gets the requested entry from as well as optionally adding the alliance. Used internally
      * @param pose The pose you want as defined by https://docs.limelightvision.io/docs/docs-limelight/apis/complete-networktables-api#apriltag-and-3d-data
@@ -23,17 +34,38 @@ public class VisionUtils {
      * @return The pose from the limelight
      */
     private static Pose3d getPose(String pose, boolean useAlliance) {
-        String suffix = (useAlliance && DriverStation.getAlliance().isPresent()) ?
-                ((DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) ? "_wpiblue" : "_wpired") : "";
+        if (!enabled) return new Pose3d();
+
+//        String suffix = (useAlliance && DriverStation.getAlliance().isPresent()) ?
+//                ((DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) ? "_wpiblue" : "_wpired") : "";
 
 
+        String suffix = useAlliance ? "_wpiblue" : "";
         double[] returnedPose = NetworkTableInstance.getDefault().getTable("limelight-april").getEntry(pose + suffix).getDoubleArray(new double[0]);
         if (returnedPose.length == 0) return new Pose3d();
 
-        return new Pose3d(
-                new Translation3d(returnedPose[0], returnedPose[1], returnedPose[2]),
-                new Rotation3d(0.0, 0.0, Math.toRadians(returnedPose[5]))
+        return getPose3d(returnedPose);
+    }
+
+    /**
+     * Converts a double array from limelight to a {@link Pose3d} with an origin of the Blue Side
+     * @param returnedPose A double array of values, normally returned from limelight
+     * @return A {@link Pose3d} of the robots current position
+     */
+    private static Pose3d getPose3d(double[] returnedPose) {
+        Pose3d visionPos = new Pose3d(
+            new Translation3d(returnedPose[0], returnedPose[1], returnedPose[2]),
+            new Rotation3d(0.0, 0.0, Math.toRadians(returnedPose[5]))
         );
+
+//        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+//            visionPos = new Pose3d(
+//                new Translation3d(VisionConstants.fieldLenMeters - visionPos.getX(),
+//                        VisionConstants.fieldHighMeters - visionPos.getY(), visionPos.getZ()),
+//                new Rotation3d(0.0, 0.0, visionPos.getRotation().getZ())
+//            );
+//        }
+        return visionPos;
     }
 
     /**
@@ -60,7 +92,7 @@ public class VisionUtils {
 
         Pose3d returnedPose = getBotPoseTargetSpace();
 
-        return -returnedPose.getZ();
+        return Math.abs(returnedPose.getZ());
 
     }
 

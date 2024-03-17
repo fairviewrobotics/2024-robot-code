@@ -54,6 +54,10 @@ public class NetworkTableUtils {
         return this.table.getEntry(key).getDoubleArray(doubles);
     }
 
+    public void  setDoubleArray(String key, double[] value) {
+        this.table.getEntry(key).setDoubleArray(value);
+    }
+
     /**
      * This function sets a double in network tables
      * @param key The key in Network Tables for the value
@@ -75,21 +79,20 @@ public class NetworkTableUtils {
     /**
      * This function returns a entry as whatever it is
      * @param key The key in Network Tables for the value
-     * @param value We will return this is the entry is invalid
+     * @param defaultValue We will return this is the entry is invalid
      * @return Returns the entry as whatever it is
      */
-    public <T> T getEntry(String key, T value) {
+    public Object getEntry(String key, Object defaultValue) {
         if (this.table.getEntry(key).exists()) {
-            if (value instanceof Double) {
-                return (T) (Object) getDouble(key, (double) value);
-            } else if (value instanceof String) {
-                return (T) (Object) getString(key, (String) value);
-            } else {
-                throw new IllegalArgumentException("Invalid value type");
+            if (defaultValue instanceof Double) {
+                return getDouble(key, (Double) defaultValue);
+            } else if (defaultValue instanceof String) {
+                return getString(key, (String) defaultValue);
+            } else  if (defaultValue instanceof double[]) {
+                return getDoubleArray(key, (double[]) defaultValue);
             }
-        } else {
-            throw new IllegalArgumentException("Invalid key");
         }
+        return null;
     }
 
     /**
@@ -97,17 +100,15 @@ public class NetworkTableUtils {
      * @param key The key in Network Tables for the value
      * @param value The value we are setting the entry to.
      */
-    public <T> void setEntry(String key, T value) {
-        if (this.table.getEntry(key).exists()) {
-            if (value instanceof Double) {
-                setDouble(key, (double) value);
-            } else if (value instanceof String) {
-                setString(key, (String) value);
-            } else {
-                throw new IllegalArgumentException("Invalid value type");
+        public void setEntry(String key, Object value) {
+            if (this.table.getEntry(key).exists()) {
+                if (value instanceof Double) {
+                    setDouble(key, (Double) value);
+                } else if (value instanceof String) {
+                    setString(key, (String) value);
+                } else  if (value instanceof double[]) {
+                    setDoubleArray(key, (double[]) value);
+                }
             }
-        } else {
-            throw new IllegalArgumentException("Invalid key");
         }
-    }
 }

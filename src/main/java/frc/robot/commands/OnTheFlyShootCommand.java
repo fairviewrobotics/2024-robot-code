@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.ShooterConstants;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.utils.NetworkTableUtils;
 
+import java.util.function.Consumer;
 import java.util.function.DoubleSupplier;
 
 public class OnTheFlyShootCommand extends Command {
@@ -15,6 +17,8 @@ public class OnTheFlyShootCommand extends Command {
     private final IndexerSubsystem indexerSubsystem;
     private final DoubleSupplier forward;
     private final DoubleSupplier sideways;
+
+    private final NetworkTableUtils debug = new NetworkTableUtils("debug");
 
 
     private final ProfiledPIDController rotationPID = new ProfiledPIDController(
@@ -38,6 +42,7 @@ public class OnTheFlyShootCommand extends Command {
 
         //Rotation tolerance in radians
         rotationPID.setTolerance(0.05);
+        rotationPID.enableContinuousInput(-Math.PI, Math.PI);
 
 
         addRequirements(swerveSubsystem, indexerSubsystem);
@@ -46,8 +51,6 @@ public class OnTheFlyShootCommand extends Command {
 
     @Override
     public void execute() {
-
-
         //ROTATION CALCULATIONS
         double odometryRotation;
 
@@ -56,12 +59,13 @@ public class OnTheFlyShootCommand extends Command {
         //Robot speed toward/away from the speaker (x-direction)
         double robotXSpeed = swerveSubsystem.getFieldRelativeChassisSpeeds().vxMetersPerSecond;
         //Note speed in x-direction(forward, as opposed to up)
-        double noteSpeedX = robotXSpeed + ShooterConstants.shooterNoteSpeedX;
+        double noteSpeedX = (ShooterConstants.shooterNoteSpeedX + Math.abs(robotXSpeed)) * 1.1;
         Pose2d speakerPose;
 
         //Getting speaker pose relative to alliance color
         if (DriverStation.getAlliance().isPresent()) {
-            speakerPose = (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)? ShooterConstants.speakerPoseBlue : ShooterConstants.speakerPoseRed;
+            speakerPose = (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) ? ShooterConstants.speakerPoseBlue
+                    : ShooterConstants.speakerPoseRed;
         } else {
             speakerPose = ShooterConstants.speakerPoseBlue;
         }
@@ -71,12 +75,13 @@ public class OnTheFlyShootCommand extends Command {
 
         //'Moving' speaker position based on robot speed
         double speakerYTranslation = robotYSpeed * ((speakerPose.getX()-robotPose.getX()) / noteSpeedX);
+        System.out.println("Speaker Y trans: " + speakerYTranslation);
 
         //Calculated angle to rotate to
         double angle = Math.atan2((speakerPose.getY() + speakerYTranslation) - robotPose.getY(), speakerPose.getX()-robotPose.getX());
 
         //Rotation PID Calculations
-        rotationPID.setGoal(angle);
+        rotationPID.setGoal(angle + Math.PI - Math.toRadians(3.0));
         odometryRotation = rotationPID.calculate(robotPose.getRotation().getRadians());
 
 
@@ -86,7 +91,10 @@ public class OnTheFlyShootCommand extends Command {
         //SHOOTING TIME CALCULATIONS
 
         //Initial calculated distance to shoot from the speaker
-        double shootingDistanceFromSpeaker = noteSpeedX * ShooterConstants.timeToSpeakerHeightWithGravity;
+        double shootingDistanceFromSpeaker = (noteSpeedX * ShooterConstants.timeToSpeakerHeightWithGravity) + 0.1;
+
+        System.out.println("Inital Distance Calc: " + shootingDistanceFromSpeaker);
+        System.out.println("Other Distance Calc: " + ShooterConstants.shooterNoteSpeedX * ShooterConstants.timeToSpeakerHeightWithGravity);
 
         //Robot distance to speaker
         double robotDistanceFromSpeaker = Math.sqrt(
@@ -108,29 +116,30 @@ public class OnTheFlyShootCommand extends Command {
                 )
         );
 
+        System.out.println("Robot distance from speaker " + robotDistanceFromSpeaker);
+
         //Difference between optimal location and current location
         double difference = robotDistanceFromSpeaker - shootingDistanceFromSpeaker;
 
         //Accounting for indexer spin time
         if (difference > 0) {
-            shootingDistanceFromSpeaker += noteSpeedX * ShooterConstants.shootDelayTime;
+            shootingDistanceFromSpeaker -= robotXSpeed * ShooterConstants.shootDelayTime;
         } else {
-            shootingDistanceFromSpeaker -= noteSpeedX * ShooterConstants.shootDelayTime;
+            shootingDistanceFromSpeaker += robotXSpeed * ShooterConstants.shootDelayTime;
         }
 
         //Removing negatives
         difference = Math.abs(robotDistanceFromSpeaker - shootingDistanceFromSpeaker);
+        debug.setDoubleArray("SpeakerPos", new double[] { ShooterConstants.speakerPoseRed.getX(), ShooterConstants.speakerPoseRed.getY() + speakerYTranslation });
+        debug.setDoubleArray("ShootDist", new double[] {ShooterConstants.speakerPoseRed.getX() - shootingDistanceFromSpeaker, ShooterConstants.speakerPoseRed.getY()});
 
         System.out.println("Robot Speed: " + robotXSpeed +
                 "\n Note Speed: " + noteSpeedX +
                 "\n Calculated Distance To Shoot: " + shootingDistanceFromSpeaker +
                 "\n Robot Distance: " + robotDistanceFromSpeaker+
-                "\n Difference: " + difference
+                "\n Difference: " + difference+
+                "\n Error: " + rotationPID.getPositionError()
         );
-
-
-
-
         //Actual Execute
         swerveSubsystem.drive(
                 forward.getAsDouble(),
@@ -140,11 +149,18 @@ public class OnTheFlyShootCommand extends Command {
                 true
         );
 
-        if (difference < 0.4){
+        if (difference < 0.5 && rotationPID.atSetpoint()){
             indexerSubsystem.rotateAllWheelsPercent(0.6);
-            System.out.println("Shooting!!!!!");
+//            System.out.println("Shooting!!!!!");
+        } else {
+//            indexerSubsystem.rotateAllWheelsPercent(0.0);
         }
 
+    }
+
+    @Override
+    public void initialize() {
+        rotationPID.reset(swerveSubsystem.getPose().getRotation().getRadians());
     }
 
     @Override

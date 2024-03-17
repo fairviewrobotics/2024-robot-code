@@ -44,7 +44,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "IntakeCommand"
+                              "name": "LongIntakeCommand"
                             }
                           },
                           {
@@ -75,7 +75,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "IntakeCommand"
+                              "name": "LongIntakeCommand"
                             }
                           },
                           {
@@ -106,7 +106,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "IntakeCommand"
+                              "name": "LongIntakeCommand"
                             }
                           },
                           {
@@ -137,7 +137,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "IntakeCommand"
+                              "name": "LongIntakeCommand"
                             }
                           },
                           {

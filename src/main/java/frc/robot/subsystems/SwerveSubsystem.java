@@ -151,9 +151,9 @@ public class SwerveSubsystem extends SubsystemBase {
                 this::getRobotRelativeSpeeds,
                 this::driveRobotRelative,
                 new HolonomicPathFollowerConfig(
-                        new PIDConstants(1.8, 0.0, 0.0), //1.8 // 2.7
-                        new PIDConstants(1.0, 0.0, 0.0), //1.0 // 1.8
-                        5.5, //swervesubsystem.setmodulestate
+                        new PIDConstants(5, 0.0, 0.2), //1.8 // 2.7
+                        new PIDConstants(3, 0.0, 0.2), //1.0 // 1.8
+                        3, //swervesubsystem.setmodulestate
                         0.301625,//11.875 meters
                         new ReplanningConfig()
                 ),
@@ -195,11 +195,15 @@ public class SwerveSubsystem extends SubsystemBase {
 //        System.out.println(visionMeasurement.getX());
 //
 //        System.out.println(VisionUtils.getDistanceFromTag());
+        if (DriverStation.isAutonomous() && (Math.abs(getRobotRelativeSpeeds().vxMetersPerSecond) > 0.2 ||
+                Math.abs(getRobotRelativeSpeeds().vyMetersPerSecond) > 0.2 ||
+                Math.abs(getRobotRelativeSpeeds().omegaRadiansPerSecond) > Math.PI/6))
+            visionMeasurement = new Pose3d();
 
+//        System.out.println(getPose());
 
-        if ((visionMeasurement.getY() != 0 || visionMeasurement.getX() != 0) && VisionUtils.getDistanceFromTag() < 3) {
+        if (Math.abs(visionMeasurement.getY()) != 0 && Math.abs(visionMeasurement.getX()) != 0.0 && VisionUtils.getDistanceFromTag() < 3) {
             distanceToTag = VisionUtils.getDistanceFromTag();
-           // System.out.println(distanceToTag);
 
 
             double visionTrust = 0.075 * Math.pow(distanceToTag, 2.5);
@@ -219,11 +223,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
                 // If we're 3 meters away, limelight is too unreliable. Don't trust it!
-                poseEstimator.setVisionMeasurementStdDevs(
-                        VecBuilder.fill(9999, 9999, 9999)
-                );
+//                poseEstimator.setVisionMeasurementStdDevs(
+//                        VecBuilder.fill(9999, 9999, 9999)
+//                );
             }
-
             poseEstimator.addVisionMeasurement(
                     new Pose2d(
                             new Translation2d(visionMeasurement.getX(), visionMeasurement.getY()),
@@ -290,11 +293,11 @@ public class SwerveSubsystem extends SubsystemBase {
      * @param chassisSpeeds {@link ChassisSpeeds} object
      */
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
-            double forward = -chassisSpeeds.vxMetersPerSecond;
-            double sideways = -chassisSpeeds.vyMetersPerSecond;
+            double forward = chassisSpeeds.vxMetersPerSecond;
+            double sideways = chassisSpeeds.vyMetersPerSecond;
             double rotation = chassisSpeeds.omegaRadiansPerSecond;
 
-            drive(-forward, -sideways, rotation, false, false);//ratelimit was true, to be tested
+            drive(forward, sideways, rotation, false, false);//ratelimit was true, to be tested
 
     }
 
@@ -494,7 +497,6 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public void zeroGyro() {
         gyro.reset();
-
     }
 
     /**
