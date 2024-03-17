@@ -35,10 +35,12 @@ public class VisionUtils {
      */
     private static Pose3d getPose(String pose, boolean useAlliance) {
         if (!enabled) return new Pose3d();
-        String suffix = (useAlliance && DriverStation.getAlliance().isPresent()) ?
-                ((DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) ? "_wpiblue" : "_wpired") : "";
+
+//        String suffix = (useAlliance && DriverStation.getAlliance().isPresent()) ?
+//                ((DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) ? "_wpiblue" : "_wpired") : "";
 
 
+        String suffix = useAlliance ? "_wpiblue" : "";
         double[] returnedPose = NetworkTableInstance.getDefault().getTable("limelight-april").getEntry(pose + suffix).getDoubleArray(new double[0]);
         if (returnedPose.length == 0) return new Pose3d();
 
@@ -56,13 +58,13 @@ public class VisionUtils {
             new Rotation3d(0.0, 0.0, Math.toRadians(returnedPose[5]))
         );
 
-        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-            visionPos = new Pose3d(
-                new Translation3d(VisionConstants.fieldLenMeters - visionPos.getX(),
-                        VisionConstants.fieldHighMeters - visionPos.getY(), visionPos.getZ()),
-                new Rotation3d(0.0, 0.0, visionPos.getRotation().getZ())
-            );
-        }
+//        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+//            visionPos = new Pose3d(
+//                new Translation3d(VisionConstants.fieldLenMeters - visionPos.getX(),
+//                        VisionConstants.fieldHighMeters - visionPos.getY(), visionPos.getZ()),
+//                new Rotation3d(0.0, 0.0, visionPos.getRotation().getZ())
+//            );
+//        }
         return visionPos;
     }
 
@@ -90,7 +92,7 @@ public class VisionUtils {
 
         Pose3d returnedPose = getBotPoseTargetSpace();
 
-        return -returnedPose.getZ();
+        return Math.abs(returnedPose.getZ());
 
     }
 

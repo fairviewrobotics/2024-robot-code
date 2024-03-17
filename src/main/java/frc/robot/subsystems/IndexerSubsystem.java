@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.BooleanEntry;
 import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IndexerConstants;
 import frc.robot.utils.CANUtils;
@@ -45,7 +46,6 @@ public class IndexerSubsystem extends SubsystemBase {
             IndexerConstants.indexerTrapezoidProfile
     );
 
-
     /**
      * Indexer subsystem for everything indexer related
      */
@@ -57,6 +57,7 @@ public class IndexerSubsystem extends SubsystemBase {
         indexerEncoder.setVelocityConversionFactor((2.0 * Math.PI)/ 60.0); //use constants
         indexerEncoder.setInverted(true);
         indexerRotate.setInverted(false);
+
 //        indexerRotate.setSmartCurrentLimit(1);
 
 
