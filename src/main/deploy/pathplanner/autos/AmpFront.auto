@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2582679517210889,
-      "y": 5.4834346983508775
+      "x": 0.8850371358150126,
+      "y": 6.584480451368311
     },
-    "rotation": 0
+    "rotation": 59.72789153297531
   },
   "command": {
     "type": "sequential",
@@ -25,6 +25,37 @@
                 "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "StartToAmp"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoShoot"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "MediumIntakeCommand"
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "ToAmpNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
                     {
                       "type": "path",
                       "data": {
@@ -51,37 +82,6 @@
                             "type": "path",
                             "data": {
                               "pathName": "Front2FromShoot"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "InitialShootCenter"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "AutoShoot"
-                      }
-                    },
-                    {
-                      "type": "parallel",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "MediumIntakeCommand"
-                            }
-                          },
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Front1FromShoot"
                             }
                           }
                         ]
@@ -121,7 +121,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ShootFrom3"
+                        "pathName": "StartToSource"
                       }
                     },
                     {
@@ -139,6 +139,6 @@
       ]
     }
   },
-  "folder": "Center",
+  "folder": "Amp",
   "choreoAuto": false
 }

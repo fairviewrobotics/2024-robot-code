@@ -59,7 +59,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShortIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(1.5));
     NamedCommands.registerCommand("MediumIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(2.5));
     NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem, ledSubsystem).withTimeout(1.5));
-    NamedCommands.registerCommand("AutoShoot", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.SHOOT).withTimeout(1));
+    NamedCommands.registerCommand("AutoShoot", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.SHOOT).withTimeout(0.7));
 ////
     superSecretMissileTech = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", superSecretMissileTech);
@@ -109,9 +109,9 @@ public class RobotContainer {
             new RunCommand(() -> swerveSubsystem.setX())
     );
 
-    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
-            new PathCommand(swerveSubsystem, 0, 0, 0)
-    );
+//    new JoystickButton(primaryController, XboxController.Button.kA.value).whileTrue(
+//            new PathCommand(swerveSubsystem, 0, 0, 0)
+//    );
 
 
 
