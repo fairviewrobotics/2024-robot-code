@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.4630582131534635,
-        "y": 5.534386494698915
+        "x": 1.4221688350857737,
+        "y": 6.549384283953481
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.647547666562195,
-        "y": 5.509447041930756
+        "x": 1.751633364385203,
+        "y": 6.561261159559084
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.6410925784814534,
-        "y": 5.527319753713582
+        "x": 2.737057733382089,
+        "y": 6.8310443889403585
       },
       "prevControl": {
-        "x": 2.616269908465743,
-        "y": 5.512354890450522
+        "x": 2.246364617736598,
+        "y": 6.600573617813631
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 42.80722293796882,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "FrontFromShoot",
+  "folder": "FarAmpStuff",
   "previewStartingState": null,
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
