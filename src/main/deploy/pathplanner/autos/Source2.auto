@@ -28,7 +28,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "InitialShootRight"
+                        "pathName": "StartToSource"
                       }
                     },
                     {
@@ -66,7 +66,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "InitialShootCenter"
+                        "pathName": "StartToSource"
                       }
                     },
                     {
