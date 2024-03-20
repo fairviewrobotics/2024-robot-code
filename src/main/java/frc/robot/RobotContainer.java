@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.constants.DrivetrainConstants;
+import frc.robot.constants.ShooterConstants;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 import frc.robot.commands.IntakeCommand;
@@ -207,14 +208,20 @@ public class RobotContainer {
             new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
     );
     new JoystickButton(secondaryController, XboxController.Button.kY.value).whileTrue(
-            new RunCommand(() ->  indexerSubsystem.rotateAllWheelsPercent(0.15))
-    ).whileFalse(
-            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
+           new ParallelCommandGroup(
+                   new RotateToCorner(swerveSubsystem,
+                           () -> -primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar,
+                           () -> -primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar,
+                           ShooterConstants.cornerPoseBlue,
+                           ShooterConstants.cornerPoseRed
+                   ),
+                   new SpinUpCommand(shooterSubsystem, ledSubsystem)
+           )
     );
     new JoystickButton(secondaryController, XboxController.Button.kX.value).whileTrue(
-            new RunCommand(() ->  indexerSubsystem.rotateAllWheelsPercent(-0.15))
+            new RunCommand(() -> shooterSubsystem.setSpeed(1000))
     ).whileFalse(
-            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
+            new RunCommand(() -> shooterSubsystem.setSpeed(0))
     );
     new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
             new ParallelCommandGroup(
@@ -227,9 +234,14 @@ public class RobotContainer {
     );
 
     new POVButton(secondaryController, 0).whileTrue(
-            new RunCommand(() -> shooterSubsystem.setSpeed(1000))
+            new RunCommand(() ->  indexerSubsystem.rotateAllWheelsPercent(0.15))
     ).whileFalse(
-            new RunCommand(() -> shooterSubsystem.setSpeed(0))
+            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
+    );
+    new POVButton(secondaryController, 180).whileTrue(
+            new RunCommand(() ->  indexerSubsystem.rotateAllWheelsPercent(-0.15))
+    ).whileFalse(
+            new RunCommand(() -> indexerSubsystem.rotateAllWheelsPercent(0.0))
     );
 
 //

@@ -28,11 +28,14 @@ public class IndexerSubsystem extends SubsystemBase {
     private final AbsoluteEncoder indexerEncoder = indexerRotate.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
     private final DigitalInput centerLinebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
+    private final DigitalInput upLinebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
 
 
 
     private final BooleanEntry centerLinebreaknt = NetworkTableInstance.getDefault()
             .getTable("Indexer").getBooleanTopic("Center Linebreak").getEntry(!centerLinebreak.get());
+    private final BooleanEntry upLinebreaknt = NetworkTableInstance.getDefault()
+            .getTable("Indexer").getBooleanTopic("Up Linebreak").getEntry(!upLinebreak.get());
 
     private Rotation2d indexerPosFirst = new Rotation2d(indexerEncoder.getPosition());
     private double indexerPosRadians = indexerPosFirst.minus(new Rotation2d(IndexerConstants.posOffset)).getRadians();
@@ -141,6 +144,10 @@ public class IndexerSubsystem extends SubsystemBase {
         return !centerLinebreak.get();
     }
 
+    public boolean isUp() {
+        return !upLinebreak.get();
+    }
+
     /**
      * Check if top limebreak is seeing something
      * @return If the limebreak is seeing something
@@ -184,5 +191,6 @@ public class IndexerSubsystem extends SubsystemBase {
 //        nt.setEntry("Center Linebreak", isCenter());
 
         centerLinebreaknt.set(!centerLinebreak.get());
+        upLinebreaknt.set(!upLinebreak.get());
     }
 }
