@@ -72,6 +72,8 @@ public class RobotContainer {
 
     //DEFAULT COMMANDS
 
+//    indexerSubsystem.setDefaultCommand(new JiggleCommand(indexerSubsystem, intakeSubsystem));
+
     //Test!!:
 //    shooterSubsystem.setDefaultCommand(new SpinUpCommand(shooterSubsystem, indexerSubsystem));
 
@@ -86,6 +88,8 @@ public class RobotContainer {
             true,
             true
     ));
+
+
 
     new JoystickButton(primaryController, XboxController.Button.kRightBumper.value).whileTrue(
             new DriveCommands(swerveSubsystem,

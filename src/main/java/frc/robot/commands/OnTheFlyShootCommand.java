@@ -59,7 +59,7 @@ public class OnTheFlyShootCommand extends Command {
         //Robot speed toward/away from the speaker (x-direction)
         double robotXSpeed = swerveSubsystem.getFieldRelativeChassisSpeeds().vxMetersPerSecond;
         //Note speed in x-direction(forward, as opposed to up)
-        double noteSpeedX = (ShooterConstants.shooterNoteSpeedX + Math.abs(robotXSpeed)) * 1.1;
+        double noteSpeedX = (ShooterConstants.shooterNoteSpeedX + Math.abs(robotXSpeed * 1.1)) * 1.1;
         Pose2d speakerPose;
 
         //Getting speaker pose relative to alliance color
@@ -122,11 +122,11 @@ public class OnTheFlyShootCommand extends Command {
         double difference = robotDistanceFromSpeaker - shootingDistanceFromSpeaker;
 
         //Accounting for indexer spin time
-        if (difference > 0) {
-            shootingDistanceFromSpeaker -= robotXSpeed * ShooterConstants.shootDelayTime;
-        } else {
-            shootingDistanceFromSpeaker += robotXSpeed * ShooterConstants.shootDelayTime;
-        }
+//        if (difference > 0) {
+//            shootingDistanceFromSpeaker -= robotXSpeed * ShooterConstants.shootDelayTime;
+//        } else {
+//            shootingDistanceFromSpeaker += robotXSpeed * ShooterConstants.shootDelayTime;
+//        }
 
         //Removing negatives
         difference = Math.abs(robotDistanceFromSpeaker - shootingDistanceFromSpeaker);

@@ -88,7 +88,7 @@ public class IntakeCommand extends Command {
                         intakeSubsystem.setSpeed(0.0);
                         double timePassed = Timer.getFPGATimestamp() - this.rumbleTime;
                         System.out.println("TP: " + timePassed + " CT: " + Timer.getFPGATimestamp() + " RT: " + this.rumbleTime);
-                        if (timePassed >= 1) {
+                        if (timePassed >= 0.1) {
                             System.out.println("Rumbling");
                             primaryController.setRumble(GenericHID.RumbleType.kBothRumble, 1.0);
                             this.rumbleTime = Timer.getFPGATimestamp();
