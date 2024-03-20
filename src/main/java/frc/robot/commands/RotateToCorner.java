@@ -30,7 +30,7 @@ public class RotateToCorner extends Command {
     );
 
     /**
-     * Rotates the robot to face the speaker, while still allowing the driver to control forward and backward movement
+     * Rotates the robot to face the corner near the amp, while still allowing the driver to control forward and backward movement
      * @param swerveSubsystem The instance of {@link SwerveSubsystem}
      * @param forward The desired forward percentage of the robot
      * @param sideways The desired sideways percentage of the robot

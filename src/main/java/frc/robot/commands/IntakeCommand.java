@@ -77,7 +77,7 @@ public class IntakeCommand extends Command {
                     intakeSubsystem.setBottomSpeed(0.4);
                     indexerSubsystem.rotateAllWheelsPercent(0.3);
                 } else if (indexerSubsystem.isCenter()) {
-                   // intakeSubsystem.setSpeed(0);
+
                     try {
                         Thread.sleep(120);
                     } catch (InterruptedException e) {
@@ -94,6 +94,26 @@ public class IntakeCommand extends Command {
                             this.rumbleTime = Timer.getFPGATimestamp();
                         }
                     }
+
+                }
+
+            }
+            case ZANE -> {
+                if (!indexerSubsystem.isUp()) {
+                    intakeSubsystem.setTopSpeed(0.4);
+                    intakeSubsystem.setBottomSpeed(0.4);
+                    indexerSubsystem.rotateAllWheelsPercent(0.3);
+                } else if (indexerSubsystem.isUp()) {
+                        indexerSubsystem.rotateAllWheelsPercent(0);
+                        intakeSubsystem.setSpeed(0.0);
+                        double timePassed = Timer.getFPGATimestamp() - this.rumbleTime;
+                        System.out.println("TP: " + timePassed + " CT: " + Timer.getFPGATimestamp() + " RT: " + this.rumbleTime);
+                        if (timePassed >= 0.1) {
+                            System.out.println("Rumbling");
+                            primaryController.setRumble(GenericHID.RumbleType.kBothRumble, 1.0);
+                            this.rumbleTime = Timer.getFPGATimestamp();
+                        }
+
 
                 }
             }
@@ -113,6 +133,7 @@ public class IntakeCommand extends Command {
 
     public enum Targets {
         AMP,
-        SPEAKER
+        SPEAKER,
+        ZANE
     }
 }
