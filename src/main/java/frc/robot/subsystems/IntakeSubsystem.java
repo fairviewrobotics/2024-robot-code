@@ -6,8 +6,8 @@ import com.revrobotics.CANSparkMax;
 import frc.robot.utils.CANUtils;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private final CANSparkMax intakeTop = CANUtils.configure(new CANSparkMax(15,CANSparkLowLevel.MotorType.kBrushless));
-    private  final CANSparkMax intakeBottom = CANUtils.configure(new CANSparkMax(12, CANSparkLowLevel.MotorType.kBrushless));
+    private final CANSparkMax intakeTop = CANUtils.configure(new CANSparkMax(12,CANSparkLowLevel.MotorType.kBrushless));
+    private  final CANSparkMax intakeBottom = CANUtils.configure(new CANSparkMax(15, CANSparkLowLevel.MotorType.kBrushless));
 
     /**
      * Set speed of top intake wheel

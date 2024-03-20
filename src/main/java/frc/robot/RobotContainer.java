@@ -57,7 +57,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem, ledSubsystem).withTimeout(20.0));
     NamedCommands.registerCommand("LongIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(3.5));
     NamedCommands.registerCommand("ShortIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(1.5));
-    NamedCommands.registerCommand("MediumIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(2.5));
+    NamedCommands.registerCommand("MediumIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(2.3));
     NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem, ledSubsystem).withTimeout(1.5));
     NamedCommands.registerCommand("AutoShoot", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.SHOOT).withTimeout(0.7));
 ////
@@ -71,6 +71,8 @@ public class RobotContainer {
   public void configureButtonBindings() {
 
     //DEFAULT COMMANDS
+
+//    indexerSubsystem.setDefaultCommand(new JiggleCommand(indexerSubsystem, intakeSubsystem));
 
     //Test!!:
 //    shooterSubsystem.setDefaultCommand(new SpinUpCommand(shooterSubsystem, indexerSubsystem));
@@ -86,6 +88,8 @@ public class RobotContainer {
             true,
             true
     ));
+
+
 
     new JoystickButton(primaryController, XboxController.Button.kRightBumper.value).whileTrue(
             new DriveCommands(swerveSubsystem,

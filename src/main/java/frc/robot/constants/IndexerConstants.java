@@ -5,8 +5,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 public class IndexerConstants {
 
-    public final static int topMotorID = 9;
-    public final static int bottomMotorID = 10;
+    public final static int topMotorID = 10;
+    public final static int bottomMotorID = 9;
 
     public final static int indexerRotateID = 11;
 

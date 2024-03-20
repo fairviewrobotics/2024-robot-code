@@ -56,6 +56,14 @@ public class ShooterConstants {
     public static final Pose2d speakerPoseRed = new Pose2d(16.5, 5.5, Rotation2d.fromRadians(0.0));
 
     public static final Pose2d speakerPoseBlue = new Pose2d(0.0,5.5, Rotation2d.fromRadians(0.0));
+
+    public static final Pose2d cornerPoseRed = new Pose2d(16.5, 8.0, Rotation2d.fromRadians(0.0));
+
+    public static final Pose2d cornerPoseBlue = new Pose2d(0.0,8.0, Rotation2d.fromRadians(0.0));
+
+    public static final Pose2d middlePoseRed = new Pose2d(8.3, 7.4, Rotation2d.fromRadians(0.0));
+
+    public static final Pose2d middlePoseBlue = new Pose2d(8.3,0.7, Rotation2d.fromRadians(0.0));
 //    public static final Pose2d speakerPoseRed = new Pose2d(0.0,5.5, Rotation2d.fromRadians(0.0));
 
 
