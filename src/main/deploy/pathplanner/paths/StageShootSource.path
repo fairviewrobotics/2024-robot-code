@@ -1,0 +1,93 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.129212175091017,
+        "y": 3.8302923828069884
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.499618999237998,
+        "y": 3.9485860638387944
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.000968376936754,
+        "y": 3.8913989077978157
+      },
+      "prevControl": {
+        "x": 5.594772842541414,
+        "y": 4.249966449118334
+      },
+      "nextControl": {
+        "x": 4.593532159286541,
+        "y": 3.6453694296277486
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.484377204865521,
+        "y": 3.0685095814636076
+      },
+      "prevControl": {
+        "x": 4.06940563881128,
+        "y": 3.199333366259325
+      },
+      "nextControl": {
+        "x": 2.470241246052055,
+        "y": 3.067342839218429
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.13,
+        "y": 4.48
+      },
+      "prevControl": {
+        "x": 2.0998921203397964,
+        "y": 4.539740684296183
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 1.9,
+      "maxWaypointRelativePos": 3.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 3.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -35.45645241778551,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Shoot",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}

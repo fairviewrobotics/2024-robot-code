@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.8565920187395932,
-      "y": 4.501870313925814
+      "x": 0.7645462327961695,
+      "y": 4.522357924345479
     },
-    "rotation": -58.042774611643864
+    "rotation": -59.19587234861452
   },
   "command": {
     "type": "sequential",
@@ -32,9 +32,16 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "parallel",
                       "data": {
-                        "name": "AutoShoot"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AutoShoot"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -59,7 +66,45 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "InitialShootCenter"
+                        "pathName": "StartToSource"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AutoShoot"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "LongIntakeCommand"
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Back3"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "StageShootSource"
                       }
                     },
                     {
@@ -75,13 +120,13 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "ShortIntakeCommand"
+                              "name": "LongIntakeCommand"
                             }
                           },
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Front2FromShoot"
+                              "pathName": "Back4"
                             }
                           }
                         ]
@@ -90,38 +135,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "InitialShootCenter"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "AutoShoot"
-                      }
-                    },
-                    {
-                      "type": "parallel",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "MediumIntakeCommand"
-                            }
-                          },
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Front1FromShoot"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "StartToAmp"
+                        "pathName": "StageShootSource"
                       }
                     },
                     {

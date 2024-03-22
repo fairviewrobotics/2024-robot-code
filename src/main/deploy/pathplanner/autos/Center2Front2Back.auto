@@ -5,7 +5,7 @@
       "x": 1.392941927563015,
       "y": 5.493265083231815
     },
-    "rotation": -0.02411706985019758
+    "rotation": 1.2649112786590153
   },
   "command": {
     "type": "sequential",
@@ -51,7 +51,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "LongIntakeCommand"
+                              "name": "ShortIntakeCommand"
                             }
                           },
                           {
@@ -66,7 +66,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "AmpShoot"
+                        "pathName": "InitialShootCenter"
                       }
                     },
                     {
@@ -104,7 +104,45 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "AmpShoot"
+                        "pathName": "CenterShoot"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AutoShoot"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "LongIntakeCommand"
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Back3"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "StageShootCenter"
                       }
                     },
                     {

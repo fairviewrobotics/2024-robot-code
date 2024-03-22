@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7975045626017181,
-      "y": 6.6521192579422195
+      "x": 1.392941927563015,
+      "y": 5.493265083231815
     },
-    "rotation": 60.55817328715721
+    "rotation": -0.02411706985019758
   },
   "command": {
     "type": "sequential",
@@ -28,7 +28,45 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "StartToAmp"
+                        "pathName": "InitialShootCenter"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AutoShoot"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "ShortIntakeCommand"
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Front2FromShoot"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "InitialShootCenter"
                       }
                     },
                     {
@@ -57,7 +95,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Front2FromShoot"
+                              "pathName": "Back2"
                             }
                           }
                         ]
@@ -66,7 +104,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "StartToAmp"
+                        "pathName": "CenterShoot"
                       }
                     },
                     {
@@ -91,6 +129,6 @@
       ]
     }
   },
-  "folder": "Amp",
+  "folder": "Center",
   "choreoAuto": false
 }
