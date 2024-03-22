@@ -21,6 +21,7 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.utils.NetworkTableUtils;
 
 
 /**
@@ -46,6 +47,8 @@ public class RobotContainer {
 
   private LEDSubsystem ledSubsystem = new LEDSubsystem();
 
+  private NetworkTableUtils NTUtils = new NetworkTableUtils("debug");
+
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -56,7 +59,7 @@ public class RobotContainer {
 //FOR ALL: tune timeouts
 
     NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem, ledSubsystem).withTimeout(20.0));
-    NamedCommands.registerCommand("LongIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(3.3));
+    NamedCommands.registerCommand("LongIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(3.5));
     NamedCommands.registerCommand("ShortIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(1.5));
     NamedCommands.registerCommand("MediumIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(2.3));
     NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem, ledSubsystem).withTimeout(1.5));
@@ -199,7 +202,7 @@ public class RobotContainer {
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kLeftBumper.value).whileTrue(
-            new IntakeCommand(intakeSubsystem, indexerSubsystem, ledSubsystem, primaryController, secondaryController, IntakeCommand.Targets.SPEAKER, false)
+            new IntakeCommand(intakeSubsystem, indexerSubsystem, ledSubsystem, secondaryController, IntakeCommand.Targets.FLYSHOOT, false)
     );
 
     new JoystickButton(secondaryController, XboxController.Button.kA.value).whileTrue(
@@ -215,7 +218,7 @@ public class RobotContainer {
                            ShooterConstants.cornerPoseBlue,
                            ShooterConstants.cornerPoseRed
                    ),
-                   new SpinUpCommand(shooterSubsystem, ledSubsystem)
+                   new RunCommand(() -> shooterSubsystem.setSpeed(3000), shooterSubsystem)
            )
     );
     new JoystickButton(secondaryController, XboxController.Button.kX.value).whileTrue(
@@ -224,13 +227,16 @@ public class RobotContainer {
             new RunCommand(() -> shooterSubsystem.setSpeed(0))
     );
     new JoystickButton(secondaryController, XboxController.Button.kB.value).whileTrue(
-            new ParallelCommandGroup(
-              new OnTheFlyShootCommand(swerveSubsystem, indexerSubsystem,
-                      () -> -primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar,
-                      () -> -primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar
-              ),
-                    new SpinUpCommand(shooterSubsystem, ledSubsystem)
-            )
+//            new ParallelCommandGroup(
+//              new OnTheFlyShootCommand(swerveSubsystem,
+//                      () -> -primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar,
+//                      () -> -primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar
+//              ),
+//                    new SpinUpCommand(shooterSubsystem, ledSubsystem)
+//            )
+            new RunCommand(() -> shooterSubsystem.setSpeed(3000), shooterSubsystem)
+    ).whileFalse(
+            new RunCommand(() -> shooterSubsystem.setSpeed(0.0), shooterSubsystem)
     );
 
     new POVButton(secondaryController, 0).whileTrue(
@@ -334,6 +340,11 @@ public class RobotContainer {
 
 
 
+  }
+
+  public void initDebugNT() {
+    NTUtils.setDoubleArray("SpeakerPos", new double[] {});
+    NTUtils.setDoubleArray("ShootDist", new double[] {});
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

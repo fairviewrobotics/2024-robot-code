@@ -28,7 +28,7 @@ public class IndexerSubsystem extends SubsystemBase {
     private final AbsoluteEncoder indexerEncoder = indexerRotate.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
     private final DigitalInput centerLinebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
-    private final DigitalInput upLinebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
+    private final DigitalInput upLinebreak = new DigitalInput(IndexerConstants.upLimeBreakID);
 
 
 

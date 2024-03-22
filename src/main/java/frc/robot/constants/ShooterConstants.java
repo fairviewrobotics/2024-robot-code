@@ -21,7 +21,7 @@ public class ShooterConstants {
 
     public static final PIDController shooterPID = new PIDController(ShooterConstants.shooterP,ShooterConstants.shooterI, ShooterConstants.shooterD);
     public static boolean isActive = false;
-    public static double rotateP = 2.6;
+    public static double rotateP = 3;
     public static double rotateI = 0.0;
     public static double rotateD = 0.2;
     public static final TrapezoidProfile.Constraints rotateConstraints = new TrapezoidProfile.Constraints(Math.PI, Math.PI/2);

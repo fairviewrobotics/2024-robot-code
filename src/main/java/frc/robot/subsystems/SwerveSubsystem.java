@@ -74,6 +74,8 @@ public class SwerveSubsystem extends SubsystemBase {
     // Slew Rate Time
     private double previousTime = WPIUtilJNI.now() * 1e-6;
 
+    private double visionUpdate = Timer.getFPGATimestamp();
+
     // Limelight Network Table
     // Relay data to driverstation using network table
 
@@ -95,6 +97,8 @@ public class SwerveSubsystem extends SubsystemBase {
      */
 
     private double distanceToTag = 1.0;
+
+
 
     private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
             DrivetrainConstants.driveKinematics,
@@ -227,13 +231,18 @@ public class SwerveSubsystem extends SubsystemBase {
 //                        VecBuilder.fill(9999, 9999, 9999)
 //                );
             }
-            poseEstimator.addVisionMeasurement(
-                    new Pose2d(
-                            new Translation2d(visionMeasurement.getX(), visionMeasurement.getY()),
-                            new Rotation2d(visionMeasurement.getRotation().toRotation2d().getRadians())
-                    ),
-                    Timer.getFPGATimestamp() - (VisionUtils.getLatencyPipeline()/1000.0) - (VisionUtils.getLatencyCapture()/1000.0));
+            if (Timer.getFPGATimestamp() - visionUpdate >= 0.1) {
+                visionUpdate = Timer.getFPGATimestamp();
+                poseEstimator.addVisionMeasurement(
+                        new Pose2d(
+                                new Translation2d(visionMeasurement.getX(), visionMeasurement.getY()),
+//                                Rotation2d.fromRadians(heading())
+                                new Rotation2d(visionMeasurement.getRotation().toRotation2d().getRadians())
+                        ),
+                        Timer.getFPGATimestamp() - (VisionUtils.getLatencyPipeline() / 1000.0) - (VisionUtils.getLatencyCapture() / 1000.0));
+            }
         }
+//        }
 
         frontrightpos.set(frontRight.getPosition().angle.getRadians());
         frontleftpos.set(frontLeft.getPosition().angle.getRadians());

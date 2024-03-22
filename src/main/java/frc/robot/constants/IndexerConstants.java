@@ -11,7 +11,7 @@ public class IndexerConstants {
     public final static int indexerRotateID = 11;
 
     public final static int centerLimebreakID = 1;
-    public final static int upLimeBreakID = 0;
+    public final static int upLimeBreakID = 9;
 
 
     public final static double indexerP = 8.0;
