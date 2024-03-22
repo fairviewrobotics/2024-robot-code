@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7941790374321492,
-      "y": 6.620229846941176
+      "x": 1.328935361574427,
+      "y": 5.534030188430748
     },
-    "rotation": 60.82814642453673
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -28,13 +28,20 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "StartToAmp"
+                        "pathName": "InitialShootCenter"
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "parallel",
                       "data": {
-                        "name": "AutoShoot"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AutoShoot"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -46,6 +53,6 @@
       ]
     }
   },
-  "folder": "Amp",
+  "folder": "Center",
   "choreoAuto": false
 }

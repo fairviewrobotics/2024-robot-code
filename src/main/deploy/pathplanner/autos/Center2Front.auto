@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.392941927563015,
-      "y": 5.493265083231815
+      "x": 1.308982210557014,
+      "y": 5.528032366249919
     },
     "rotation": 1.2895613862214865
   },
@@ -51,7 +51,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "LongIntakeCommand"
+                              "name": "ShortIntakeCommand"
                             }
                           },
                           {

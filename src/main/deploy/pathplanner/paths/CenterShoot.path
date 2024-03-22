@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.42,
-        "y": 1.910351815456254
+        "x": 7.5642356701380065,
+        "y": 2.3684271488913358
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.2020516600137,
-        "y": 4.0385533965512375
+        "x": 7.478009553241329,
+        "y": 3.1557452327867623
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.216672428715228,
-        "y": 6.460664023179898
+        "x": 6.8531671276305515,
+        "y": 6.548374749527277
       },
       "prevControl": {
-        "x": 7.82769604728111,
-        "y": 8.559223200424341
+        "x": 7.846192697015024,
+        "y": 6.409949764343973
+      },
+      "nextControl": {
+        "x": 6.21409492038861,
+        "y": 6.63745962664012
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.2,
+        "y": 5.51
+      },
+      "prevControl": {
+        "x": 2.875245181045918,
+        "y": 5.945801465677006
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,16 +46,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 32.50423861357956,
+      "waypointRelativePos": 1.3,
+      "rotationDegrees": 0,
       "rotateFast": true
     }
   ],
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 0.9,
-      "maxWaypointRelativePos": 1.0,
+      "minWaypointRelativePos": 1.75,
+      "maxWaypointRelativePos": 2.0,
       "constraints": {
         "maxVelocity": 1.0,
         "maxAcceleration": 3.0,
@@ -57,8 +73,8 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 37.64115871011478,
-    "rotateFast": true
+    "rotation": 0,
+    "rotateFast": false
   },
   "reversed": false,
   "folder": "Shoot",
