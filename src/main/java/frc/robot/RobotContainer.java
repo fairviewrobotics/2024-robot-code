@@ -59,9 +59,9 @@ public class RobotContainer {
 //FOR ALL: tune timeouts
 
     NamedCommands.registerCommand("AutoSpinUp", new SpinUpCommand(shooterSubsystem, ledSubsystem).withTimeout(20.0));
-    NamedCommands.registerCommand("LongIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(3.5));
-    NamedCommands.registerCommand("ShortIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(1.5));
-    NamedCommands.registerCommand("MediumIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(2.3));
+    NamedCommands.registerCommand("LongIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(4)); // 3.5
+    NamedCommands.registerCommand("ShortIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(4)); // 3
+    NamedCommands.registerCommand("MediumIntakeCommand", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.INTAKE).withTimeout(4)); // 2.3
     NamedCommands.registerCommand("AutoSpinForShoot", new SpinUpCommand(shooterSubsystem, ledSubsystem).withTimeout(1.5));
     NamedCommands.registerCommand("AutoShoot", new AutoIntakeOrShoot(indexerSubsystem, intakeSubsystem, AutoIntakeOrShoot.Goal.SHOOT).withTimeout(0.7));
 ////
@@ -86,9 +86,9 @@ public class RobotContainer {
 
     swerveSubsystem.setDefaultCommand(new DriveCommands(
             swerveSubsystem,
-            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar,
-            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar,
-            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar,
+            () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar * DrivetrainConstants.maxSpeedMetersPerSecond,
+            () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar * DrivetrainConstants.maxSpeedMetersPerSecond,
+            () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar * DrivetrainConstants.maxAngularSpeed,
             true,
             true
     ));
@@ -97,9 +97,9 @@ public class RobotContainer {
 
     new JoystickButton(primaryController, XboxController.Button.kRightBumper.value).whileTrue(
             new DriveCommands(swerveSubsystem,
-                    () -> primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar / 2.5,
-                    () -> primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar / 2.5,
-                    () -> primaryController.getRightX() * DrivetrainConstants.rotationSpeedScalar / 2.5,
+                    () -> (primaryController.getLeftY() * DrivetrainConstants.maxSpeedMetersPerSecond) * DrivetrainConstants.drivingSpeedScalar / 2.5,
+                    () -> (primaryController.getLeftX() * DrivetrainConstants.maxSpeedMetersPerSecond) * DrivetrainConstants.drivingSpeedScalar / 2.5,
+                    () -> (primaryController.getRightX() * DrivetrainConstants.maxSpeedMetersPerSecond) * DrivetrainConstants.maxSpeedMetersPerSecond * DrivetrainConstants.rotationSpeedScalar / 2.5,
                     true,
                     true
             )
@@ -213,8 +213,8 @@ public class RobotContainer {
     new JoystickButton(secondaryController, XboxController.Button.kY.value).whileTrue(
            new ParallelCommandGroup(
                    new RotateToCorner(swerveSubsystem,
-                           () -> -primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar,
-                           () -> -primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar,
+                           () -> -primaryController.getLeftY() * DrivetrainConstants.drivingSpeedScalar * DrivetrainConstants.maxSpeedMetersPerSecond,
+                           () -> -primaryController.getLeftX() * DrivetrainConstants.drivingSpeedScalar * DrivetrainConstants.maxAngularSpeed,
                            ShooterConstants.cornerPoseBlue,
                            ShooterConstants.cornerPoseRed
                    ),
@@ -234,7 +234,7 @@ public class RobotContainer {
 //              ),
 //                    new SpinUpCommand(shooterSubsystem, ledSubsystem)
 //            )
-            new RunCommand(() -> shooterSubsystem.setSpeed(3000), shooterSubsystem)
+            new RunCommand(() -> shooterSubsystem.setSpeed(5500), shooterSubsystem)
     ).whileFalse(
             new RunCommand(() -> shooterSubsystem.setSpeed(0.0), shooterSubsystem)
     );

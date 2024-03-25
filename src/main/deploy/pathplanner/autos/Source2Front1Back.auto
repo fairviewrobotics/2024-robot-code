@@ -95,7 +95,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Back3"
+                              "pathName": "Back5"
                             }
                           }
                         ]
@@ -104,7 +104,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "StageShootSource"
+                        "pathName": "SourceShoot"
                       }
                     },
                     {

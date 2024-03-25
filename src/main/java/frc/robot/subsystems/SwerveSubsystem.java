@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.ShooterConstants;
 import frc.robot.controllers.SwerveModuleControlller;
+import frc.robot.utils.MathUtils;
 import frc.robot.utils.NetworkTableUtils;
 import frc.robot.utils.SwerveUtils;
 
@@ -155,7 +156,7 @@ public class SwerveSubsystem extends SubsystemBase {
                 this::getRobotRelativeSpeeds,
                 this::driveRobotRelative,
                 new HolonomicPathFollowerConfig(
-                        new PIDConstants(5, 0.0, 0.2), //1.8 // 2.7
+                        new PIDConstants(5, 0.0, 0.2 ), //1.8 // 2.7
                         new PIDConstants(3, 0.0, 0.2), //1.0 // 1.8
                         3, //swervesubsystem.setmodulestate
                         0.301625,//11.875 meters
@@ -443,9 +444,9 @@ public class SwerveSubsystem extends SubsystemBase {
         }
 
 
-        double xSpeedDelivered = xSpeedCommanded * DrivetrainConstants.maxSpeedMetersPerSecond;
-        double ySpeedDelivered = ySpeedCommanded * DrivetrainConstants.maxSpeedMetersPerSecond;
-        double rotationDelivered = currentRotation * DrivetrainConstants.maxAngularSpeed;
+        double xSpeedDelivered = MathUtils.clamp(xSpeedCommanded, -DrivetrainConstants.maxSpeedMetersPerSecond, DrivetrainConstants.maxSpeedMetersPerSecond);
+        double ySpeedDelivered = MathUtils.clamp(ySpeedCommanded, -DrivetrainConstants.maxSpeedMetersPerSecond, DrivetrainConstants.maxSpeedMetersPerSecond);
+        double rotationDelivered = MathUtils.clamp(currentRotation, -DrivetrainConstants.maxAngularSpeed, DrivetrainConstants.maxAngularSpeed);
 
         // Field relative is easier for drivers I think.
         SwerveModuleState[] swerveModuleStates;

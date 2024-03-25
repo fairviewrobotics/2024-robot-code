@@ -37,6 +37,9 @@ public class SwerveModuleControlller {
         drivingMotor.restoreFactoryDefaults();
         turningMotor.restoreFactoryDefaults();
 
+        drivingEncoder.setAverageDepth(4);
+        drivingEncoder.setMeasurementPeriod(16);
+
         drivingPID.setFeedbackDevice(drivingEncoder);
         turningPID.setFeedbackDevice(turningEncoder);
 
