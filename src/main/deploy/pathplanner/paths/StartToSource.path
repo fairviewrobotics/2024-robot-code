@@ -38,14 +38,14 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 2.0,
     "maxAcceleration": 3.0,
-    "maxAngularVelocity": 360.0,
-    "maxAngularAcceleration": 180.0
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -33.7254602550283,
+    "rotation": -25.729878759515188,
     "rotateFast": false
   },
   "reversed": false,

@@ -22,22 +22,14 @@ public class AutoIntakeOrShoot extends Command {
     public void execute() {
         switch (goal) {
             case INTAKE -> {
-                if (!indexerSubsystem.isCenter()) {
+                if (!indexerSubsystem.isUp()) {
                     intakeSubsystem.setTopSpeed(0.5);
                     intakeSubsystem.setBottomSpeed(0.5);
                     indexerSubsystem.rotateAllWheelsPercent(0.3);
-                } else if (indexerSubsystem.isCenter()) {
+                } else if (indexerSubsystem.isUp()) {
                     // intakeSubsystem.setSpeed(0);
-                    try {
-                        Thread.sleep(105);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (indexerSubsystem.isCenter()) {
                         indexerSubsystem.rotateAllWheelsPercent(0);
                         intakeSubsystem.setSpeed(0.0);
-                    }
-
                 }
             }
             case SHOOT -> {
@@ -52,6 +44,13 @@ public class AutoIntakeOrShoot extends Command {
         intakeSubsystem.setSpeed(0);
         indexerSubsystem.rotateAllWheelsPercent(0);
     }
+
+    @Override
+    public boolean isFinished() {
+        System.out.println(this.goal.equals(Goal.INTAKE) && indexerSubsystem.isUp());
+        return this.goal.equals(Goal.INTAKE) && indexerSubsystem.isUp();
+    }
+
     public enum Goal {
         INTAKE,
         SHOOT

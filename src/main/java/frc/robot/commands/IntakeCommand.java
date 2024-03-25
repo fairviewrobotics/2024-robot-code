@@ -19,9 +19,10 @@ public class IntakeCommand extends Command {
 
     private final boolean source;
 
+    private boolean finshed = false;
 
 
-    private final XboxController primaryController;
+
     private final XboxController secondaryController;
 
 
@@ -34,13 +35,12 @@ public class IntakeCommand extends Command {
      * @param intakeSubsystem The instance of {@link IntakeSubsystem}
      * @param indexerSubsystem The instance of {@link IndexerSubsystem} (needed for limebreak detection to stop intake motor)
      */
-    public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, LEDSubsystem ledSubsystem, XboxController primaryController, XboxController secondaryController, Targets target, boolean source) {
+    public IntakeCommand(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, LEDSubsystem ledSubsystem, XboxController secondaryController, Targets target, boolean source) {
         this.intakeSubsystem = intakeSubsystem;
         this.indexerSubsystem = indexerSubsystem;
         this.ledSubsystem = ledSubsystem;
         this.target = target;
         this.source = source;
-        this.primaryController = primaryController;
         this.secondaryController = secondaryController;
 
         addRequirements(intakeSubsystem, indexerSubsystem);
@@ -50,7 +50,7 @@ public class IntakeCommand extends Command {
     @Override
     public void execute() {
         if (indexerSubsystem.isCenter())
-            ledSubsystem.setLED(0.35);
+            ledSubsystem.setLED(-.07);
         else
             ledSubsystem.setLED(0.61);
 
@@ -64,8 +64,8 @@ public class IntakeCommand extends Command {
 //                if (!indexerSubsystem.isTop()) {
                     indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.TOP_WHEEL, 0.22);
                     indexerSubsystem.rotateMotorPercent(IndexerSubsystem.IndexerMotors.BOTTOM_WHEELS, -0.22);
-                    intakeSubsystem.setTopSpeed(-0.4);
-                    intakeSubsystem.setBottomSpeed(-0.7);
+                    intakeSubsystem.setTopSpeed(-0.5);
+                    intakeSubsystem.setBottomSpeed(-0.8);
 //                } else if (indexerSubsystem.isTop()) {
                     indexerSubsystem.rotateAllWheelsPercent(0.0);
                     intakeSubsystem.setSpeed(0.0);
@@ -73,8 +73,8 @@ public class IntakeCommand extends Command {
             }
             case SPEAKER -> {
                 if (!indexerSubsystem.isCenter()) {
-                    intakeSubsystem.setTopSpeed(0.4);
-                    intakeSubsystem.setBottomSpeed(0.4);
+                    intakeSubsystem.setTopSpeed(0.5);
+                    intakeSubsystem.setBottomSpeed(0.5);
                     indexerSubsystem.rotateAllWheelsPercent(0.3);
                 } else if (indexerSubsystem.isCenter()) {
 
@@ -84,56 +84,58 @@ public class IntakeCommand extends Command {
                         e.printStackTrace();
                     }
                     if (indexerSubsystem.isCenter()) {
-                        indexerSubsystem.rotateAllWheelsPercent(0);
-                        intakeSubsystem.setSpeed(0.0);
-                        double timePassed = Timer.getFPGATimestamp() - this.rumbleTime;
-                        System.out.println("TP: " + timePassed + " CT: " + Timer.getFPGATimestamp() + " RT: " + this.rumbleTime);
-                        if (timePassed >= 0.1) {
-                            System.out.println("Rumbling");
-                            primaryController.setRumble(GenericHID.RumbleType.kBothRumble, 1.0);
-                            this.rumbleTime = Timer.getFPGATimestamp();
-                        }
+                        stopAndRumble();
                     }
 
                 }
 
             }
-            case ZANE -> {
+            case FLYSHOOT -> {
                 if (!indexerSubsystem.isUp()) {
-                    intakeSubsystem.setTopSpeed(0.4);
-                    intakeSubsystem.setBottomSpeed(0.4);
-                    indexerSubsystem.rotateAllWheelsPercent(0.3);
+                    intakeSubsystem.setTopSpeed(0.5);
+                    intakeSubsystem.setBottomSpeed(0.5);
+                    indexerSubsystem.rotateAllWheelsPercent(0.25);
                 } else if (indexerSubsystem.isUp()) {
-                        indexerSubsystem.rotateAllWheelsPercent(0);
-                        intakeSubsystem.setSpeed(0.0);
-                        double timePassed = Timer.getFPGATimestamp() - this.rumbleTime;
-                        System.out.println("TP: " + timePassed + " CT: " + Timer.getFPGATimestamp() + " RT: " + this.rumbleTime);
-                        if (timePassed >= 0.1) {
-                            System.out.println("Rumbling");
-                            primaryController.setRumble(GenericHID.RumbleType.kBothRumble, 1.0);
-                            this.rumbleTime = Timer.getFPGATimestamp();
-                        }
-
-
+                    stopAndRumble();
+                    finshed = true;
                 }
             }
+        }
+    }
+
+    private void stopAndRumble() {
+        indexerSubsystem.rotateAllWheelsPercent(0);
+        intakeSubsystem.setSpeed(0.0);
+        double timePassed = Timer.getFPGATimestamp() - this.rumbleTime;
+        System.out.println("TP: " + timePassed + " CT: " + Timer.getFPGATimestamp() + " RT: " + this.rumbleTime);
+        if (timePassed >= 0.1) {
+            System.out.println("Rumbling");
+            secondaryController.setRumble(GenericHID.RumbleType.kBothRumble, 1.0);
+            this.rumbleTime = Timer.getFPGATimestamp();
         }
     }
 
     @Override
     public void initialize() {
         rumbleTime = Timer.getFPGATimestamp();
+        finshed = false;
     }
 
     @Override
     public void end(boolean interrupted) {
+        secondaryController.setRumble(GenericHID.RumbleType.kBothRumble, 0.0);
         intakeSubsystem.setSpeed(0);
         indexerSubsystem.rotateAllWheelsPercent(0);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return finshed;
     }
 
     public enum Targets {
         AMP,
         SPEAKER,
-        ZANE
+        FLYSHOOT
     }
 }
