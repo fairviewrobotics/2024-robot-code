@@ -7,15 +7,12 @@ import com.revrobotics.SparkAbsoluteEncoder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.BooleanEntry;
-import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IndexerConstants;
 import frc.robot.utils.CANUtils;
 import frc.robot.utils.MathUtils;
-import frc.robot.utils.NetworkTableUtils;
 
 public class IndexerSubsystem extends SubsystemBase {
     private final CANSparkMax topWheel = CANUtils.configure(new CANSparkMax(IndexerConstants.topMotorID, CANSparkLowLevel.MotorType.kBrushless));
@@ -28,7 +25,7 @@ public class IndexerSubsystem extends SubsystemBase {
     private final AbsoluteEncoder indexerEncoder = indexerRotate.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
 
     private final DigitalInput centerLinebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
-    private final DigitalInput upLinebreak = new DigitalInput(IndexerConstants.centerLimebreakID);
+    private final DigitalInput upLinebreak = new DigitalInput(IndexerConstants.upLimeBreakID);
 
 
 
@@ -120,7 +117,7 @@ public class IndexerSubsystem extends SubsystemBase {
      * @param angle The target angle for the indexer
      */
     public void moveIndexerToPos(double angle) {
-        angle = MathUtils.inRange(angle, IndexerConstants.indexerMinAngle, IndexerConstants.indexerMaxAngle);
+        angle = MathUtils.clamp(angle, IndexerConstants.indexerMinAngle, IndexerConstants.indexerMaxAngle);
         rotateMotorVolts(IndexerMotors.INDEXER_ROTATE,
                 indexerPID.calculate(indexerPosRadians, angle) +
                         IndexerConstants.indexerFF.calculate(indexerPosRadians, 0.0));

@@ -14,7 +14,7 @@ public class SwerveModuleControlller {
     private final SparkPIDController drivingPID;
     private final SparkPIDController turningPID;
     private SwerveModuleState m_desiredState;
-    private double chassisAngularOffset;
+    private final double chassisAngularOffset;
 
     /**
      * This class contains all  the logic and code to control the swerve motors
@@ -36,6 +36,9 @@ public class SwerveModuleControlller {
 
         drivingMotor.restoreFactoryDefaults();
         turningMotor.restoreFactoryDefaults();
+
+        drivingEncoder.setAverageDepth(4);
+        drivingEncoder.setMeasurementPeriod(16);
 
         drivingPID.setFeedbackDevice(drivingEncoder);
         turningPID.setFeedbackDevice(turningEncoder);

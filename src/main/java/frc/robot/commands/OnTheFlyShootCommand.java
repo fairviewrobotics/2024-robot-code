@@ -14,7 +14,7 @@ import java.util.function.DoubleSupplier;
 
 public class OnTheFlyShootCommand extends Command {
     private final SwerveSubsystem swerveSubsystem;
-    private final IndexerSubsystem indexerSubsystem;
+//    private final IndexerSubsystem indexerSubsystem;
     private final DoubleSupplier forward;
     private final DoubleSupplier sideways;
 
@@ -34,9 +34,9 @@ public class OnTheFlyShootCommand extends Command {
      * @param forward The desired forward percentage of the robot
      * @param sideways The desired sideways percentage of the robot
      */
-    public OnTheFlyShootCommand(SwerveSubsystem swerveSubsystem, IndexerSubsystem indexerSubsystem, DoubleSupplier forward, DoubleSupplier sideways) {
+    public OnTheFlyShootCommand(SwerveSubsystem swerveSubsystem, DoubleSupplier forward, DoubleSupplier sideways) {
         this.swerveSubsystem = swerveSubsystem;
-        this.indexerSubsystem = indexerSubsystem;
+//        this.indexerSubsystem = indexerSubsystem;
         this.forward = forward;
         this.sideways = sideways;
 
@@ -45,7 +45,7 @@ public class OnTheFlyShootCommand extends Command {
         rotationPID.enableContinuousInput(-Math.PI, Math.PI);
 
 
-        addRequirements(swerveSubsystem, indexerSubsystem);
+        addRequirements(swerveSubsystem);
 
     }
 
@@ -59,7 +59,7 @@ public class OnTheFlyShootCommand extends Command {
         //Robot speed toward/away from the speaker (x-direction)
         double robotXSpeed = swerveSubsystem.getFieldRelativeChassisSpeeds().vxMetersPerSecond;
         //Note speed in x-direction(forward, as opposed to up)
-        double noteSpeedX = (ShooterConstants.shooterNoteSpeedX + Math.abs(robotXSpeed * 1.1)) * 1.1;
+        double noteSpeedX = (ShooterConstants.shooterNoteSpeedX + Math.abs(robotXSpeed * 1.1 ));
         Pose2d speakerPose;
 
         //Getting speaker pose relative to alliance color
@@ -91,7 +91,7 @@ public class OnTheFlyShootCommand extends Command {
         //SHOOTING TIME CALCULATIONS
 
         //Initial calculated distance to shoot from the speaker
-        double shootingDistanceFromSpeaker = (noteSpeedX * ShooterConstants.timeToSpeakerHeightWithGravity) + 0.1;
+        double shootingDistanceFromSpeaker = (noteSpeedX * ShooterConstants.timeToSpeakerHeightWithGravity);
 
         System.out.println("Inital Distance Calc: " + shootingDistanceFromSpeaker);
         System.out.println("Other Distance Calc: " + ShooterConstants.shooterNoteSpeedX * ShooterConstants.timeToSpeakerHeightWithGravity);
@@ -149,12 +149,12 @@ public class OnTheFlyShootCommand extends Command {
                 true
         );
 
-        if (difference < 0.5 && rotationPID.atSetpoint()){
-            indexerSubsystem.rotateAllWheelsPercent(0.6);
-//            System.out.println("Shooting!!!!!");
-        } else {
-//            indexerSubsystem.rotateAllWheelsPercent(0.0);
-        }
+//        if (difference < 0.5 && rotationPID.atSetpoint()){
+////            indexerSubsystem.rotateAllWheelsPercent(0.6);
+////            System.out.println("Shooting!!!!!");
+//        } else {
+////            indexerSubsystem.rotateAllWheelsPercent(0.0);
+//        }
 
     }
 
@@ -165,6 +165,6 @@ public class OnTheFlyShootCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        indexerSubsystem.rotateAllWheelsPercent(0.0);
+
     }
 }

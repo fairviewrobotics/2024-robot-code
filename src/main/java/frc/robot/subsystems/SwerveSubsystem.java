@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.ShooterConstants;
 import frc.robot.controllers.SwerveModuleControlller;
+import frc.robot.utils.MathUtils;
 import frc.robot.utils.NetworkTableUtils;
 import frc.robot.utils.SwerveUtils;
 
@@ -74,6 +75,8 @@ public class SwerveSubsystem extends SubsystemBase {
     // Slew Rate Time
     private double previousTime = WPIUtilJNI.now() * 1e-6;
 
+    private double visionUpdate = Timer.getFPGATimestamp();
+
     // Limelight Network Table
     // Relay data to driverstation using network table
 
@@ -95,6 +98,8 @@ public class SwerveSubsystem extends SubsystemBase {
      */
 
     private double distanceToTag = 1.0;
+
+
 
     private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
             DrivetrainConstants.driveKinematics,
@@ -151,7 +156,7 @@ public class SwerveSubsystem extends SubsystemBase {
                 this::getRobotRelativeSpeeds,
                 this::driveRobotRelative,
                 new HolonomicPathFollowerConfig(
-                        new PIDConstants(5, 0.0, 0.2), //1.8 // 2.7
+                        new PIDConstants(5, 0.0, 0.2 ), //1.8 // 2.7
                         new PIDConstants(3, 0.0, 0.2), //1.0 // 1.8
                         3, //swervesubsystem.setmodulestate
                         0.301625,//11.875 meters
@@ -227,13 +232,18 @@ public class SwerveSubsystem extends SubsystemBase {
 //                        VecBuilder.fill(9999, 9999, 9999)
 //                );
             }
-            poseEstimator.addVisionMeasurement(
-                    new Pose2d(
-                            new Translation2d(visionMeasurement.getX(), visionMeasurement.getY()),
-                            new Rotation2d(visionMeasurement.getRotation().toRotation2d().getRadians())
-                    ),
-                    Timer.getFPGATimestamp() - (VisionUtils.getLatencyPipeline()/1000.0) - (VisionUtils.getLatencyCapture()/1000.0));
+            if (Timer.getFPGATimestamp() - visionUpdate >= 0.1) {
+                visionUpdate = Timer.getFPGATimestamp();
+                poseEstimator.addVisionMeasurement(
+                        new Pose2d(
+                                new Translation2d(visionMeasurement.getX(), visionMeasurement.getY()),
+//                                Rotation2d.fromRadians(heading())
+                                new Rotation2d(visionMeasurement.getRotation().toRotation2d().getRadians())
+                        ),
+                        Timer.getFPGATimestamp() - (VisionUtils.getLatencyPipeline() / 1000.0) - (VisionUtils.getLatencyCapture() / 1000.0));
+            }
         }
+//        }
 
         frontrightpos.set(frontRight.getPosition().angle.getRadians());
         frontleftpos.set(frontLeft.getPosition().angle.getRadians());
@@ -434,9 +444,9 @@ public class SwerveSubsystem extends SubsystemBase {
         }
 
 
-        double xSpeedDelivered = xSpeedCommanded * DrivetrainConstants.maxSpeedMetersPerSecond;
-        double ySpeedDelivered = ySpeedCommanded * DrivetrainConstants.maxSpeedMetersPerSecond;
-        double rotationDelivered = currentRotation * DrivetrainConstants.maxAngularSpeed;
+        double xSpeedDelivered = MathUtils.clamp(xSpeedCommanded, -DrivetrainConstants.maxSpeedMetersPerSecond, DrivetrainConstants.maxSpeedMetersPerSecond);
+        double ySpeedDelivered = MathUtils.clamp(ySpeedCommanded, -DrivetrainConstants.maxSpeedMetersPerSecond, DrivetrainConstants.maxSpeedMetersPerSecond);
+        double rotationDelivered = MathUtils.clamp(currentRotation, -DrivetrainConstants.maxAngularSpeed, DrivetrainConstants.maxAngularSpeed);
 
         // Field relative is easier for drivers I think.
         SwerveModuleState[] swerveModuleStates;
