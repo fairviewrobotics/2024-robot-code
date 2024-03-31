@@ -121,10 +121,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.robot.subsystems.IntakeSubsystem,frc.robot.subsystems.IndexerSubsystem,frc.robot.subsystems.LEDSubsystem,edu.wpi.first.wpilibj.XboxController,edu.wpi.first.wpilibj.XboxController,frc.robot.commands.IntakeCommand.Targets,boolean)" class="member-name-link">IntakeCommand</a><wbr>(<a href="../subsystems/IntakeSubsystem.html" title="class in frc.robot.subsystems">IntakeSubsystem</a>&nbsp;intakeSubsystem,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.robot.subsystems.IntakeSubsystem,frc.robot.subsystems.IndexerSubsystem,frc.robot.subsystems.LEDSubsystem,edu.wpi.first.wpilibj.XboxController,frc.robot.commands.IntakeCommand.Targets,boolean)" class="member-name-link">IntakeCommand</a><wbr>(<a href="../subsystems/IntakeSubsystem.html" title="class in frc.robot.subsystems">IntakeSubsystem</a>&nbsp;intakeSubsystem,
  <a href="../subsystems/IndexerSubsystem.html" title="class in frc.robot.subsystems">IndexerSubsystem</a>&nbsp;indexerSubsystem,
  <a href="../subsystems/LEDSubsystem.html" title="class in frc.robot.subsystems">LEDSubsystem</a>&nbsp;ledSubsystem,
- edu.wpi.first.wpilibj.XboxController&nbsp;primaryController,
  edu.wpi.first.wpilibj.XboxController&nbsp;secondaryController,
  <a href="IntakeCommand.Targets.html" title="enum class in frc.robot.commands">IntakeCommand.Targets</a>&nbsp;target,
  boolean&nbsp;source)</code></div>
@@ -154,12 +153,15 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize()" class="member-name-link">initialize</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFinished()" class="member-name-link">isFinished</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-edu.wpi.first.wpilibj2.command.Command">Methods inherited from class&nbsp;edu.wpi.first.wpilibj2.command.Command</h3>
-<code>addRequirements, alongWith, andThen, andThen, asProxy, beforeStarting, beforeStarting, cancel, deadlineWith, finallyDo, finallyDo, getInterruptionBehavior, getName, getRequirements, getSubsystem, handleInterrupt, hasRequirement, ignoringDisable, initSendable, isFinished, isScheduled, onlyIf, onlyWhile, raceWith, repeatedly, runsWhenDisabled, schedule, setName, setSubsystem, unless, until, withInterruptBehavior, withName, withTimeout</code></div>
+<code>addRequirements, alongWith, andThen, andThen, asProxy, beforeStarting, beforeStarting, cancel, deadlineWith, finallyDo, finallyDo, getInterruptionBehavior, getName, getRequirements, getSubsystem, handleInterrupt, hasRequirement, ignoringDisable, initSendable, isScheduled, onlyIf, onlyWhile, raceWith, repeatedly, runsWhenDisabled, schedule, setName, setSubsystem, unless, until, withInterruptBehavior, withName, withTimeout</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -175,12 +177,11 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(frc.robot.subsystems.IntakeSubsystem,frc.robot.subsystems.IndexerSubsystem,frc.robot.subsystems.LEDSubsystem,edu.wpi.first.wpilibj.XboxController,edu.wpi.first.wpilibj.XboxController,frc.robot.commands.IntakeCommand.Targets,boolean)">
+<section class="detail" id="&lt;init&gt;(frc.robot.subsystems.IntakeSubsystem,frc.robot.subsystems.IndexerSubsystem,frc.robot.subsystems.LEDSubsystem,edu.wpi.first.wpilibj.XboxController,frc.robot.commands.IntakeCommand.Targets,boolean)">
 <h3>IntakeCommand</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">IntakeCommand</span><wbr><span class="parameters">(<a href="../subsystems/IntakeSubsystem.html" title="class in frc.robot.subsystems">IntakeSubsystem</a>&nbsp;intakeSubsystem,
  <a href="../subsystems/IndexerSubsystem.html" title="class in frc.robot.subsystems">IndexerSubsystem</a>&nbsp;indexerSubsystem,
  <a href="../subsystems/LEDSubsystem.html" title="class in frc.robot.subsystems">LEDSubsystem</a>&nbsp;ledSubsystem,
- edu.wpi.first.wpilibj.XboxController&nbsp;primaryController,
  edu.wpi.first.wpilibj.XboxController&nbsp;secondaryController,
  <a href="IntakeCommand.Targets.html" title="enum class in frc.robot.commands">IntakeCommand.Targets</a>&nbsp;target,
  boolean&nbsp;source)</span></div>
@@ -227,6 +228,16 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>end</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.Command</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isFinished()">
+<h3>isFinished</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isFinished</span>()</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code>isFinished</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.Command</code></dd>
 </dl>
 </section>
 </li>

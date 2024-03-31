@@ -105,10 +105,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#inRange(double,double,double)" class="member-name-link">inRange</a><wbr>(double&nbsp;value,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clamp(double,double,double)" class="member-name-link">clamp</a><wbr>(double&nbsp;value,
  double&nbsp;min,
  double&nbsp;max)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Clamp a value to a minimum and a maximum</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#rpmToRadians(double)" class="member-name-link">rpmToRadians</a><wbr>(double&nbsp;rpm)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -159,11 +161,20 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="inRange(double,double,double)">
-<h3>inRange</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">inRange</span><wbr><span class="parameters">(double&nbsp;value,
+<section class="detail" id="clamp(double,double,double)">
+<h3>clamp</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">clamp</span><wbr><span class="parameters">(double&nbsp;value,
  double&nbsp;min,
  double&nbsp;max)</span></div>
+<div class="block">Clamp a value to a minimum and a maximum</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>value</code> - The value to clamp</dd>
+<dd><code>min</code> - Minimum possible value</dd>
+<dd><code>max</code> - Maximum possible value</dd>
+<dt>Returns:</dt>
+<dd>The value after being clamping</dd>
+</dl>
 </section>
 </li>
 </ul>
